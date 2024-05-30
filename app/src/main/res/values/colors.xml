@@ -5,4 +5,6 @@
     <color name="white_background">#FFF3F3F3</color>
     <color name="primary_blue">#2274A5</color>
     <color name="secondary_pink">#FF8381</color>
+    <color name="grey_inactive">#656565</color>
+    <color name="grey_variant_1">#D9D9D9</color>
 </resources>
