@@ -8,9 +8,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bangkit.android.dermatify.R
 import com.bangkit.android.dermatify.databinding.FragmentSplashBinding
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class SplashFragment : Fragment() {
 
@@ -35,6 +38,14 @@ class SplashFragment : Fragment() {
         Handler(Looper.getMainLooper()).postDelayed({
             findNavController().navigate(R.id.action_splashFragment_to_onboardingFragment)
         }, 3969L)
+//        lifecycleScope.launch {
+//            navigateToHome()
+//        }
     }
+
+//    private suspend fun navigateToHome() {
+//        delay(3969L)
+//        findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
+//    }
 
 }
