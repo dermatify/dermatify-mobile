@@ -5,4 +5,10 @@
     <string name="journey">Journey</string>
     <string name="learn">Learn</string>
     <string name="wishlist">Wishlist</string>
+    <string name="password_error">Password can\'t be less than 8 characters</string>
+    <string name="email_error">You typed the wrong email format\nCorrect email format: example@your.domain</string>
+    <string name="hint_email">Please enter your email</string>
+    <string name="hint_name">Please enter your name</string>
+    <string name="hint_password">Please enter your password</string>
+
 </resources>
