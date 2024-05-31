@@ -38,14 +38,6 @@ class SplashFragment : Fragment() {
         Handler(Looper.getMainLooper()).postDelayed({
             findNavController().navigate(R.id.action_splashFragment_to_onboardingFragment)
         }, 3969L)
-//        lifecycleScope.launch {
-//            navigateToHome()
-//        }
     }
-
-//    private suspend fun navigateToHome() {
-//        delay(3969L)
-//        findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
-//    }
 
 }
