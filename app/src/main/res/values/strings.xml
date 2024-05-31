@@ -10,5 +10,9 @@
     <string name="hint_email">Please enter your email</string>
     <string name="hint_name">Please enter your name</string>
     <string name="hint_password">Please enter your password</string>
-
+    <string name="onboarding_title">Track, analyze, and improve your skin</string>
+    <string name="onboarding_subtitle">Dermatify exists to help you identify skin issues\neffectively and give personalized treatment\nrecommendation</string>
+    <string name="login">Login</string>
+    <string name="create_acc">Create an account</string>
+    <string name="lottie_assets_name">\@drawable/placeholder_onboarding_illus</string>
 </resources>

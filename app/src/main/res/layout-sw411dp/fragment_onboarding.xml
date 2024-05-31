@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary_blue"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.onboarding.OnboardingFragment"
     android:paddingHorizontal="28dp"
-    tools:context=".ui.onboarding.OnboardingFragment">
+    android:background="@color/primary_blue">
 
         <ImageView
             android:id="@+id/iv_logo_small"
@@ -14,9 +14,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:src="@drawable/ic_logo_small"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/anim_illus"
@@ -36,54 +36,53 @@
             android:id="@+id/tv_onboarding_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="13dp"
             android:text="@string/onboarding_title"
-            android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="18sp"
+            android:layout_marginTop="13dp"
+            android:textAlignment="center"
+            android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/anim_illus" />
-
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/anim_illus"/>
         <TextView
             android:id="@+id/tv_onboarding_subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:text="@string/onboarding_subtitle"
-            android:textAlignment="center"
             android:textColor="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="10dp"
+            android:textSize="16sp"
+            android:textAlignment="center"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_onboarding_title" />
-
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_onboarding_title"/>
         <Button
             android:id="@+id/btn_to_login_fragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@string/login"
+            android:textStyle="bold"
+            android:textSize="16sp"
             android:layout_marginTop="21dp"
             android:backgroundTint="@color/secondary_pink"
-            android:text="@string/login"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_onboarding_subtitle" />
-
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_onboarding_subtitle"/>
         <Button
-            android:id="@+id/btn_to_register_fragment"
             style="?attr/materialButtonOutlinedStyle"
+            android:id="@+id/btn_to_register_fragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:backgroundTint="@color/white"
             android:text="@string/create_acc"
-            android:textColor="@color/secondary_pink"
+            android:layout_marginTop="4dp"
+            android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@color/secondary_pink"
+            android:backgroundTint="@color/white"
+            app:strokeColor="@color/secondary_pink"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_to_login_fragment"
-            app:strokeColor="@color/secondary_pink" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_to_login_fragment"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

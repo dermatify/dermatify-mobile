@@ -16,7 +16,6 @@ import com.bangkit.android.dermatify.util.visible
 
 class MainActivity : AppCompatActivity() {
 
-    //jasmine init
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

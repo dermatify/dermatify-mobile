@@ -33,8 +33,19 @@ class OnboardingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Handler(Looper.getMainLooper()).postDelayed({
-            findNavController().navigate(R.id.action_onboardingFragment_to_homeFragment)
-        }, 6969L)
+        setupUI()
     }
+
+    private fun setupUI() {
+        binding.apply {
+            btnToLoginFragment.setOnClickListener {
+                findNavController().navigate(R.id.action_onboardingFragment_to_loginFragment)
+            }
+            btnToRegisterFragment.setOnClickListener {
+                findNavController().navigate(R.id.action_onboardingFragment_to_registerFragment)
+            }
+        }
+    }
+
+
 }
