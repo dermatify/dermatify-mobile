@@ -5,6 +5,9 @@
     <string name="journey">Journey</string>
     <string name="learn">Learn</string>
     <string name="wishlist">Wishlist</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
     <string name="password_error">Password can\'t be less than 8 characters</string>
     <string name="email_error">You typed the wrong email format\nCorrect email format: example@your.domain</string>
     <string name="hint_email">Please enter your email</string>
@@ -13,6 +16,13 @@
     <string name="onboarding_title">Track, analyze, and improve your skin</string>
     <string name="onboarding_subtitle">Dermatify exists to help you identify skin issues\neffectively and give personalized treatment\nrecommendation</string>
     <string name="login">Login</string>
+    <string name="login_title">Take control of your skin\'s well-being</string>
+    <string name="login_in_register">Already have an account? Login</string>
+    <string name="register">Register</string>
+    <string name="register_title">Join us and discover the secrets to healthier skin</string>
+    <string name="register_in_login">Don\'t have an account? Register </string>
+    <string name="login_w_google">Login with Google</string>
+    <string name="continue_w_google">Continue with Google</string>
     <string name="create_acc">Create an account</string>
     <string name="lottie_assets_name">\@drawable/placeholder_onboarding_illus</string>
 </resources>
