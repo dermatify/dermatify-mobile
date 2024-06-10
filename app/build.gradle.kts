@@ -56,6 +56,9 @@ dependencies {
     // CircleImageView
     implementation("de.hdodenhof:circleimageview:3.1.0")
 
+    // Glide
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+
     // Lottie
     implementation("com.airbnb.android:lottie:6.4.0")
 
@@ -65,4 +68,7 @@ dependencies {
 
     // RecyclerView
     implementation("androidx.recyclerview:recyclerview:1.3.2")
+
+    // Shimmer
+    implementation("com.facebook.shimmer:shimmer:0.5.0")
 }

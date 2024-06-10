@@ -10,5 +10,7 @@
     <color name="grey_variant_2">#CECECE</color>
     <color name="grey_variant_3">#656565</color>
     <color name="grey_variant_4">#D7D7D7</color>
+    <color name="grey_variant_5">#EEEEEE</color>
+    <color name="grey_variant_6">#3E3E3E</color>
     <color name="red_error">#FFB3261E</color>
 </resources>
