@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bangkit.android.dermatify.R
 import com.bangkit.android.dermatify.databinding.FragmentHomeBinding
+import com.bangkit.android.dermatify.ui.adapter.ArticlesAdapter
 import com.bangkit.android.dermatify.ui.adapter.HeaderAdapter
 
 class HomeFragment : Fragment() {
@@ -19,6 +20,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var homeHeaderAdapter: HeaderAdapter
+    private lateinit var articlesAdapter: ArticlesAdapter
     private lateinit var concatAdapter: ConcatAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,9 +44,11 @@ class HomeFragment : Fragment() {
 
     private fun initUI() {
         homeHeaderAdapter = HeaderAdapter(HeaderAdapter.HOME)
+        articlesAdapter = ArticlesAdapter(ArticlesAdapter.HIGHLIGHTS)
+        concatAdapter = ConcatAdapter(homeHeaderAdapter, articlesAdapter)
         binding.apply {
             rvHome.layoutManager = LinearLayoutManager(context)
-            rvHome.adapter = homeHeaderAdapter
+            rvHome.adapter = concatAdapter
         }
     }
 

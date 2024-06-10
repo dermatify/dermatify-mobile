@@ -33,4 +33,10 @@
     <string name="home_header_cta">Examine your skin</string>
     <string name="recent_scans">Recent Scans</string>
     <string name="all_results">All Results</string>
+    <string name="skin_analysis_result">Skin Analysis Result</string>
+    <string name="dark_circles">Dark circles</string>
+    <string name="cd_dark_circles">Dark circles under the eye icon</string>
+    <string name="recent_user_scan_photo">Recent user scan photo</string>
+    <string name="learn_more">Learn More</string>
+    <string name="highlights">Highlights</string>
 </resources>
