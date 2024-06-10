@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingTop="16dp">
+
+    <TextView
+        android:id="@+id/tv_welcome_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/primary_blue"
+        android:text="@string/hi_name_home_header"
+        android:textStyle="bold"
+        android:textSize="24sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/iv_waving_hand"/>
+
+    <ImageView
+        android:id="@+id/iv_waving_hand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/cd_emoji_of_waving_hand"
+        android:src="@drawable/ic_header_wave_hand"
+        android:layout_marginStart="8dp"
+        app:layout_constraintTop_toTopOf="@id/tv_welcome_header"
+        app:layout_constraintStart_toEndOf="@id/tv_welcome_header"
+        app:layout_constraintBottom_toBottomOf="@id/tv_welcome_header"/>
+
+    <Button
+        style="@style/IconButton"
+        android:id="@+id/btn_acc_profile"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:contentDescription="@string/cd_user_profile_picture"
+        app:icon="@drawable/ic_account_circle"
+        app:tint="@color/grey_variant_3"
+        app:layout_constraintTop_toTopOf="@id/tv_welcome_header"
+        app:layout_constraintBottom_toBottomOf="@id/tv_welcome_header"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_acc_profile"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:contentDescription="@string/cd_user_profile_picture"
+        android:src="@drawable/ic_account_circle"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintTop_toTopOf="@id/tv_welcome_header"
+        app:layout_constraintBottom_toBottomOf="@id/tv_welcome_header"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_header"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:cardBackgroundColor="@color/primary_blue"
+        app:cardCornerRadius="20dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_welcome_header"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="4dp"
+            android:paddingStart="16dp">
+            <TextView
+                android:id="@+id/tv_header_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:text="@string/home_cta_header_title"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_header_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:textSize="12sp"
+                android:text="@string/home_cta_header_subtitle"
+                android:textColor="@color/grey_variant_4"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_header_title"/>
+
+            <Button
+                android:id="@+id/btn_cta_to_examine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/home_header_cta"
+                android:backgroundTint="@color/secondary_pink"
+                android:paddingHorizontal="16dp"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                app:icon="@drawable/ic_cam_cta"
+                android:layout_marginVertical="8dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_header_subtitle"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_header_illus"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/illus_home_header_2"
+                android:layout_marginTop="4dp"
+                android:paddingStart="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_header_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/tv_recent_scans"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:text="@string/recent_scans"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/cv_header"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tv_all_results" />
+
+    <Button
+        style="@style/LabelTextButton"
+        android:id="@+id/tv_all_results"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="@color/primary_blue"
+        android:text="@string/all_results"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@id/cv_header"
+        app:layout_constraintBottom_toBottomOf="@id/tv_recent_scans"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

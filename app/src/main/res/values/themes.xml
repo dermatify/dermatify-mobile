@@ -19,5 +19,40 @@
         <item name="elevation">0dp</item>
     </style>
 
+    <style name="IconButton" parent="Widget.Material3.Button.IconButton">
+        <item name="android:minWidth">0dp</item>
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingRight">0dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:insetLeft">0dp</item>
+        <item name="android:insetRight">0dp</item>
+        <item name="iconSize">28dp</item>
+        <item name="iconTint">@color/grey_variant_3</item>
+    </style>
+
+    <style name="TextAppearanceLabel" parent="TextAppearance.Material3.LabelLarge">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">16sp</item>
+        <item name="fontFamily">sans-serif</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="LabelTextButton" parent="Widget.Material3.Button.TextButton">
+        <item name="android:textAppearance">@style/TextAppearanceLabel</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.M3.Sys.Shape.Corner.None</item>
+        <item name="rippleColor">@color/blue_variant_1</item>
+        <item name="android:maxWidth">0dp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:minWidth">65dp</item>
+        <item name="android:minHeight">25dp</item>
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingRight">0dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+    </style>
+
     <style name="Theme.Dermatify" parent="Base.Theme.Dermatify" />
 </resources>
