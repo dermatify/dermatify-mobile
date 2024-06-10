@@ -39,7 +39,7 @@ class OnboardingFragment : Fragment() {
     private fun setupUI() {
         binding.apply {
             btnToLoginFragment.setOnClickListener {
-                findNavController().navigate(R.id.action_onboardingFragment_to_loginFragment)
+                findNavController().navigate(R.id.action_onboardingFragment_to_homeFragment)
             }
             btnToRegisterFragment.setOnClickListener {
                 findNavController().navigate(R.id.action_onboardingFragment_to_registerFragment)

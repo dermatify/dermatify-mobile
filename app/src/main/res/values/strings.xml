@@ -25,4 +25,12 @@
     <string name="continue_w_google">Continue with Google</string>
     <string name="create_acc">Create an account</string>
     <string name="lottie_assets_name">\@drawable/placeholder_onboarding_illus</string>
+    <string name="hi_name_home_header">Hi, John Doe!</string>
+    <string name="cd_emoji_of_waving_hand">Emoji of waving hand</string>
+    <string name="cd_user_profile_picture">User profile picture</string>
+    <string name="home_cta_header_title">Have you checked\nyour facial skin today?</string>
+    <string name="home_cta_header_subtitle"><![CDATA[Unveil your glowing & healthy skin here.]]></string>
+    <string name="home_header_cta">Examine your skin</string>
+    <string name="recent_scans">Recent Scans</string>
+    <string name="all_results">All Results</string>
 </resources>
