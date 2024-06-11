@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bangkit.android.dermatify.R
@@ -43,7 +44,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun initUI() {
-        homeHeaderAdapter = HeaderAdapter(HeaderAdapter.HOME)
+        homeHeaderAdapter = HeaderAdapter(HeaderAdapter.HOME, findNavController())
         articlesAdapter = ArticlesAdapter(ArticlesAdapter.HIGHLIGHTS)
         concatAdapter = ConcatAdapter(homeHeaderAdapter, articlesAdapter)
         binding.apply {
@@ -53,7 +54,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupHeaderRV() {
-        homeHeaderAdapter = HeaderAdapter(HeaderAdapter.HOME)
+        homeHeaderAdapter = HeaderAdapter(HeaderAdapter.HOME, findNavController())
     }
 
 }

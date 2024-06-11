@@ -38,6 +38,7 @@
         android:layout_width="28dp"
         android:layout_height="28dp"
         android:contentDescription="@string/cd_user_profile_picture"
+        app:rippleColor="@color/white"
         app:icon="@drawable/ic_account_circle"
         app:tint="@color/grey_variant_3"
         app:layout_constraintTop_toTopOf="@id/tv_welcome_header"
