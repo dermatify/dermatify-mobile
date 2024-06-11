@@ -39,4 +39,14 @@
     <string name="recent_user_scan_photo">Recent user scan photo</string>
     <string name="learn_more">Learn More</string>
     <string name="highlights">Highlights</string>
+    <string name="profile">Profile</string>
+    <string name="john_doe">John Doe</string>
+    <string name="email_dummy">johndoe@gmail.com</string>
+    <string name="cd_change_language">Change app\'s language icon\n</string>
+    <string name="change_language">Change language</string>
+    <string name="change_language_subtitle">Pick the language setting you’d like to use.</string>
+    <string name="credits">Credits</string>
+    <string name="credits_subtitle">A tribute to the illustrators who helped us brought Dermatify to life visually.</string>
+    <string name="meet_team_subtitle">All the minds behind Dermatify.</string>
+    <string name="logout">Logout</string>
 </resources>

@@ -3,6 +3,7 @@ package com.bangkit.android.dermatify.ui
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.view.ViewGroup.MarginLayoutParams
 import androidx.core.view.marginBottom
 import androidx.fragment.app.Fragment
@@ -75,7 +76,7 @@ class MainActivity : AppCompatActivity() {
                 else -> {
                     binding.apply {
                         botAppBar.hide()
-                        fabBotNav.hide()
+                        fabBotNav.visibility = View.GONE
                         divider.hide()
                     }
                 }

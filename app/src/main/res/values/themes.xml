@@ -53,5 +53,22 @@
         <item name="android:insetBottom">0dp</item>
     </style>
 
+    <style name="CustomCardCorners" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance_custom_corners</item>
+        <item name="cardForegroundColor">@android:color/transparent</item>
+        <item name="cardElevation">0dp</item>
+        <item name="checkedIconTint">@android:color/transparent</item>
+
+    </style>
+
+    <style name="ShapeAppearance_custom_corners" parent="">
+        <item name="cornerFamilyBottomLeft">rounded</item>
+        <item name="cornerFamilyBottomRight">rounded</item>
+        <item name="cornerSizeTopLeft">0dp</item>
+        <item name="cornerSizeTopRight">0dp</item>
+        <item name="cornerSizeBottomLeft">20dp</item>
+        <item name="cornerSizeBottomRight">20dp</item>
+    </style>
+
     <style name="Theme.Dermatify" parent="Base.Theme.Dermatify" />
 </resources>
