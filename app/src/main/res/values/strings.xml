@@ -74,4 +74,6 @@
     <string name="mobile_development" translatable="false">Mobile Development</string>
     <string name="md_name_1" translatable="false">Jasmine Azzahra Briliane Putri</string>
     <string name="md_name_2" translatable="false">Kevin Jeremia Pontoh</string>
+    <string name="credits_subtitle_2">We\'re grateful to the talented illustrators who have contributed their creative work to bring our app to life visually. This page recognizes and celebrates their efforts.</string>
+    <string name="credits_cta">Check freepik.com\nfor more illustrations</string>
 </resources>
