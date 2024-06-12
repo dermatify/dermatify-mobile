@@ -43,6 +43,14 @@ class HomeFragment : Fragment() {
         initUI()
     }
 
+    // Ensure the status bar and nav bar color is
+    // the same as backround when popback from Profile Fragment
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        requireActivity().window.statusBarColor = activity?.getColor(R.color.white_background) ?: Color.TRANSPARENT
+        requireActivity().window.navigationBarColor = activity?.getColor(R.color.white_background) ?: Color.TRANSPARENT
+    }
+
     private fun initUI() {
         homeHeaderAdapter = HeaderAdapter(HeaderAdapter.HOME, findNavController())
         articlesAdapter = ArticlesAdapter(ArticlesAdapter.HIGHLIGHTS)

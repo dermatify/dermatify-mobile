@@ -73,6 +73,14 @@ class MainActivity : AppCompatActivity() {
                         root.setBackgroundColor(Color.TRANSPARENT)
                     }
                 }
+                R.id.changeLanguageFragment, R.id.profileFragment -> {
+                    binding.apply {
+                        botAppBar.hide()
+                        fabBotNav.visibility = View.GONE
+                        divider.hide()
+                        root.setBackgroundColor(Color.TRANSPARENT)
+                    }
+                }
                 else -> {
                     binding.apply {
                         botAppBar.hide()

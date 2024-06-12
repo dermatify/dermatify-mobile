@@ -1,7 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">Dermatify</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="home">Home</string>
+    <string name="home">Beranda</string>
     <string name="journey">Journey</string>
     <string name="learn">Learn</string>
     <string name="wishlist">Wishlist</string>
@@ -25,7 +25,7 @@
     <string name="continue_w_google">Continue with Google</string>
     <string name="create_acc">Create an account</string>
     <string name="lottie_assets_name">\@drawable/placeholder_onboarding_illus</string>
-    <string name="hi_name_home_header">Hi, John Doe!</string>
+    <string name="hi_name_home_header">Hai, John Doe!</string>
     <string name="cd_emoji_of_waving_hand">Emoji of waving hand</string>
     <string name="cd_user_profile_picture">User profile picture</string>
     <string name="home_cta_header_title">Have you checked\nyour facial skin today?</string>
@@ -39,7 +39,7 @@
     <string name="recent_user_scan_photo">Recent user scan photo</string>
     <string name="learn_more">Learn More</string>
     <string name="highlights">Highlights</string>
-    <string name="profile">Profile</string>
+    <string name="profile">Profil</string>
     <string name="john_doe">John Doe</string>
     <string name="email_dummy">johndoe@gmail.com</string>
     <string name="cd_change_language">Change app\'s language icon\n</string>
@@ -48,19 +48,16 @@
     <string name="credits">Credits</string>
     <string name="credits_subtitle">A tribute to the illustrators who helped us brought Dermatify to life visually.</string>
     <string name="meet_team_subtitle">All the minds behind Dermatify.</string>
-    <string name="logout">Logout</string>
-    <string name="article_title" translatable="false">Article Title</string>
-    <string name="article_subtitle" translatable="false">Article Subtitle</string>
-    <string name="edit_profile">Edit Profile</string>
-    <string name="change_profile_photo">Change profile photo</string>
-    <string name="edit_profile_button">Edit profile button</string>
+    <string name="logout">Keluar</string>
+    <string name="edit_profile">Edit Profil</string>
+    <string name="change_profile_photo">Ubah foto profil</string>
+    <string name="edit_profile_button">Tombol mengedit profil</string>
     <string name="save">Save</string>
-    <string name="change_language_title">Change Language</string>
-    <string name="change_language_dialog_title">Change language?</string>
+    <string name="change_language_title">Ganti Bahasa</string>
+    <string name="change_language_dialog_title">Ganti bahasa?</string>
     <string name="english">English (EN)</string>
     <string name="bahasa_indonesia">Bahasa Indonesia (ID)</string>
-    <string name="change_language_dialog_desc">Your language settings on the app will change to %1$s.</string>
-    <string name="cancel">Cancel</string>
-    <string name="yes">Yes</string>
->>>>>>> 55343cf (feat: implement edit profile and change lang screen)
+    <string name="change_language_dialog_desc">Pengaturan bahasa di applikasi akan berubah menjadi %1$s.</string>
+    <string name="cancel">Batalkan</string>
+    <string name="yes">Ya</string>
 </resources>

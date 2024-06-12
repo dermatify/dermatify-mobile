@@ -13,7 +13,7 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
+        resourceConfigurations += mutableSetOf("en", "in")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -55,6 +55,9 @@ dependencies {
 
     // CircleImageView
     implementation("de.hdodenhof:circleimageview:3.1.0")
+
+    // Data Store
+    implementation("androidx.datastore:datastore-preferences:1.1.1")
 
     // Glide
     implementation("com.github.bumptech.glide:glide:4.16.0")

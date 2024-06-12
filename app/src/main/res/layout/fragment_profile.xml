@@ -53,6 +53,14 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:tint="@color/white" />
 
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_profile_pic_ph"
+                android:layout_width="54dp"
+                android:layout_height="54dp"
+                android:contentDescription="@string/cd_user_profile_picture"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
                 android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
@@ -84,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:paddingVertical="8dp"
                 android:backgroundTint="@color/secondary_pink"
-                android:contentDescription="@string/cd_user_profile_picture"
+                android:contentDescription="@string/edit_profile_button"
                 app:rippleColor="@color/white"
                 app:icon="@drawable/ic_edit"
                 app:iconTint="@color/white"
@@ -114,12 +122,14 @@
                 android:id="@+id/btn_change_lang"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clickable="true"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:menuIcon="@drawable/ic_change_lang"
                 app:menuTitle="@string/change_language"
-                app:menuSubtitle="@string/change_language_subtitle" />
+                app:menuSubtitle="@string/change_language_subtitle"
+                 />
 
             <com.google.android.material.divider.MaterialDivider
                 android:id="@+id/divider1"
@@ -136,6 +146,7 @@
                 android:id="@+id/btn_credits"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clickable="true"
                 app:layout_constraintTop_toBottomOf="@id/divider1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -158,6 +169,7 @@
                 android:id="@+id/btn_meet_team"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clickable="true"
                 app:layout_constraintTop_toBottomOf="@id/divider2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
