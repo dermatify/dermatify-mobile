@@ -60,4 +60,6 @@
     <string name="change_language_dialog_desc">Pengaturan bahasa di applikasi akan berubah menjadi %1$s.</string>
     <string name="cancel">Batalkan</string>
     <string name="yes">Ya</string>
+    <string name="meet_the_team">Meet The Team</string>
+    <string name="meet_the_team_title">We\'re part of Bangkit Academy 2024\nBy Google, GoTo, Traveloka</string>
 </resources>

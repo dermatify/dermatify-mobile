@@ -62,4 +62,16 @@
     <string name="change_language_dialog_desc">Your language settings on the app will change to %1$s.</string>
     <string name="cancel">Cancel</string>
     <string name="yes">Yes</string>
+    <string name="meet_the_team">Meet The Team</string>
+    <string name="meet_the_team_title">We\'re part of Bangkit Academy 2024\nBy Google, GoTo, Traveloka</string>
+    <string name="machine_learning" translatable="false">Machine Learning</string>
+    <string name="ml_name_1" translatable="false">Muhammad Naufal Adani</string>
+    <string name="ml_name_2" translatable="false">Nico Gilang Aprully</string>
+    <string name="ml_name_3" translatable="false">Sherly Angelica</string>
+    <string name="cloud_computing" translatable="false">Cloud Computing</string>
+    <string name="cc_name_1" translatable="false">Annava Wisha Sikoko</string>
+    <string name="cc_name_2" translatable="false">Daffa Muhammad Faizan</string>
+    <string name="mobile_development" translatable="false">Mobile Development</string>
+    <string name="md_name_1" translatable="false">Jasmine Azzahra Briliane Putri</string>
+    <string name="md_name_2" translatable="false">Kevin Jeremia Pontoh</string>
 </resources>

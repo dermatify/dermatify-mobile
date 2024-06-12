@@ -57,6 +57,10 @@ class ProfileFragment : Fragment() {
             btnCredits.setOnClickListener {
                 findNavController().navigate(R.id.action_profileFragment_to_creditsFragment)
             }
+
+            btnMeetTeam.setOnClickListener {
+                findNavController().navigate(R.id.action_profileFragment_to_meetTeamFragment)
+            }
         }
     }
 }
