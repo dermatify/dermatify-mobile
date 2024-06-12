@@ -19,4 +19,5 @@ class LearnFragment : Fragment() {
         _binding = FragmentLearnBinding.inflate(inflater, container, false)
         return binding.root
     }
+
 }
