@@ -119,9 +119,14 @@
             app:popExitAnim="@android:anim/slide_out_right" />
         <action
             android:id="@+id/action_profileFragment_to_creditsFragment"
-            app:destination="@+id/creditsFragment"
+            app:destination="@id/creditsFragment"
             app:enterAnim="@android:anim/slide_in_left"
             app:popExitAnim="@android:anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_profileFragment_to_meetTeamFragment"
+            app:destination="@id/meetTeamFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
@@ -138,4 +143,10 @@
         android:name="com.bangkit.android.dermatify.ui.credits.CreditsFragment"
         android:label="fragment_credits"
         tools:layout="@layout/fragment_credits" />
+    <fragment
+        android:id="@+id/meetTeamFragment"
+        android:name="com.bangkit.android.dermatify.ui.meettheteam.MeetTeamFragment"
+        android:label="fragment_meet_team"
+        tools:layout="@layout/fragment_meet_team" />
+
 </navigation>
