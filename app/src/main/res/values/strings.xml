@@ -49,6 +49,8 @@
     <string name="credits_subtitle">A tribute to the illustrators who helped us brought Dermatify to life visually.</string>
     <string name="meet_team_subtitle">All the minds behind Dermatify.</string>
     <string name="logout">Logout</string>
+
+
     <string name="edit_profile">Edit Profile</string>
     <string name="change_profile_photo">Change profile photo</string>
     <string name="edit_profile_button">Edit profile button</string>
