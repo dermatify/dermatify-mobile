@@ -53,6 +53,10 @@ class ProfileFragment : Fragment() {
             btnChangeLang.setOnClickListener {
                 findNavController().navigate(R.id.action_profileFragment_to_changeLanguageFragment)
             }
+
+            btnCredits.setOnClickListener {
+                findNavController().navigate(R.id.action_profileFragment_to_creditsFragment)
+            }
         }
     }
 }

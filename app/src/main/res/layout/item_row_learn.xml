@@ -6,21 +6,21 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_marginStart="@dimen/dimen_8dp"
-    android:layout_marginTop="@dimen/dimen_4dp"
-    android:layout_marginEnd="@dimen/dimen_8dp"
-    android:layout_marginBottom="@dimen/dimen_4dp"
-    card_view:cardCornerRadius="@dimen/dimen_4dp">
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginBottom="4dp"
+    card_view:cardCornerRadius="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/dimen_8dp">
+        android:padding="8dp">
 
         <ImageView
             android:id="@+id/iv_learn_thumbnail"
-            android:layout_width="@dimen/dimen_100dp"
-            android:layout_height="@dimen/dimen_100dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:scaleType="centerCrop"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintStart_toStartOf="parent"
@@ -29,10 +29,10 @@
 
         <TextView
             android:id="@+id/tv_learn_title"
-            android:layout_width="@dimen/dimen_0dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dimen_8dp"
-            android:layout_marginEnd="@dimen/dimen_8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_toEndOf="@id/iv_learn_thumbnail"
             android:layout_toStartOf="@id/iv_bookmark"
             android:textSize="16sp"
@@ -44,11 +44,11 @@
 
         <TextView
             android:id="@+id/tv_learn_subtitle"
-            android:layout_width="@dimen/dimen_0dp"
-            android:layout_height="@dimen/dimen_0dp"
-            android:layout_marginStart="@dimen/dimen_8dp"
-            android:layout_marginEnd="@dimen/dimen_8dp"
-            android:layout_marginTop="@dimen/dimen_8dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
             android:ellipsize="end"
             android:maxLines="5"
             card_view:layout_constraintBottom_toBottomOf="@+id/iv_learn_thumbnail"
@@ -60,8 +60,8 @@
 
         <ImageView
             android:id="@+id/iv_bookmark"
-            android:layout_width="@dimen/dimen_25dp"
-            android:layout_height="@dimen/dimen_25dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_bookmark"
             card_view:layout_constraintBottom_toBottomOf="parent"
