@@ -62,5 +62,4 @@
     <string name="change_language_dialog_desc">Your language settings on the app will change to %1$s.</string>
     <string name="cancel">Cancel</string>
     <string name="yes">Yes</string>
->>>>>>> 55343cf (feat: implement edit profile and change lang screen)
 </resources>
