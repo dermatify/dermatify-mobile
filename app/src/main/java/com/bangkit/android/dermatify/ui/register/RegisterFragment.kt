@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
+import com.bangkit.android.dermatify.R
 import com.bangkit.android.dermatify.databinding.FragmentRegisterBinding
 
 class RegisterFragment : Fragment() {
@@ -22,6 +24,19 @@ class RegisterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initUI()
+    }
+
+    private fun initUI() {
+        binding.apply {
+            topbar.setNavigationOnClickListener {
+                findNavController().popBackStack()
+            }
+
+            btnToLogin.setOnClickListener {
+                findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
+            }
+        }
     }
 
 }
