@@ -16,7 +16,7 @@
     <string name="onboarding_title">Track, analyze, and improve your skin</string>
     <string name="onboarding_subtitle">Dermatify exists to help you identify skin issues\neffectively and give personalized treatment\nrecommendation</string>
     <string name="login">Login</string>
-    <string name="login_title">Take control of your skin\'s well-being</string>
+    <string name="login_title">Take control of your\nskin\'s well-being</string>
     <string name="login_in_register">Already have an account? Login</string>
     <string name="register">Register</string>
     <string name="register_title">Join us and discover the secrets to healthier skin</string>
