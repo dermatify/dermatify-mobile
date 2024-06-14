@@ -4,18 +4,11 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup.MarginLayoutParams
-import androidx.core.view.marginBottom
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.NavigationUiSaveStateControl
 import androidx.navigation.ui.setupWithNavController
 import com.bangkit.android.dermatify.R
 import com.bangkit.android.dermatify.databinding.ActivityMainBinding
-import com.bangkit.android.dermatify.util.hide
+import com.bangkit.android.dermatify.util.gone
 import com.bangkit.android.dermatify.util.visible
 
 class MainActivity : AppCompatActivity() {
@@ -75,17 +68,17 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.changeLanguageFragment, R.id.profileFragment -> {
                     binding.apply {
-                        botAppBar.hide()
+                        botAppBar.gone()
                         fabBotNav.visibility = View.GONE
-                        divider.hide()
+                        divider.gone()
                         root.setBackgroundColor(Color.TRANSPARENT)
                     }
                 }
                 else -> {
                     binding.apply {
-                        botAppBar.hide()
+                        botAppBar.gone()
                         fabBotNav.visibility = View.GONE
-                        divider.hide()
+                        divider.gone()
                     }
                 }
             }
