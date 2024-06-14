@@ -180,4 +180,17 @@
         app:layout_constraintTop_toTopOf="@id/tv_login"
         app:rippleColor="@color/secondary_pink" />
 
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/progbar_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="gone"
+        android:layout_marginTop="32dp"
+        app:indicatorColor="@color/secondary_pink"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_continue_w_google"
+        tools:visibility="visible" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

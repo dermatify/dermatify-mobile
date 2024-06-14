@@ -34,6 +34,27 @@ class AuthRepository private constructor(
         }
     }
 
+    fun register(name: String, email: String, password: String) = liveData {
+        emit(ApiResponse.Loading)
+        try {
+            val successResponse = apiService.register(name, email, password)
+            emit(ApiResponse.Success(successResponse.message))
+        } catch (e: HttpException) {
+            val errorBody = e.response()?.errorBody()?.string()
+            Log.d("Cilukba", "$errorBody")
+            val errorResponse = Gson().fromJson(errorBody, ErrorResponse::class.java)
+            emit(ApiResponse.Error(errorResponse.message))
+        } catch (e: Exception) {
+            Log.d("Cilukba", "${e.message}")
+            val errorMessage = if (e.message?.contains("Unable to resolve host", ignoreCase = true) == true) {
+                "Seems you lost your connection. Please try again"
+            } else {
+                "An error occurred. Please try again"
+            }
+            emit(ApiResponse.Error(errorMessage))
+        }
+    }
+
     companion object {
         @Volatile
         private var instance: AuthRepository? = null
