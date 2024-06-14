@@ -179,9 +179,7 @@ class LoginFragment : Fragment() {
                     }
                 }
                 is ApiResponse.Success -> {
-                    binding.apply {
-                        progbarLogin.gone()
-                    }
+                    binding.progbarLogin.gone()
                     findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
                 }
             }

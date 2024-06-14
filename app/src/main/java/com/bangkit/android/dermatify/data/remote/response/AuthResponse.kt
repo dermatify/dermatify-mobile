@@ -5,6 +5,10 @@ data class LoginResponse(
     val accessToken: String
 )
 
+data class RegisterResponse(
+    val message: String
+)
+
 data class ErrorResponse(
     val statusCode: Int,
     val error: String,
