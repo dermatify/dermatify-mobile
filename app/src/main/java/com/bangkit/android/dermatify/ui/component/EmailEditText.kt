@@ -57,7 +57,11 @@ class EmailEditText @JvmOverloads constructor(
     }
 
     override fun onFocusChange(v: View?, isFocused: Boolean) {
-        if (isFocused) {
+        if (error != null) {
+            borderError()
+            showErrorIcon()
+        }
+        else if (isFocused) {
             showFocusedEmail()
             borderFocused()
         } else {
@@ -66,6 +70,9 @@ class EmailEditText @JvmOverloads constructor(
         }
     }
 
+    private fun showErrorIcon() {
+        setButtonDrawables(endOfTheText = errorIcn)
+    }
     private fun showFocusedEmail() {
         setButtonDrawables(endOfTheText = emailLogoFocused)
     }

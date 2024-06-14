@@ -76,4 +76,7 @@
     <string name="md_name_2" translatable="false">Kevin Jeremia Pontoh</string>
     <string name="credits_subtitle_2">We\'re grateful to the talented illustrators who have contributed their creative work to bring our app to life visually. This page recognizes and celebrates their efforts.</string>
     <string name="credits_cta">Check freepik.com\nfor more illustrations</string>
+    <string name="invalid_creds">Invalid credentials. Please check your email and password and enter it correctly</string>
+    <string name="network_lost">Seems you lost your connection. Please try again</string>
+    <string name="error_occured">An error occurred. Please try again</string>
 </resources>
