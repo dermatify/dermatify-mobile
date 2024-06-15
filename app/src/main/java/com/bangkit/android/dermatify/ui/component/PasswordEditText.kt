@@ -12,6 +12,7 @@ import android.view.View
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import com.bangkit.android.dermatify.R
+import com.bangkit.android.dermatify.ui.register.RegisterFragment
 
 class PasswordEditText@JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
@@ -22,7 +23,7 @@ class PasswordEditText@JvmOverloads constructor(
     private var visibleBtn: Drawable
     private var visibleBtnFocused: Drawable
     private var errorIcn: Drawable
-
+    var fragmentType: String = "empty"
     init {
         notVisibleBtn = ContextCompat.getDrawable(context, R.drawable.ic_not_visible) as Drawable
         notVisibleBtnFocused = ContextCompat.getDrawable(context, R.drawable.ic_not_visible_focused) as Drawable
@@ -42,18 +43,28 @@ class PasswordEditText@JvmOverloads constructor(
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
             override fun onTextChanged(cs: CharSequence?, start: Int, count: Int, after: Int) {
-                if (cs.toString().length in 1..7) {
+                if (transformationMethod != null) showNotVisibleBtnFocused() else showVisibleBtnFocused()
+
+                if (cs.toString().length < 8 &&
+                    fragmentType == "REGISTER"
+                ) {
                     setError(ContextCompat.getString(context, R.string.password_error), null)
-                    setButtonDrawables(endOfTheText = errorIcn)
+                    showErrorIcon()
+                    borderError()
+                } else if (!cs.toString().isPasswordValid() &&
+                    fragmentType == "REGISTER"
+                ) {
+                    setError(ContextCompat.getString(context, R.string.password_notvalid_error), null)
                     borderError()
                 } else {
                     error = null
                     borderFocused()
-                    if (transformationMethod != null) showNotVisibleBtnFocused() else showVisibleBtnFocused()
                 }
             }
 
-            override fun afterTextChanged(p0: Editable?) { }
+            override fun afterTextChanged(ed: Editable?) {
+
+            }
 
         })
     }
@@ -147,6 +158,9 @@ class PasswordEditText@JvmOverloads constructor(
         }
     }
 
+    private fun showErrorIcon() {
+        setButtonDrawables(endOfTheText = errorIcn)
+    }
     private fun showNotVisibleBtn() {
         setButtonDrawables(endOfTheText = notVisibleBtn)
     }
@@ -165,6 +179,12 @@ class PasswordEditText@JvmOverloads constructor(
 
     private fun setButtonDrawables(startOfTheText: Drawable? = null, topOfTheText: Drawable? = null, endOfTheText: Drawable? = null, bottomOfTheText: Drawable? = null) {
         setCompoundDrawablesWithIntrinsicBounds(startOfTheText, topOfTheText, endOfTheText, bottomOfTheText)
+    }
+
+    // Check if password contains at least one uppercase letter,
+    // one lowercase letter, and one number
+    private fun String.isPasswordValid(): Boolean {
+        return Regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*\$").containsMatchIn(this)
     }
 
     private fun borderFocused() {

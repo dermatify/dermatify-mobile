@@ -15,6 +15,7 @@ import java.security.SecureRandom
 import android.util.Base64
 import android.util.Log
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.credentials.CredentialManager
 import androidx.credentials.CustomCredential
 import androidx.credentials.GetCredentialRequest
@@ -98,6 +99,8 @@ class LoginFragment : Fragment() {
 
     private fun initUI() {
         binding.apply {
+
+            edtPasswordLogin.fragmentType = LOGIN
             topbar.setNavigationOnClickListener {
                 findNavController().popBackStack()
             }
@@ -111,8 +114,8 @@ class LoginFragment : Fragment() {
                     password.isNotEmpty()
                 ) {
                     initLoginObserver(email, password)
-                    this@LoginFragment.closeKeyboard()
                 }
+                this@LoginFragment.closeKeyboard()
             }
 
             btnToRegister.setOnClickListener {
@@ -256,5 +259,8 @@ class LoginFragment : Fragment() {
         }
     }
 
+    companion object {
+        const val LOGIN = "LOGIN"
+    }
 
 }

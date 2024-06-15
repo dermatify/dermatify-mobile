@@ -39,6 +39,7 @@ class RegisterFragment : Fragment() {
 
     private fun initUI() {
         binding.apply {
+            edtPasswordReg.fragmentType = REGISTER
             topbar.setNavigationOnClickListener {
                 findNavController().popBackStack()
             }
@@ -55,8 +56,8 @@ class RegisterFragment : Fragment() {
                     password.isNotEmpty()
                 ) {
                   initRegisterObserver(name, email, password)
-                  this@RegisterFragment.closeKeyboard()
                 }
+                this@RegisterFragment.closeKeyboard()
             }
 
             btnToLogin.setOnClickListener {
@@ -99,6 +100,10 @@ class RegisterFragment : Fragment() {
             }
 
         }
+    }
+
+    companion object {
+        const val REGISTER = "REGISTER"
     }
 
 }

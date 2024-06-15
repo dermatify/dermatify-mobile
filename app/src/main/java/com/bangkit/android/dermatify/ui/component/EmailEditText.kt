@@ -36,9 +36,10 @@ class EmailEditText @JvmOverloads constructor(
             override fun onTextChanged(cs: CharSequence?, start: Int, count: Int, after: Int) { }
 
             override fun afterTextChanged(view: Editable?) {
-                if (view.toString().isEmpty() || isEmailValid(view.toString())) {
+                if (isEmailValid(view.toString())) {
                     error = null
                     borderFocused()
+                    showFocusedEmail()
                 } else {
                     setError(ContextCompat.getString(context, R.string.email_error), null)
                     setButtonDrawables(endOfTheText = errorIcn)
@@ -57,6 +58,7 @@ class EmailEditText @JvmOverloads constructor(
     }
 
     override fun onFocusChange(v: View?, isFocused: Boolean) {
+
         if (error != null) {
             borderError()
             showErrorIcon()
