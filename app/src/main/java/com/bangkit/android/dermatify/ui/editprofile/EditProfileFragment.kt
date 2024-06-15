@@ -1,4 +1,4 @@
-package com.bangkit.android.dermatify.ui.profile
+package com.bangkit.android.dermatify.ui.editprofile
 
 import android.graphics.Color
 import android.os.Bundle
@@ -7,12 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.bangkit.android.dermatify.R
 import com.bangkit.android.dermatify.databinding.FragmentEditProfileBinding
 
 class EditProfileFragment : Fragment() {
     private var _binding: FragmentEditProfileBinding? = null
     private val binding get() = _binding!!
+
+    private val navigationArgs: EditProfileFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +38,8 @@ class EditProfileFragment : Fragment() {
 
     private fun initUI() {
         binding.apply {
+            tvEmail.text = navigationArgs.email
+
             topbar.setNavigationOnClickListener {
                 findNavController().popBackStack()
             }
