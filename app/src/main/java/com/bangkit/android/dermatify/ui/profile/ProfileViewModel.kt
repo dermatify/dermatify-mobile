@@ -1,25 +1,33 @@
-package com.bangkit.android.dermatify.ui.login
+package com.bangkit.android.dermatify.ui.profile
 
 import android.content.Context
+import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asFlow
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
+import com.bangkit.android.dermatify.data.remote.response.ApiResponse
 import com.bangkit.android.dermatify.data.repository.UserRepository
 import com.bangkit.android.dermatify.di.Injection
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
-class LoginViewModel(private val userRepository: UserRepository) : ViewModel() {
-    fun login(email: String, password: String) = userRepository.login(email, password)
+class ProfileViewModel(private val userRepository: UserRepository) : ViewModel() {
 
-    companion object {
-        const val USER_EMAIL_KEY = "USER_EMAIL"
-        const val ACCESS_TOKEN_KEY = "ACCESS_TOKEN"
-        const val REFRESH_TOKEN_KEY = "REFRESH_TOKEN"
-    }
+    fun getEmail() = userRepository.getUserEmail().asLiveData()
+
+    fun logout() = userRepository.logout()
+
+
+
 }
 
 class ViewModelFactory private constructor(private val userRepository: UserRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
-            return LoginViewModel(userRepository) as T
+        if (modelClass.isAssignableFrom(ProfileViewModel::class.java)) {
+            return ProfileViewModel(userRepository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
     }

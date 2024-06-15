@@ -2,19 +2,29 @@ package com.bangkit.android.dermatify.ui.profile
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bangkit.android.dermatify.R
+import com.bangkit.android.dermatify.data.remote.response.ApiResponse
 import com.bangkit.android.dermatify.databinding.FragmentProfileBinding
-
-private var _binding: FragmentProfileBinding? = null
-private val binding get() = _binding!!
+import com.bangkit.android.dermatify.util.gone
+import com.bangkit.android.dermatify.util.showSnackbar
+import com.bangkit.android.dermatify.util.visible
 
 
 class ProfileFragment : Fragment() {
+    private var _binding: FragmentProfileBinding? = null
+    private val binding get() = _binding!!
+
+    private val profileViewModel by activityViewModels<ProfileViewModel> {
+        ViewModelFactory.getInstance(requireActivity().application)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +52,10 @@ class ProfileFragment : Fragment() {
 
     private fun setupUI() {
         binding.apply {
+            profileViewModel.getEmail().observe(viewLifecycleOwner) {
+                tvEmail.text = it
+            }
+
             topbar.setNavigationOnClickListener {
                 findNavController().popBackStack()
             }
@@ -60,6 +74,42 @@ class ProfileFragment : Fragment() {
 
             btnMeetTeam.setOnClickListener {
                 findNavController().navigate(R.id.action_profileFragment_to_meetTeamFragment)
+            }
+
+            btnLogout.setOnClickListener {
+                initLogoutObserver()
+            }
+        }
+    }
+
+    private fun initLogoutObserver() {
+        profileViewModel.logout().observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is ApiResponse.Loading -> {
+                    binding.apply {
+                        btnLogout.isEnabled = false
+                        progbarLogout.visible()
+                    }
+                }
+                is ApiResponse.Success -> {
+                    findNavController().navigate(R.id.action_profileFragment_to_onboardingFragment)
+                }
+                is ApiResponse.Error -> {
+                    val msg = if (result.errorMsg== "Seems you lost your connection. Please try again") {
+                        getString(R.string.network_lost)
+                    } else {
+                        getString(R.string.error_occured)
+                    }
+                    binding.apply {
+                        btnLogout.isEnabled = true
+                        progbarLogout.gone()
+                        root.showSnackbar(
+                            message = msg,
+                            type = "error",
+                            anchorView = btnLogout
+                        )
+                    }
+                }
             }
         }
     }

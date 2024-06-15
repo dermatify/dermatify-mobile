@@ -3,17 +3,17 @@ package com.bangkit.android.dermatify.ui.register
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.bangkit.android.dermatify.data.repository.AuthRepository
+import com.bangkit.android.dermatify.data.repository.UserRepository
 import com.bangkit.android.dermatify.di.Injection
 
-class RegisterViewModel(private val authRepository: AuthRepository) : ViewModel() {
-    fun register(name: String, email: String, password: String) = authRepository.register(name, email, password)
+class RegisterViewModel(private val userRepository: UserRepository) : ViewModel() {
+    fun register(name: String, email: String, password: String) = userRepository.register(name, email, password)
 }
 
-class RegViewModelFactory private constructor(private val authRepository: AuthRepository) : ViewModelProvider.Factory {
+class RegViewModelFactory private constructor(private val userRepository: UserRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(RegisterViewModel::class.java)) {
-            return RegisterViewModel(authRepository) as T
+            return RegisterViewModel(userRepository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
     }
