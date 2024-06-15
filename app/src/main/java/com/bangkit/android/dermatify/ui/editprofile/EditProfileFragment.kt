@@ -17,9 +17,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bangkit.android.dermatify.R
 import com.bangkit.android.dermatify.databinding.FragmentEditProfileBinding
-import com.bangkit.android.dermatify.util.gone
 import com.bangkit.android.dermatify.util.invisible
-import com.bangkit.android.dermatify.util.showSnackbar
 
 class EditProfileFragment : Fragment() {
     private var _binding: FragmentEditProfileBinding? = null
@@ -27,19 +25,8 @@ class EditProfileFragment : Fragment() {
 
     private val navigationArgs: EditProfileFragmentArgs by navArgs()
 
-    private val userEmail = navigationArgs.email
+    private var userEmail = ""
     private var userProfilePic: Uri? = null
-
-    private val requestPermissionLauncher =
-        registerForActivityResult(
-            ActivityResultContracts.RequestPermission()
-        ) { isGranted ->
-            if (isGranted) {
-                binding.root.showSnackbar(getString(R.string.camera_permission_granted), "success", binding.btnSave)
-            } else {
-                binding.root.showSnackbar(getString(R.string.camera_permission_denied), "error", binding.btnSave)
-            }
-        }
 
     private val launcherGallery = registerForActivityResult(
         ActivityResultContracts.PickVisualMedia()
@@ -73,9 +60,7 @@ class EditProfileFragment : Fragment() {
     }
 
     private fun initUI() {
-        if (!checkPermission(CAMERA_PERMISSION)) {
-            requestPermissionLauncher.launch(CAMERA_PERMISSION)
-        }
+        fetchDataFromNavArgs()
 
         binding.apply {
             tvEmail.text = userEmail
@@ -88,6 +73,10 @@ class EditProfileFragment : Fragment() {
                 startGallery()
             }
         }
+    }
+
+    private fun fetchDataFromNavArgs() {
+        userEmail = navigationArgs.email
     }
 
     private fun ImageView.showImage() {
@@ -106,7 +95,4 @@ class EditProfileFragment : Fragment() {
         launcherGallery.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
     }
 
-    companion object {
-        private const val CAMERA_PERMISSION = Manifest.permission.CAMERA
-    }
 }
