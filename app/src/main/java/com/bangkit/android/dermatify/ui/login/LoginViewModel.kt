@@ -1,11 +1,10 @@
 package com.bangkit.android.dermatify.ui.login
 
 import android.content.Context
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.bangkit.android.dermatify.data.repository.AuthRepository
-import com.bangkit.android.dermatify.util.Injection
+import com.bangkit.android.dermatify.di.Injection
 
 class LoginViewModel(private val authRepository: AuthRepository) : ViewModel() {
     fun login(email: String, password: String) = authRepository.login(email, password)

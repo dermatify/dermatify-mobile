@@ -9,7 +9,10 @@
     <string name="name_error">Name can\'t be empty. Please enter your name</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
+    <string name="password_empty_error">Password can\'t be empty</string>
+    <string name="email_empty_error">Email can\'t be empty</string>
     <string name="password_error">Password can\'t be less than 8 characters</string>
+    <string name="password_notvalid_error">Password must contain lowercase letters, uppercase letters, and numbers</string>
     <string name="email_error">You typed the wrong email format\nCorrect email format: example@your.domain</string>
     <string name="hint_email">Please enter your email</string>
     <string name="hint_name">Please enter your name</string>

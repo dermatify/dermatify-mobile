@@ -1,4 +1,4 @@
-package com.bangkit.android.dermatify.util
+package com.bangkit.android.dermatify.di
 
 import android.content.Context
 import com.bangkit.android.dermatify.data.remote.retrofit.ApiConfig
