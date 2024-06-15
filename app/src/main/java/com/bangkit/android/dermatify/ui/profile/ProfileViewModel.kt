@@ -20,6 +20,7 @@ class ProfileViewModel(private val userRepository: UserRepository) : ViewModel()
 
     fun logout() = userRepository.logout()
 
+    fun renewAccessToken() = userRepository.renewAccessToken()
 
 
 }

@@ -95,21 +95,51 @@ class ProfileFragment : Fragment() {
                     findNavController().navigate(R.id.action_profileFragment_to_onboardingFragment)
                 }
                 is ApiResponse.Error -> {
-                    val msg = if (result.errorMsg== "Seems you lost your connection. Please try again") {
-                        getString(R.string.network_lost)
+                    if (result.errorMsg == "Invalid token!") {
+                        Log.d("Cilukba", "Renew token")
+                        initRenewObserver()
                     } else {
-                        getString(R.string.error_occured)
+                        val msg = if (result.errorMsg == "Seems you lost your connection. Please try again") {
+                            getString(R.string.network_lost)
+                        } else {
+                            getString(R.string.error_occured)
+                        }
+                        binding.apply {
+                            root.showSnackbar(
+                                message = msg,
+                                type = "error",
+                                anchorView = btnLogout
+                            )
+                        }
                     }
                     binding.apply {
                         btnLogout.isEnabled = true
                         progbarLogout.gone()
-                        root.showSnackbar(
-                            message = msg,
-                            type = "error",
-                            anchorView = btnLogout
-                        )
                     }
                 }
+            }
+        }
+    }
+
+    private fun initRenewObserver() {
+        profileViewModel.renewAccessToken().observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is ApiResponse.Error -> {
+                    if (result.errorMsg.contains("Logout")) {
+                        findNavController().navigate(R.id.action_profileFragment_to_onboardingFragment)
+                    } else if (result.errorMsg == "Seems you lost your connection. Please try again") {
+                        val msg = getString(R.string.network_lost)
+                        binding.apply {
+                            root.showSnackbar(
+                                message = msg,
+                                type = "error",
+                                anchorView = btnLogout
+                            )
+                        }
+                    }
+                }
+                is ApiResponse.Success -> { }
+                is ApiResponse.Loading -> { }
             }
         }
     }
