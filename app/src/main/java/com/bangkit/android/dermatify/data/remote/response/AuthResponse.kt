@@ -9,6 +9,10 @@ data class RegisterResponse(
     val message: String
 )
 
+data class LogoutResponse(
+    val message: String
+)
+
 data class ErrorResponse(
     val statusCode: Int,
     val error: String,

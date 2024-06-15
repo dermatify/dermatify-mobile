@@ -4,10 +4,12 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bangkit.android.dermatify.R
@@ -19,6 +21,10 @@ class SplashFragment : Fragment() {
 
     private var _binding: FragmentSplashBinding? = null
     private val binding get() = _binding!!
+
+    private val splashViewModel by activityViewModels<SplashViewModel> {
+        ViewModelFactory.getInstance(requireActivity().application)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,8 +42,19 @@ class SplashFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Handler(Looper.getMainLooper()).postDelayed({
-            findNavController().navigate(R.id.action_splashFragment_to_onboardingFragment)
+            initObserver()
         }, 3969L)
+    }
+
+    private fun initObserver() {
+        splashViewModel.getAccessToken().observe(viewLifecycleOwner) { accessToken ->
+            Log.d("Cilukba", "$accessToken")
+            if (accessToken.isEmpty()) {
+                findNavController().navigate(R.id.action_splashFragment_to_onboardingFragment)
+            } else {
+                findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
+            }
+        }
     }
 
 }

@@ -1,25 +1,25 @@
-package com.bangkit.android.dermatify.ui.login
+package com.bangkit.android.dermatify.ui.splash
 
 import android.content.Context
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asLiveData
 import com.bangkit.android.dermatify.data.repository.UserRepository
 import com.bangkit.android.dermatify.di.Injection
 
-class LoginViewModel(private val userRepository: UserRepository) : ViewModel() {
-    fun login(email: String, password: String) = userRepository.login(email, password)
-
-    companion object {
-        const val USER_EMAIL_KEY = "USER_EMAIL"
-        const val ACCESS_TOKEN_KEY = "ACCESS_TOKEN"
-        const val REFRESH_TOKEN_KEY = "REFRESH_TOKEN"
+class SplashViewModel(private val userRepository: UserRepository) : ViewModel() {
+    init {
+        getAccessToken()
     }
+
+    fun getAccessToken(): LiveData<String> = userRepository.getAccessToken().asLiveData()
 }
 
 class ViewModelFactory private constructor(private val userRepository: UserRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
-            return LoginViewModel(userRepository) as T
+        if (modelClass.isAssignableFrom(SplashViewModel::class.java)) {
+            return SplashViewModel(userRepository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
     }

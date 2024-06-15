@@ -1,12 +1,15 @@
 package com.bangkit.android.dermatify.di
 
 import android.content.Context
+import com.bangkit.android.dermatify.data.local.UserPreferences
+import com.bangkit.android.dermatify.data.local.userDataStore
 import com.bangkit.android.dermatify.data.remote.retrofit.ApiConfig
-import com.bangkit.android.dermatify.data.repository.AuthRepository
+import com.bangkit.android.dermatify.data.repository.UserRepository
 
 object Injection {
-    fun provideAuthRepository(context: Context): AuthRepository {
+    fun provideAuthRepository(context: Context): UserRepository {
         val apiService = ApiConfig.getApiService()
-        return AuthRepository.getInstance(apiService)
+        val userDataStore = UserPreferences.getInstance(context.userDataStore)
+        return UserRepository.getInstance(apiService, userDataStore)
     }
 }

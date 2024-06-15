@@ -1,6 +1,7 @@
 package com.bangkit.android.dermatify.data.remote.retrofit
 
 import com.bangkit.android.dermatify.data.remote.response.LoginResponse
+import com.bangkit.android.dermatify.data.remote.response.LogoutResponse
 import com.bangkit.android.dermatify.data.remote.response.RegisterResponse
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -21,4 +22,11 @@ interface ApiService {
         @Field("email") email: String,
         @Field("password") password: String
     ): RegisterResponse
+
+    @FormUrlEncoded
+    @POST("auth/logout")
+    suspend fun logout(
+        @Field("email") email: String,
+        @Field("accessToken") accessToken: String
+    ): LogoutResponse
 }

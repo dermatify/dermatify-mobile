@@ -164,7 +164,7 @@ class LoginFragment : Fragment() {
                     ) {
                         Log.d("Cilukba", "lewat invalid creds")
                         getString(R.string.invalid_creds)
-                    } else if (result.errorMsg== "Seems you lost your connection. Please try again") {
+                    } else if (result.errorMsg == "Seems you lost your connection. Please try again") {
                         Log.d("Cilukba", "lewat network lost")
                         getString(R.string.network_lost)
                     } else {
