@@ -13,6 +13,11 @@ data class LogoutResponse(
     val message: String
 )
 
+data class RenewResponse(
+    val message: String,
+    val accessToken: String
+)
+
 data class ErrorResponse(
     val statusCode: Int,
     val error: String,

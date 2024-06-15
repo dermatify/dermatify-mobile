@@ -100,6 +100,29 @@ class UserRepository private constructor(
         }
     }
 
+    fun renewAccessToken() = liveData {
+        emit(ApiResponse.Loading)
+        try {
+            val email = getUserEmail().first()
+            val accessToken = getAccessToken().first()
+            val successResponse = apiService.renewAccessToken(email, accessToken)
+            userDataStore.updateAccessToken(successResponse.accessToken)
+            emit(ApiResponse.Success(successResponse.message))
+        } catch (e: HttpException) {
+            val errorBody = e.response()?.errorBody()?.string()
+            val errorResponse = Gson().fromJson(errorBody, ErrorResponse::class.java)
+            val errorMsg = "${errorResponse.message} Logout"
+            emit(ApiResponse.Error(errorMsg))
+        } catch (e: Exception) {
+            val errorMessage = if (e.message?.contains("Unable to resolve host", ignoreCase = true) == true) {
+                "Seems you lost your connection. Please try again"
+            } else {
+                "An error occurred. Please try again"
+            }
+            emit(ApiResponse.Error(errorMessage))
+        }
+    }
+
     companion object {
         @Volatile
         private var instance: UserRepository? = null
