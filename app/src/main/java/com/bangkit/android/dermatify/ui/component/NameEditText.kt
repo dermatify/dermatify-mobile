@@ -36,9 +36,13 @@ class NameEditText @JvmOverloads constructor(
 
             override fun afterTextChanged(view: Editable?) {
                 if (view.toString().isEmpty()) {
-                    setError(ContextCompat.getString(context, R.string.name_error))
+                    setError(ContextCompat.getString(context, R.string.name_error), null)
                     setButtonDrawables(endOfTheText = errorIcn)
                     borderError()
+                } else {
+                    error = null
+                    borderFocused()
+                    showFocusedPerson()
                 }
             }
 
@@ -54,7 +58,11 @@ class NameEditText @JvmOverloads constructor(
     }
 
     override fun onFocusChange(v: View?, isFocused: Boolean) {
-        if (isFocused) {
+        if (error != null) {
+            borderError()
+            showErrorIcon()
+        }
+        else if (isFocused) {
             showFocusedPerson()
             borderFocused()
         } else {
@@ -85,5 +93,9 @@ class NameEditText @JvmOverloads constructor(
 
     private fun borderError() {
         background = ContextCompat.getDrawable(context, R.drawable.edittext_border_error)
+    }
+
+    private fun showErrorIcon() {
+        setButtonDrawables(endOfTheText = errorIcn)
     }
 }

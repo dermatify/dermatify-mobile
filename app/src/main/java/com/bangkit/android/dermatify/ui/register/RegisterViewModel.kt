@@ -4,8 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.bangkit.android.dermatify.data.repository.AuthRepository
-import com.bangkit.android.dermatify.ui.login.ViewModelFactory
-import com.bangkit.android.dermatify.util.Injection
+import com.bangkit.android.dermatify.di.Injection
 
 class RegisterViewModel(private val authRepository: AuthRepository) : ViewModel() {
     fun register(name: String, email: String, password: String) = authRepository.register(name, email, password)
