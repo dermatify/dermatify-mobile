@@ -72,4 +72,6 @@
     <string name="network_lost">Seems you lost your connection. Please try again</string>
     <string name="error_occured">An error occurred. Please try again</string>
     <string name="register_success">Account successfully created</string>
+    <string name="camera_permission_granted">Camera permission is granted</string>
+    <string name="camera_permission_denied">Camera permission is denied</string>
 </resources>
