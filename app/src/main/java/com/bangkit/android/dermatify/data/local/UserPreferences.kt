@@ -15,8 +15,19 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
     private val ACCESS_TOKEN_KEY = stringPreferencesKey(LoginViewModel.ACCESS_TOKEN_KEY)
     private val REFRESH_TOKEN_KEY = stringPreferencesKey(LoginViewModel.REFRESH_TOKEN_KEY)
     private val USER_EMAIL_KEY = stringPreferencesKey(LoginViewModel.USER_EMAIL_KEY)
+    private val USER_NAME_KEY = stringPreferencesKey(LoginViewModel.USER_NAME_KEY)
+    private val USER_PIC_KEY = stringPreferencesKey(LoginViewModel.USER_PIC_KEY)
 
-
+    fun getUserName(): Flow<String> {
+        return dataStore.data.map { prefs ->
+            prefs[USER_NAME_KEY] ?: ""
+        }
+    }
+    fun getUserPic(): Flow<String> {
+        return dataStore.data.map { prefs ->
+            prefs[USER_PIC_KEY] ?: ""
+        }
+    }
 
     fun getUserEmail(): Flow<String> {
         return dataStore.data.map { prefs ->
@@ -40,6 +51,24 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
         dataStore.edit { prefs ->
             prefs.remove(ACCESS_TOKEN_KEY)
             prefs.remove(REFRESH_TOKEN_KEY)
+        }
+    }
+
+    suspend fun removePic() {
+        dataStore.edit { prefs ->
+            prefs.remove(USER_PIC_KEY)
+        }
+    }
+
+    suspend fun updateUserName(newName: String) {
+        dataStore.edit { prefs ->
+            prefs[USER_NAME_KEY] = newName
+        }
+    }
+
+    suspend fun updateUserPic(newPic: String) {
+        dataStore.edit { prefs ->
+            prefs[USER_PIC_KEY] = newPic
         }
     }
 
