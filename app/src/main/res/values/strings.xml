@@ -86,7 +86,5 @@
     <string name="register_success">Account successfully created</string>
     <string name="camera_permission_granted">Camera permission is granted</string>
     <string name="camera_permission_denied">Camera permission is denied</string>
-    <string name="hint_month">Month</string>
-    <string name="hint_week">Week</string>
-    <string name="title_journey">Scan History</string>
+    <string name="profile_success">Profile is successfully updated</string>
 </resources>

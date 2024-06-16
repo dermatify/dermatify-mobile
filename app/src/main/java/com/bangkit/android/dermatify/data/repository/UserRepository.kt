@@ -1,5 +1,6 @@
 package com.bangkit.android.dermatify.data.repository
 
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
@@ -21,6 +22,8 @@ class UserRepository private constructor(
     private val userDataStore: UserPreferences
 ) {
 
+    fun getUserName(): Flow<String> = userDataStore.getUserName()
+    fun getUserPic(): Flow<String> = userDataStore.getUserPic()
     fun getUserEmail(): Flow<String> = userDataStore.getUserEmail()
     fun getAccessToken(): Flow<String> = userDataStore.getAccessToken()
 
@@ -29,6 +32,37 @@ class UserRepository private constructor(
     private fun removeToken() {
         CoroutineScope(Dispatchers.IO).launch {
             userDataStore.removeToken()
+        }
+    }
+
+    private fun removePic() {
+        CoroutineScope(Dispatchers.IO).launch {
+            userDataStore.removePic()
+        }
+    }
+
+    private fun updateUserName(newName: String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val oldName = getUserName().first()
+            if (newName != oldName) userDataStore.updateUserName(newName)
+        }
+    }
+    private fun updateUserPic(newPic: String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val oldPic = getUserPic().first()
+            if (newPic != oldPic) userDataStore.updateUserPic(newPic)
+        }
+    }
+
+    fun saveUpdateProfile(newName: String = "", newProfilePic: String = "") {
+        CoroutineScope(Dispatchers.IO).launch {
+            if (newProfilePic == "removed") {
+                removePic()
+            } else if (newProfilePic.isNotEmpty()) {
+                updateUserPic(newProfilePic)
+            }
+
+            if (newName.isNotEmpty()) updateUserName(newName)
         }
     }
 

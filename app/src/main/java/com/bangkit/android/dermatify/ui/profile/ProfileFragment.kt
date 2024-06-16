@@ -1,6 +1,7 @@
 package com.bangkit.android.dermatify.ui.profile
 
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,12 +9,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bangkit.android.dermatify.R
 import com.bangkit.android.dermatify.data.remote.response.ApiResponse
 import com.bangkit.android.dermatify.databinding.FragmentProfileBinding
 import com.bangkit.android.dermatify.util.gone
+import com.bangkit.android.dermatify.util.invisible
+import com.bangkit.android.dermatify.util.setUriToImageView
 import com.bangkit.android.dermatify.util.showSnackbar
 import com.bangkit.android.dermatify.util.visible
 
@@ -25,6 +27,11 @@ class ProfileFragment : Fragment() {
     private val profileViewModel by activityViewModels<ProfileViewModel> {
         ViewModelFactory.getInstance(requireActivity().application)
     }
+
+    private var userEmail = ""
+    private var userName = ""
+    private var userProfilePic = ""
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +60,26 @@ class ProfileFragment : Fragment() {
     private fun setupUI() {
         binding.apply {
             profileViewModel.getEmail().observe(viewLifecycleOwner) {
-                tvEmail.text = it
+                userEmail = it
+                tvEmail.text = userEmail
+            }
+
+            profileViewModel.getUserName().observe(viewLifecycleOwner) {
+                userName = it
+                tvName.text = userName
+            }
+
+            profileViewModel.getUserPic().observe(viewLifecycleOwner) { userPic ->
+                Log.d("Cilukba", "$userPic")
+                if (userPic.isEmpty()) {
+                    ivProfilePicPh.invisible()
+                    ivProfile.visible()
+                } else {
+                    ivProfilePicPh.visible()
+                    ivProfile.invisible()
+                    ivProfilePicPh.setUriToImageView(Uri.parse(userPic))
+                    userProfilePic = userPic
+                }
             }
 
             topbar.setNavigationOnClickListener {
@@ -61,7 +87,7 @@ class ProfileFragment : Fragment() {
             }
 
             btnEdit.setOnClickListener {
-                findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToEditProfileFragment(tvEmail.text.toString()))
+                findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToEditProfileFragment(userEmail, userName, userProfilePic))
             }
 
             btnChangeLang.setOnClickListener {

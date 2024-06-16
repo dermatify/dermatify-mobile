@@ -17,6 +17,8 @@ import kotlinx.coroutines.launch
 class ProfileViewModel(private val userRepository: UserRepository) : ViewModel() {
 
     fun getEmail() = userRepository.getUserEmail().asLiveData()
+    fun getUserPic() = userRepository.getUserPic().asLiveData()
+    fun getUserName() = userRepository.getUserName().asLiveData()
 
     fun logout() = userRepository.logout()
 
