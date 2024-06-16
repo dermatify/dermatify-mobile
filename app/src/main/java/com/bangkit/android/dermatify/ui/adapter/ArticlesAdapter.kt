@@ -2,10 +2,11 @@ package com.bangkit.android.dermatify.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bangkit.android.dermatify.databinding.ItemArticlesBinding
 
-class ArticlesAdapter(private val tabType: String) : RecyclerView.Adapter<ArticlesViewHolder>() {
+class ArticlesAdapter(private val tabType: String, private val navController: NavController? = null) : RecyclerView.Adapter<ArticlesViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticlesViewHolder {
         return when (tabType) {

@@ -12,7 +12,7 @@ object Constants {
     const val GH_AWS = "https://github.com/annavaws"
     const val LI_DMF = "https://www.linkedin.com/in/daffafaizan"
     const val GH_DMF = "https://github.com/daffafaizan"
-    const val LI_JABP = "https://www.linkedin.com/in/jasmine-azzahra-533430300"
+    const val LI_JABP = "https://www.linkedin.com/in/jasmineazzahrabp"
     const val GH_JABP = "https://github.com/jasmineazzahra13"
     const val LI_KJP = "https://www.linkedin.com/in/kevinj-pontoh"
     const val GH_KJP = "https://github.com/kevinjeremia"

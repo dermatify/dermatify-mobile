@@ -1,52 +1,58 @@
-/*package com.bangkit.android.dermatify.ui.adapter
+package com.bangkit.android.dermatify.ui.adapter
 
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bangkit.android.dermatify.R
+import com.bangkit.android.dermatify.data.remote.response.ArticlesItem
+import com.bangkit.android.dermatify.databinding.ItemRowLearnBinding
+import com.bangkit.android.dermatify.util.loadImg
+import com.bumptech.glide.Glide
 
-class ListArticleAdapter(private val listArticle: ArrayList<Article>) : RecyclerView.Adapter<ListArticleAdapter.ListViewHolder>() {
-    private lateinit var onItemClickCallback: OnItemClickCallback
-
-    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
-        this.onItemClickCallback = onItemClickCallback
-    }
-
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): ListViewHolder {
-        val view: View =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_row_learn, parent, false)
-        return ListViewHolder(view)
-    }
-
-    override fun getItemCount(): Int = listArticle.size
-
-    override fun onBindViewHolder(holder: ListArticleAdapter.ListViewHolder, position: Int) {
-        val (title, subtitle, thumbnail) = ListAdapter[position]
-        holder.ivLearnThumbnail.setImageResource(thumbnail)
-        holder.tvLearnTitle.text = title
-        holder.tvLearnSubtitle.text = subtitle
-        holder.itemView.setOnClickListener {
-            onItemClickCallback.onItemClicked(listArticle[holder.adapterPosition])
+class ListArticleAdapter(private val tabType: String, val newList: List<ArticlesItem>? = null) : RecyclerView.Adapter<ListArticleAdapter.ListViewHolder>() {
+    inner class ListViewHolder(private val binding: ItemRowLearnBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(position: Int) {
+            if (newList != null) {
+                binding.apply {
+                    cardView.setOnClickListener {
+                        val webpage: Uri = Uri.parse(newList[position].newsUrl)
+                        val intent = Intent(Intent.ACTION_VIEW, webpage)
+                        cardView.context.startActivity(intent)
+                    }
+                    ivLearnThumbnail.loadImg(newList[position].imgUrl!!)
+                    tvLearnTitle.text = newList[position].title!!.trim()
+                    tvLearnSubtitle.text = newList[position].description!!.trim()
+                }
+            }
         }
-
     }
 
-    interface OnItemClickCallback {
-        fun onItemClicked(data: Article)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
+        return ListViewHolder(
+            ItemRowLearnBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
-    class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val ivLearnThumbnail: ImageView = itemView.findViewById(R.id.iv_learn_thumbnail)
-        val tvLearnTitle: TextView = itemView.findViewById(R.id.tv_learn_title)
-        val tvLearnSubtitle: TextView = itemView.findViewById(R.id.tv_learn_subtitle)
+    override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
+        holder.bind(position)
+    }
+
+    override fun getItemCount(): Int {
+        return when (tabType) {
+            LISTLEARN -> 10
+            else -> 0
+        }
+    }
+
+    companion object {
+        const val LISTLEARN = "LIST_LEARN"
     }
 }
 
- */
