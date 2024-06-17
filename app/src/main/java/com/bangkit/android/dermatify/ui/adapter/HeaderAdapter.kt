@@ -1,12 +1,18 @@
 package com.bangkit.android.dermatify.ui.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bangkit.android.dermatify.databinding.ItemHeaderHomeBinding
 
-class HeaderAdapter(private val tabType: String, private val navController: NavController? = null) : RecyclerView.Adapter<HeaderViewHolder>() {
+class HeaderAdapter(
+    private val tabType: String,
+    private val navController: NavController? = null,
+    private val context: Context,
+    var name: String = "",
+    var userPic: String = "") : RecyclerView.Adapter<HeaderViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HeaderViewHolder {
         return if (tabType == HeaderAdapter.HOME) {
@@ -16,7 +22,10 @@ class HeaderAdapter(private val tabType: String, private val navController: NavC
                     parent,
                     false
                 ),
-                navController!!
+                navController!!,
+                context,
+                name,
+                userPic
             )
 
         } else {
@@ -26,14 +35,21 @@ class HeaderAdapter(private val tabType: String, private val navController: NavC
                     parent,
                     false
                 ),
-                navController!!
+                navController!!,
+                context,
+                name,
+                userPic
             )
         }
     }
 
     override fun onBindViewHolder(holder: HeaderViewHolder, position: Int) {
-        (holder as HeaderViewHolder.HomeHeaderViewHolder).bind()
+        if (holder is HeaderViewHolder.HomeHeaderViewHolder) {
+            holder.bind()
+        }
+
     }
+
 
     override fun getItemCount(): Int = 1
 

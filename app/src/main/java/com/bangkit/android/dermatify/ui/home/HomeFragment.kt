@@ -3,14 +3,17 @@ package com.bangkit.android.dermatify.ui.home
 import android.graphics.Color
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bangkit.android.dermatify.R
+import com.bangkit.android.dermatify.data.remote.response.ApiResponse
 import com.bangkit.android.dermatify.databinding.FragmentHomeBinding
 import com.bangkit.android.dermatify.ui.adapter.ArticlesAdapter
 import com.bangkit.android.dermatify.ui.adapter.HeaderAdapter
@@ -23,6 +26,12 @@ class HomeFragment : Fragment() {
     private lateinit var homeHeaderAdapter: HeaderAdapter
     private lateinit var articlesAdapter: ArticlesAdapter
     private lateinit var concatAdapter: ConcatAdapter
+
+    private var userName = ""
+
+    private val homeViewModel by activityViewModels<HomeViewModel> {
+        ViewModelFactory.getInstance(requireActivity().application)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +61,9 @@ class HomeFragment : Fragment() {
     }
 
     private fun initUI() {
-        homeHeaderAdapter = HeaderAdapter(HeaderAdapter.HOME, findNavController())
+        initUserNameObserver()
+        initUserPicObserver()
+        homeHeaderAdapter = HeaderAdapter(HeaderAdapter.HOME, findNavController(), requireContext(), userName)
         articlesAdapter = ArticlesAdapter(ArticlesAdapter.HIGHLIGHTS)
         concatAdapter = ConcatAdapter(homeHeaderAdapter, articlesAdapter)
         binding.apply {
@@ -61,8 +72,40 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun setupHeaderRV() {
-        homeHeaderAdapter = HeaderAdapter(HeaderAdapter.HOME, findNavController())
+    private fun initUserNameObserver() {
+        homeViewModel.getUserName().observe(viewLifecycleOwner) {
+            removeAdapterFromConcat()
+            homeHeaderAdapter.name = it
+            addAdapterToConcat()
+            concatAdapter.notifyDataSetChanged()
+            Log.d("Cilukba", "dalam observe $it")
+        }
     }
+
+    private fun initUserPicObserver() {
+        homeViewModel.getUserPic().observe(viewLifecycleOwner) {
+            removeAdapterFromConcat()
+            homeHeaderAdapter.userPic = it
+            addAdapterToConcat()
+            concatAdapter.notifyDataSetChanged()
+            Log.d("Cilukba", "observing profpic $it")
+        }
+    }
+
+    private fun removeAdapterFromConcat() {
+        concatAdapter.removeAdapter(homeHeaderAdapter)
+        concatAdapter.removeAdapter(articlesAdapter)
+    }
+
+    private fun addAdapterToConcat() {
+        concatAdapter.addAdapter(homeHeaderAdapter)
+        concatAdapter.addAdapter(articlesAdapter)
+    }
+
+//    private fun setupHeaderRV() {
+//        homeHeaderAdapter = HeaderAdapter(HeaderAdapter.HOME, findNavController())
+//    }
+
+
 
 }

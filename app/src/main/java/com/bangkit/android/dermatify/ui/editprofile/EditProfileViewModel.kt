@@ -7,7 +7,11 @@ import com.bangkit.android.dermatify.data.repository.UserRepository
 import com.bangkit.android.dermatify.di.Injection
 
 class EditProfileViewModel(private val userRepository: UserRepository) : ViewModel() {
-    fun saveUpdate(newUserName: String = "", newPic: String = "") = userRepository.saveUpdateProfile(newUserName, newPic)
+    fun saveUpdateName(newUserName: String) = userRepository.updateUserName(newUserName)
+    fun saveUpdatePic(newUserPic: String) = userRepository.updateUserPic(newUserPic)
+    fun updateUserProfileRemotely(name: String) = userRepository.updateUserProfile(name)
+    fun renewAccessToken() = userRepository.renewAccessToken()
+
 }
 
 class ViewModelFactory private constructor(private val userRepository: UserRepository) : ViewModelProvider.Factory {

@@ -29,7 +29,7 @@
     <string name="continue_w_google">Continue with Google</string>
     <string name="create_acc">Create an account</string>
     <string name="lottie_assets_name">\@drawable/placeholder_onboarding_illus</string>
-    <string name="hi_name_home_header">Hi, John Doe!</string>
+    <string name="hi_name_home_header">Hi, %1$s!</string>
     <string name="cd_emoji_of_waving_hand">Emoji of waving hand</string>
     <string name="cd_user_profile_picture">User profile picture</string>
     <string name="home_cta_header_title">Have you checked\nyour facial skin today?</string>
@@ -57,6 +57,8 @@
     <string name="article_subtitle" translatable="false">Article Subtitle</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="change_profile_photo">Change profile photo</string>
+    <string name="select_from_gallery">Select photo from gallery</string>
+    <string name="remove_photo">Remove profile picture</string>
     <string name="edit_profile_button">Edit profile button</string>
     <string name="save">Save</string>
     <string name="change_language_title">Change Language</string>

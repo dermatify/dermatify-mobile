@@ -1,6 +1,7 @@
 package com.bangkit.android.dermatify.data.remote.response
 
 data class LoginResponse(
+    val name: String,
     val refreshToken: String,
     val accessToken: String
 )
@@ -16,6 +17,10 @@ data class LogoutResponse(
 data class RenewResponse(
     val message: String,
     val accessToken: String
+)
+
+data class UpdateUserProfileResponse(
+    val name: String
 )
 
 data class ErrorResponse(
