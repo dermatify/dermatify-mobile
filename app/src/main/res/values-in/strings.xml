@@ -29,7 +29,7 @@
     <string name="continue_w_google">Continue with Google</string>
     <string name="create_acc">Create an account</string>
     <string name="lottie_assets_name">\@drawable/placeholder_onboarding_illus</string>
-    <string name="hi_name_home_header">Hai, John Doe!</string>
+    <string name="hi_name_home_header">Hai, %1$s!</string>
     <string name="cd_emoji_of_waving_hand">Emoji of waving hand</string>
     <string name="cd_user_profile_picture">User profile picture</string>
     <string name="home_cta_header_title">Have you checked\nyour facial skin today?</string>
@@ -78,4 +78,6 @@
     <string name="hint_month">Month</string>
     <string name="hint_week">Week</string>
     <string name="title_journey">Scan History</string>
+    <string name="select_from_gallery">Select photo from gallery</string>
+    <string name="remove_photo">Remove profile picture</string>
 </resources>

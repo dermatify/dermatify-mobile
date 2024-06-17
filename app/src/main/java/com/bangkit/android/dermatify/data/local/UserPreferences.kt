@@ -54,6 +54,12 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
         }
     }
 
+    suspend fun removeAll() {
+        dataStore.edit { prefs ->
+            prefs.clear()
+        }
+    }
+
     suspend fun removePic() {
         dataStore.edit { prefs ->
             prefs.remove(USER_PIC_KEY)
@@ -88,6 +94,12 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
     suspend fun saveEmail(email: String) {
         dataStore.edit { prefs ->
             prefs[USER_EMAIL_KEY] = email
+        }
+    }
+
+    suspend fun saveUserName(name: String) {
+        dataStore.edit { prefs ->
+            prefs[USER_NAME_KEY] = name
         }
     }
 

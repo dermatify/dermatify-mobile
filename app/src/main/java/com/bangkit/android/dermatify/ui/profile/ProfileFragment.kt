@@ -17,6 +17,7 @@ import com.bangkit.android.dermatify.util.gone
 import com.bangkit.android.dermatify.util.invisible
 import com.bangkit.android.dermatify.util.setUriToImageView
 import com.bangkit.android.dermatify.util.showSnackbar
+import com.bangkit.android.dermatify.util.uriToFile
 import com.bangkit.android.dermatify.util.visible
 
 
@@ -31,7 +32,6 @@ class ProfileFragment : Fragment() {
     private var userEmail = ""
     private var userName = ""
     private var userProfilePic = ""
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,15 +70,24 @@ class ProfileFragment : Fragment() {
             }
 
             profileViewModel.getUserPic().observe(viewLifecycleOwner) { userPic ->
-                Log.d("Cilukba", "$userPic")
-                if (userPic.isEmpty()) {
-                    ivProfilePicPh.invisible()
-                    ivProfile.visible()
-                } else {
-                    ivProfilePicPh.visible()
-                    ivProfile.invisible()
+                Log.d("Cilukba", "userpic: $userPic")
+//                val picFile = Uri.parse(userPic)?.uriToFile(requireContext()) ?: null
+//                if (userPic.isEmpty()) {
+//                    ivProfilePicPh.invisible()
+//                    ivProfile.visible()
+//                } else if (!Uri.parse(userPic).uriToFile(requireContext()).exists()) {
+//                    ivProfilePicPh.invisible()
+//                    ivProfile.visible()
+//                } else {
+//                    ivProfilePicPh.visible()
+//                    ivProfile.invisible()
+//                    ivProfilePicPh.setUriToImageView(Uri.parse(userPic))
+//                    userProfilePic = userPic
+//                }
+                if (userPic.isNotEmpty()) {
                     ivProfilePicPh.setUriToImageView(Uri.parse(userPic))
                     userProfilePic = userPic
+                    ivProfilePicPh.visible()
                 }
             }
 
@@ -164,7 +173,9 @@ class ProfileFragment : Fragment() {
                         }
                     }
                 }
-                is ApiResponse.Success -> { }
+                is ApiResponse.Success -> {
+                    profileViewModel.logout()
+                }
                 is ApiResponse.Loading -> { }
             }
         }

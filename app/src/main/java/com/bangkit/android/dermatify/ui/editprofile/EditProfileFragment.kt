@@ -13,11 +13,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
+import androidx.core.os.LocaleListCompat
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bangkit.android.dermatify.R
+import com.bangkit.android.dermatify.data.remote.response.ApiResponse
 import com.bangkit.android.dermatify.databinding.FragmentEditProfileBinding
 import com.bangkit.android.dermatify.util.convertUriToString
 import com.bangkit.android.dermatify.util.invisible
@@ -25,6 +28,7 @@ import com.bangkit.android.dermatify.util.setUriToImageView
 import com.bangkit.android.dermatify.util.showSnackbar
 import com.bangkit.android.dermatify.util.uriToFile
 import com.bangkit.android.dermatify.util.visible
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.io.File
 import java.io.FileOutputStream
 
@@ -48,9 +52,12 @@ class EditProfileFragment : Fragment() {
         ActivityResultContracts.PickVisualMedia()
     ) { uri: Uri? ->
         if (uri != null) {
-            val file = uri.uriToFile(requireContext())
-            val fileUri = Uri.fromFile(file)
-            userProfilePic = fileUri
+            if (newPic.isNotEmpty() && newPic != "removed") {
+                deletePic(newPic)
+            }
+
+
+            userProfilePic = uri
             newPic = userProfilePic.convertUriToString()
             Log.d("Cilukba", "newPic: $newPic")
             binding.apply {
@@ -86,12 +93,10 @@ class EditProfileFragment : Fragment() {
             tvEmail.text = userEmail
             edEditName.text = Editable.Factory.getInstance().newEditable(userName)
 
+            Log.d("Cilukba", "isempty userpic: ${oldPic}")
             if (oldPic.isNotEmpty()) {
                 ivProfilePicPh.setUriToImageView(userProfilePic)
-                ivProfile.invisible()
                 ivProfilePicPh.visible()
-            }  else {
-                ivProfile.visible()
             }
 
             topbar.setNavigationOnClickListener {
@@ -99,10 +104,27 @@ class EditProfileFragment : Fragment() {
             }
 
             btnChangeProfilePic.setOnClickListener {
-                if (newPic.isNotEmpty()) {
-                    deletePic(newPic)
-                }
-                startGallery()
+                MaterialAlertDialogBuilder(requireContext(), R.style.EditProfile_MaterialAlertDialog)
+                    .setTitle(getString(R.string.change_profile_photo))
+                    .setNegativeButton(getString(R.string.remove_photo)) { dialog, _ ->
+                        if (newPic.isNotEmpty() && newPic != "removed") {
+                            ivProfilePicPh.setImageURI(null)
+                            deletePic(newPic)
+                            newPic = "removed"
+                            oldPic = "removed"
+                            ivProfile.visible()
+                            ivProfilePicPh.invisible()
+                        } else if (oldPic.isNotEmpty() && oldPic != "removed"){
+                            ivProfilePicPh.setImageURI(null)
+                            newPic = "removed"
+                            ivProfile.visible()
+                            ivProfilePicPh.invisible()
+                        }
+                    }
+                    .setPositiveButton(getString(R.string.select_from_gallery)) { dialog, _ ->
+                        startGallery()
+                    }
+                    .show()
             }
 
             edEditName.addTextChangedListener(object : TextWatcher {
@@ -124,13 +146,28 @@ class EditProfileFragment : Fragment() {
 
             btnSave.setOnClickListener {
                 val name = edEditName.text.toString()
+
+                if (newPic != oldPic && newPic.isNotEmpty() && newPic != "removed") {
+                    val file = userProfilePic?.uriToFile(requireContext())
+                    val fileUri = Uri.fromFile(file)
+                    userProfilePic = fileUri
+                    newPic = userProfilePic.convertUriToString()
+                }
+
                 Log.d("Cilukba", "${userProfilePic.toString()} $newPic")
                 if (edEditName.error != null || name.isEmpty()) {
                     root.showSnackbar(getString(R.string.name_error), "error", btnSave)
-                } else if (userName != name || oldPic != newPic){
-                    editProfileViewModel.saveUpdate(name, newPic)
+                } else if (userName != name) {
+                    editProfileViewModel.saveUpdateName(name)
+                    initObserverUpdateUserProfile(name)
+                }
+
+
+                if (oldPic != newPic && newPic.isNotEmpty()){
+                    editProfileViewModel.saveUpdatePic(newPic)
+                    initObserverUpdateUserProfile(name)
                     deletePic(oldPic)
-                    root.showSnackbar(getString(R.string.profile_success), "success", btnSave)
+                } else if (oldPic.isEmpty() || newPic.isEmpty() || name.isNotEmpty()){
                     findNavController().popBackStack()
                 }
             }
@@ -164,6 +201,62 @@ class EditProfileFragment : Fragment() {
 
     private fun startGallery() {
         launcherGallery.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+    }
+
+    private fun initObserverUpdateUserProfile(name: String) {
+        editProfileViewModel.updateUserProfileRemotely(name).observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is ApiResponse.Success -> {
+                    binding.apply {
+                        root.showSnackbar(
+                            getString(R.string.profile_success),
+                            "success",
+                            btnSave
+                        )
+                    }
+                    findNavController().popBackStack()
+                    Log.d("Cilukba", result.data.name)
+                }
+                is ApiResponse.Error -> {
+                    binding.apply {
+                        val msg = getString(R.string.error_occured)
+                        root.showSnackbar(
+                            message = msg,
+                            type = "error",
+                            anchorView = btnSave
+                        )
+                    }
+                    initRenewObserver(name)
+                    editProfileViewModel.renewAccessToken()
+                }
+                is ApiResponse.Loading -> {
+
+                }
+            }
+        }
+    }
+
+    private fun initRenewObserver(name: String) {
+        editProfileViewModel.renewAccessToken().observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is ApiResponse.Error -> {
+                    if (result.errorMsg == "Seems you lost your connection. Please try again") {
+                        val msg = getString(R.string.network_lost)
+                        binding.apply {
+                            root.showSnackbar(
+                                message = msg,
+                                type = "error",
+                                anchorView = btnSave
+                            )
+                        }
+                    }
+                }
+                is ApiResponse.Success -> {
+                    editProfileViewModel.updateUserProfileRemotely(name)
+                }
+                is ApiResponse.Loading -> { }
+            }
+        }
     }
 
 }

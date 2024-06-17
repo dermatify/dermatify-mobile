@@ -4,9 +4,11 @@ import com.bangkit.android.dermatify.data.remote.response.LoginResponse
 import com.bangkit.android.dermatify.data.remote.response.LogoutResponse
 import com.bangkit.android.dermatify.data.remote.response.RegisterResponse
 import com.bangkit.android.dermatify.data.remote.response.RenewResponse
+import com.bangkit.android.dermatify.data.remote.response.UpdateUserProfileResponse
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
+import retrofit2.http.PUT
 
 interface ApiService {
     @FormUrlEncoded
@@ -24,17 +26,14 @@ interface ApiService {
         @Field("password") password: String
     ): RegisterResponse
 
-    @FormUrlEncoded
     @POST("auth/logout")
-    suspend fun logout(
-        @Field("email") email: String,
-        @Field("accessToken") accessToken: String
-    ): LogoutResponse
+    suspend fun logout(): LogoutResponse
+    @POST("auth/renew")
+    suspend fun renewAccessToken(): RenewResponse
 
     @FormUrlEncoded
-    @POST("auth/renew")
-    suspend fun renewAccessToken(
-        @Field("email") email: String,
-        @Field("refreshToken") refreshToken: String
-    ): RenewResponse
+    @PUT("user/profile")
+    suspend fun updateUserProfile(
+        @Field("name") name: String
+    ): UpdateUserProfileResponse
 }
