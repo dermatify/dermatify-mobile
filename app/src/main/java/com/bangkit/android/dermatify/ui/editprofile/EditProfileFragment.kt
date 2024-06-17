@@ -92,7 +92,6 @@ class EditProfileFragment : Fragment() {
                 ivProfilePicPh.visible()
             }  else {
                 ivProfile.visible()
-                ivProfilePicPh.invisible()
             }
 
             topbar.setNavigationOnClickListener {
@@ -100,6 +99,9 @@ class EditProfileFragment : Fragment() {
             }
 
             btnChangeProfilePic.setOnClickListener {
+                if (newPic.isNotEmpty()) {
+                    deletePic(newPic)
+                }
                 startGallery()
             }
 
@@ -123,16 +125,27 @@ class EditProfileFragment : Fragment() {
             btnSave.setOnClickListener {
                 val name = edEditName.text.toString()
                 Log.d("Cilukba", "${userProfilePic.toString()} $newPic")
-                if (edEditName.error != null) {
+                if (edEditName.error != null || name.isEmpty()) {
                     root.showSnackbar(getString(R.string.name_error), "error", btnSave)
                 } else if (userName != name || oldPic != newPic){
                     editProfileViewModel.saveUpdate(name, newPic)
+                    deletePic(oldPic)
                     root.showSnackbar(getString(R.string.profile_success), "success", btnSave)
                     findNavController().popBackStack()
                 }
             }
 
 
+        }
+    }
+    private fun deletePic(pic: String) {
+        if (pic.isNotEmpty()) {
+            val fileUri = Uri.parse(pic)
+            val file = fileUri.path?.let { File(it) }
+            val deleted = file?.delete()
+            if (deleted != null && deleted) {
+                Log.d("Cilukba", "delete $pic success")
+            }
         }
     }
 
