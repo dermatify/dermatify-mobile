@@ -17,6 +17,7 @@ import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.util.UUID
 import kotlin.random.Random
 
 private const val FILENAME_FORMAT = "yyyyMMdd_HHmmss"
@@ -30,9 +31,8 @@ fun Uri?.convertUriToString(): String {
 
 // Uri to File
 fun Uri.uriToFile(context: Context): File {
-    val randomInt = Random.nextInt(0, 69)
     val inputStream = context.contentResolver.openInputStream(this)
-    val file = File(context.cacheDir, "profilePic_$randomInt $timeStamp.jpg")
+    val file = File(context.cacheDir, "profilePic_${UUID.randomUUID()}_$timeStamp.jpg")
     val outputStream = FileOutputStream(file)
     inputStream?.copyTo(outputStream)
     inputStream?.close()
