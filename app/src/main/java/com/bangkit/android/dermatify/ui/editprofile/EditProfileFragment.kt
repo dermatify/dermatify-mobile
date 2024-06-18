@@ -17,12 +17,14 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.core.os.LocaleListCompat
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.MediatorLiveData
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bangkit.android.dermatify.R
 import com.bangkit.android.dermatify.data.remote.response.ApiResponse
 import com.bangkit.android.dermatify.databinding.FragmentEditProfileBinding
 import com.bangkit.android.dermatify.util.convertUriToString
+import com.bangkit.android.dermatify.util.gone
 import com.bangkit.android.dermatify.util.invisible
 import com.bangkit.android.dermatify.util.setUriToImageView
 import com.bangkit.android.dermatify.util.showSnackbar
@@ -44,9 +46,11 @@ class EditProfileFragment : Fragment() {
 
     private var userEmail = ""
     private var userName = ""
+    private var newName = ""
     private var userProfilePic: Uri? = null
     private var newPic: String = ""
     private var oldPic: String = ""
+    private var isChanged: Boolean = false
 
     private val launcherGallery = registerForActivityResult(
         ActivityResultContracts.PickVisualMedia()
@@ -55,7 +59,6 @@ class EditProfileFragment : Fragment() {
             if (newPic.isNotEmpty() && newPic != "removed") {
                 deletePic(newPic)
             }
-
 
             userProfilePic = uri
             newPic = userProfilePic.convertUriToString()
@@ -71,8 +74,7 @@ class EditProfileFragment : Fragment() {
         super.onCreate(savedInstanceState)
         requireActivity().window.statusBarColor = activity?.getColor(R.color.primary_blue) ?: Color.TRANSPARENT
         requireActivity().window.navigationBarColor = activity?.getColor(R.color.primary_blue) ?: Color.TRANSPARENT
-
-    }
+   }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -83,6 +85,8 @@ class EditProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initObserverUpdateUserProfile()
+        initRenewObserver()
         initUI()
     }
 
@@ -145,7 +149,7 @@ class EditProfileFragment : Fragment() {
             })
 
             btnSave.setOnClickListener {
-                val name = edEditName.text.toString()
+                newName = edEditName.text.toString()
 
                 if (newPic != oldPic && newPic.isNotEmpty() && newPic != "removed") {
                     val file = userProfilePic?.uriToFile(requireContext())
@@ -154,25 +158,27 @@ class EditProfileFragment : Fragment() {
                     newPic = userProfilePic.convertUriToString()
                 }
 
-                Log.d("Cilukba", "${userProfilePic.toString()} $newPic")
-                if (edEditName.error != null || name.isEmpty()) {
+                if (edEditName.error != null || newName.isEmpty()) {
                     root.showSnackbar(getString(R.string.name_error), "error", btnSave)
-                } else if (userName != name) {
-                    editProfileViewModel.saveUpdateName(name)
-                    initObserverUpdateUserProfile(name)
+                } else if (userName != newName) {
+                    isChanged = true
+                    editProfileViewModel.saveUpdateName(newName)
                 }
 
 
                 if (oldPic != newPic && newPic.isNotEmpty()){
+                    isChanged = true
                     editProfileViewModel.saveUpdatePic(newPic)
-                    initObserverUpdateUserProfile(name)
                     deletePic(oldPic)
-                } else if (oldPic.isEmpty() || newPic.isEmpty() || name.isNotEmpty()){
+                }
+
+                if (isChanged) {
+                    Log.d("Cilukba", "Profile is changed")
+                    editProfileViewModel.updateUserProfileRemotely(userName)
+                } else {
                     findNavController().popBackStack()
                 }
             }
-
-
         }
     }
     private fun deletePic(pic: String) {
@@ -203,8 +209,9 @@ class EditProfileFragment : Fragment() {
         launcherGallery.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
     }
 
-    private fun initObserverUpdateUserProfile(name: String) {
-        editProfileViewModel.updateUserProfileRemotely(name).observe(viewLifecycleOwner) { result ->
+    private fun initObserverUpdateUserProfile() {
+        editProfileViewModel.updateProfileResponse.observe(viewLifecycleOwner) { result ->
+            Log.d("Cilukba", "update result obs init: $result")
             when (result) {
                 is ApiResponse.Success -> {
                     binding.apply {
@@ -215,29 +222,47 @@ class EditProfileFragment : Fragment() {
                         )
                     }
                     findNavController().popBackStack()
-                    Log.d("Cilukba", result.data.name)
+                    Log.d("Cilukba", "save remote success ${result.data.toString()}")
                 }
                 is ApiResponse.Error -> {
-                    binding.apply {
-                        val msg = getString(R.string.error_occured)
-                        root.showSnackbar(
-                            message = msg,
-                            type = "error",
-                            anchorView = btnSave
-                        )
+                    if (result.errorMsg == "Invalid token!") {
+                        Log.d("Cilukba", "Invalid token: Renew token")
+                        editProfileViewModel.renewAccessToken()
+                    } else {
+                        val msg = if (result.errorMsg == "Seems you lost your connection. Please try again") {
+                            getString(R.string.network_lost)
+                        } else {
+                            getString(R.string.error_occured)
+                        }
+                        binding.apply {
+                            root.showSnackbar(
+                                message = msg,
+                                type = "error",
+                                anchorView = btnSave
+                            )
+                            btnSave.isEnabled = true
+                            progbarSave.gone()
+                        }
                     }
-                    initRenewObserver(name)
+
+
                     editProfileViewModel.renewAccessToken()
+                    Log.d("Cilukba", "Save Error: ${result.errorMsg}")
                 }
                 is ApiResponse.Loading -> {
-
+                    binding.apply {
+                        btnSave.isEnabled = false
+                        progbarSave.visible()
+                    }
                 }
+                null -> { }
             }
         }
     }
 
-    private fun initRenewObserver(name: String) {
-        editProfileViewModel.renewAccessToken().observe(viewLifecycleOwner) { result ->
+    private fun initRenewObserver() {
+        editProfileViewModel.renewTokenResponse.observe(viewLifecycleOwner) { result ->
+            Log.d("Cilukba", "renew editprof obs init: $result")
             when (result) {
                 is ApiResponse.Error -> {
                     if (result.errorMsg == "Seems you lost your connection. Please try again") {
@@ -250,11 +275,14 @@ class EditProfileFragment : Fragment() {
                             )
                         }
                     }
+                    Log.d("Cilukba", "Renew Error: ${result.errorMsg}")
                 }
                 is ApiResponse.Success -> {
-                    editProfileViewModel.updateUserProfileRemotely(name)
+                    Log.d("Cilukba", "Renew Success: ${result.data}")
+                    editProfileViewModel.updateUserProfileRemotely(userName)
                 }
                 is ApiResponse.Loading -> { }
+                null -> { }
             }
         }
     }

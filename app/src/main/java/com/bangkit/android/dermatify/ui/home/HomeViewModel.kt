@@ -1,6 +1,7 @@
 package com.bangkit.android.dermatify.ui.home
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -24,6 +25,7 @@ class HomeViewModel(
         fetchArticles()
     }
     fun fetchArticles() = _articles.addSource(articlesRepository.fetchArticles()) { response ->
+        Log.d("Cilukba", "update result = $response")
         _articles.value = response
     }
     fun getUserName() = userRepository.getUserName().asLiveData()

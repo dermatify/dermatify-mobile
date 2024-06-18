@@ -3,6 +3,7 @@ package com.bangkit.android.dermatify.ui.profile
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asFlow
@@ -16,13 +17,28 @@ import kotlinx.coroutines.launch
 
 class ProfileViewModel(private val userRepository: UserRepository) : ViewModel() {
 
+    private val _logoutResponse = MediatorLiveData<ApiResponse<*>?>()
+    val logoutResponse: LiveData<ApiResponse<*>?> = _logoutResponse
+
+    private val _renewTokenResponse = MediatorLiveData<ApiResponse<*>?>()
+    val renewTokenResponse: LiveData<ApiResponse<*>?> = _renewTokenResponse
+
     fun getEmail() = userRepository.getUserEmail().asLiveData()
+
     fun getUserPic() = userRepository.getUserPic().asLiveData()
+
     fun getUserName() = userRepository.getUserName().asLiveData()
 
-    fun logout() = userRepository.logout()
 
-    fun renewAccessToken() = userRepository.renewAccessToken()
+    fun logout() = _logoutResponse.addSource(userRepository.logout()) { response ->
+        _logoutResponse.value = response
+        _logoutResponse.value = null
+    }
+
+    fun renewAccessToken() = _renewTokenResponse.addSource(userRepository.renewAccessToken()) { response ->
+        _renewTokenResponse.value = response
+        _renewTokenResponse.value = null
+    }
 
 
 }

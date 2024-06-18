@@ -75,11 +75,11 @@ class UserRepository private constructor(
             emit(ApiResponse.Success(successResponse))
         } catch (e: HttpException) {
             val errorBody = e.response()?.errorBody()?.string()
-            Log.d("Cilukba", "save ${errorBody}")
+            Log.d("Cilukba", "save update error ${errorBody}")
             val errorResponse = Gson().fromJson(errorBody, ErrorResponse::class.java)
             emit(ApiResponse.Error(errorResponse.message))
         } catch (e: Exception) {
-            Log.d("Cilukba", "save update ${e.message}")
+            Log.d("Cilukba", "save update error ${e.message}")
             val errorMessage = if (e.message?.contains("Unable to resolve host", ignoreCase = true) == true) {
                 "Seems you lost your connection. Please try again"
             } else {
