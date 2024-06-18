@@ -49,6 +49,8 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupUI()
+        initLogoutObserver()
+        initRenewObserver()
     }
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
@@ -71,19 +73,6 @@ class ProfileFragment : Fragment() {
 
             profileViewModel.getUserPic().observe(viewLifecycleOwner) { userPic ->
                 Log.d("Cilukba", "userpic: $userPic")
-//                val picFile = Uri.parse(userPic)?.uriToFile(requireContext()) ?: null
-//                if (userPic.isEmpty()) {
-//                    ivProfilePicPh.invisible()
-//                    ivProfile.visible()
-//                } else if (!Uri.parse(userPic).uriToFile(requireContext()).exists()) {
-//                    ivProfilePicPh.invisible()
-//                    ivProfile.visible()
-//                } else {
-//                    ivProfilePicPh.visible()
-//                    ivProfile.invisible()
-//                    ivProfilePicPh.setUriToImageView(Uri.parse(userPic))
-//                    userProfilePic = userPic
-//                }
                 if (userPic.isNotEmpty()) {
                     ivProfilePicPh.setUriToImageView(Uri.parse(userPic))
                     userProfilePic = userPic
@@ -112,13 +101,14 @@ class ProfileFragment : Fragment() {
             }
 
             btnLogout.setOnClickListener {
-                initLogoutObserver()
+                profileViewModel.logout()
             }
         }
     }
 
     private fun initLogoutObserver() {
-        profileViewModel.logout().observe(viewLifecycleOwner) { result ->
+        profileViewModel.logoutResponse.observe(viewLifecycleOwner) { result ->
+            Log.d("Cilukba", "logout obs init: $result")
             when (result) {
                 is ApiResponse.Loading -> {
                     binding.apply {
@@ -131,8 +121,8 @@ class ProfileFragment : Fragment() {
                 }
                 is ApiResponse.Error -> {
                     if (result.errorMsg == "Invalid token!") {
-                        Log.d("Cilukba", "Renew token")
-                        initRenewObserver()
+                        Log.d("Cilukba", "Invalid token: Renew token")
+                        profileViewModel.renewAccessToken()
                     } else {
                         val msg = if (result.errorMsg == "Seems you lost your connection. Please try again") {
                             getString(R.string.network_lost)
@@ -152,12 +142,14 @@ class ProfileFragment : Fragment() {
                         progbarLogout.gone()
                     }
                 }
+                null -> { }
             }
         }
     }
 
     private fun initRenewObserver() {
-        profileViewModel.renewAccessToken().observe(viewLifecycleOwner) { result ->
+        profileViewModel.renewTokenResponse.observe(viewLifecycleOwner) { result ->
+            Log.d("Cilukba", "renew profile obs init: $result")
             when (result) {
                 is ApiResponse.Error -> {
                     if (result.errorMsg.contains("Logout")) {
@@ -177,6 +169,7 @@ class ProfileFragment : Fragment() {
                     profileViewModel.logout()
                 }
                 is ApiResponse.Loading -> { }
+                null -> { }
             }
         }
     }

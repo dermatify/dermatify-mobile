@@ -43,7 +43,7 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
 
     fun getRefreshToken(): Flow<String> {
         return dataStore.data.map { prefs ->
-            prefs[ACCESS_TOKEN_KEY] ?: ""
+            prefs[REFRESH_TOKEN_KEY] ?: ""
         }
     }
 

@@ -51,6 +51,9 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initUserNameObserver()
+        initUserPicObserver()
+        initArticlesObserver()
         initUI()
     }
 
@@ -63,9 +66,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun initUI() {
-        initUserNameObserver()
-        initUserPicObserver()
-        initArticlesObserver()
         homeHeaderAdapter = HeaderAdapter(HeaderAdapter.HOME, findNavController(), requireContext(), userName)
         articlesAdapter = ArticlesAdapter(ArticlesAdapter.HIGHLIGHTS, context = requireContext())
         concatAdapter = ConcatAdapter(homeHeaderAdapter, articlesAdapter)
