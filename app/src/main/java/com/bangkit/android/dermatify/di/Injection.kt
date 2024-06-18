@@ -5,6 +5,7 @@ import android.util.Log
 import com.bangkit.android.dermatify.data.local.UserPreferences
 import com.bangkit.android.dermatify.data.local.userDataStore
 import com.bangkit.android.dermatify.data.remote.retrofit.ApiConfig
+import com.bangkit.android.dermatify.data.repository.ArticlesRepository
 import com.bangkit.android.dermatify.data.repository.UserRepository
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -23,5 +24,10 @@ object Injection {
         }
         val apiServiceRT = ApiConfig.getApiService(refreshToken)
         return UserRepository.getInstance(apiServiceAT, apiServiceRT, userDataStore)
+    }
+
+    fun provideArticlesRepository(): ArticlesRepository {
+        val apiService = ApiConfig.getApiService("")
+        return ArticlesRepository.getInstance(apiService)
     }
 }

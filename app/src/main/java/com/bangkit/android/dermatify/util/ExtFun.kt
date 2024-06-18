@@ -85,6 +85,30 @@ fun View.showSnackbar(message: String, type: String = "", anchorView: View = thi
         .setTextColor(context.getColor(R.color.white))
         .show()
 }
+
+fun View.showSnackbarWithActionBtn(message: String, type: String = "", actionMsg: String, onClick: () -> Unit) {
+    Snackbar.make(
+        this,
+        message,
+        Snackbar.LENGTH_INDEFINITE
+    ).setBackgroundTint(
+            ContextCompat.getColor(
+                context,
+                when (type) {
+                    "success" -> R.color.green_success
+                    else -> R.color.red_error
+                }
+            )
+        )
+        .setAction(actionMsg) {
+            onClick()
+        }
+        .setAnchorView(R.id.fabBotNav)
+        .setTextColor(context.getColor(R.color.white))
+        .setActionTextColor(context.getColor(R.color.white))
+        .show()
+}
+
 fun ShimmerFrameLayout.showShimmer() {
     this.visible()
     this.startShimmer()

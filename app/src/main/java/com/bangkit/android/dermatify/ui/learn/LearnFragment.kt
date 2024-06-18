@@ -43,7 +43,7 @@ class LearnFragment : Fragment() {
     }
 
     private fun initUI() {
-        articlesAdapter = ArticlesAdapter(ArticlesAdapter.LEARN_BOT, findNavController())
+        articlesAdapter = ArticlesAdapter(ArticlesAdapter.LEARN_BOT, findNavController(), requireContext())
         listArticleAdapter = ListArticleAdapter(ListArticleAdapter.LISTLEARN)
         concatAdapter = ConcatAdapter(articlesAdapter, listArticleAdapter)
         binding.apply {

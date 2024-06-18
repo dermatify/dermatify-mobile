@@ -84,6 +84,7 @@
     <string name="credits_cta">Check freepik.com\nfor more illustrations</string>
     <string name="invalid_creds">Invalid credentials. Please check your email and password and enter it correctly</string>
     <string name="network_lost">Seems you lost your connection. Please try again</string>
+    <string name="network_lost_2">Can\'t fetch articles, seems you lost your connection.</string>
     <string name="error_occured">An error occurred. Please try again</string>
     <string name="register_success">Account successfully created</string>
     <string name="camera_permission_granted">Camera permission is granted</string>
@@ -92,4 +93,5 @@
     <string name="hint_month">Month</string>
     <string name="hint_week">Week</string>
     <string name="title_journey">Scan History</string>
+    <string name="try_again">Try again</string>
 </resources>

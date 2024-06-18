@@ -5,18 +5,18 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 data class ArticlesResponse(
-    @field:SerializedName("articles")
+    @field:SerializedName("data")
     val articles: List<ArticlesItem>
 )
 
 @Parcelize
 data class ArticlesItem(
-    @field:SerializedName("urlToImage")
-    val imgUrl: String?,
     @field:SerializedName("title")
     val title: String?,
-    @field:SerializedName("description")
-    val description: String?,
-    @field:SerializedName("url")
-    val newsUrl: String?
+    @field:SerializedName("subtitle")
+    val subtitle: String?,
+    @field:SerializedName("original_link")
+    val newsUrl: String?,
+    @field:SerializedName("thumbnail")
+    val thumbnail: String?
 ) : Parcelable
