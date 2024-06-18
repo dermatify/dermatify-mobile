@@ -14,9 +14,11 @@ import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bangkit.android.dermatify.R
 import com.bangkit.android.dermatify.data.remote.response.ApiResponse
+import com.bangkit.android.dermatify.data.remote.response.ArticlesItem
 import com.bangkit.android.dermatify.databinding.FragmentHomeBinding
 import com.bangkit.android.dermatify.ui.adapter.ArticlesAdapter
 import com.bangkit.android.dermatify.ui.adapter.HeaderAdapter
+import com.bangkit.android.dermatify.util.showSnackbarWithActionBtn
 
 class HomeFragment : Fragment() {
 
@@ -63,8 +65,9 @@ class HomeFragment : Fragment() {
     private fun initUI() {
         initUserNameObserver()
         initUserPicObserver()
+        initArticlesObserver()
         homeHeaderAdapter = HeaderAdapter(HeaderAdapter.HOME, findNavController(), requireContext(), userName)
-        articlesAdapter = ArticlesAdapter(ArticlesAdapter.HIGHLIGHTS)
+        articlesAdapter = ArticlesAdapter(ArticlesAdapter.HIGHLIGHTS, context = requireContext())
         concatAdapter = ConcatAdapter(homeHeaderAdapter, articlesAdapter)
         binding.apply {
             rvHome.layoutManager = LinearLayoutManager(context)
@@ -102,9 +105,52 @@ class HomeFragment : Fragment() {
         concatAdapter.addAdapter(articlesAdapter)
     }
 
-//    private fun setupHeaderRV() {
-//        homeHeaderAdapter = HeaderAdapter(HeaderAdapter.HOME, findNavController())
-//    }
+    private fun initArticlesObserver() {
+        homeViewModel.articles.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is ApiResponse.Success -> {
+                    Log.d("Cilukba", "fetch success")
+                    concatAdapter.removeAdapter(articlesAdapter)
+                    articlesAdapter = ArticlesAdapter(
+                        tabType = ArticlesAdapter.HIGHLIGHTS,
+                        context = requireContext(),
+                        articles = result.data as List<ArticlesItem>
+                    )
+                    concatAdapter.addAdapter(articlesAdapter)
+                    concatAdapter.notifyDataSetChanged()
+                }
+                is ApiResponse.Error -> {
+                    Log.d("Cilukba", "fetch error")
+                    concatAdapter.removeAdapter(articlesAdapter)
+                    articlesAdapter = ArticlesAdapter(
+                        tabType = ArticlesAdapter.HIGHLIGHTS,
+                        context = requireContext()
+                    )
+                    concatAdapter.addAdapter(articlesAdapter)
+                    concatAdapter.notifyDataSetChanged()
+                    binding.rvHome.showSnackbarWithActionBtn(
+                        message = getString(R.string.network_lost_2),
+                        type = "error",
+                        actionMsg = getString(R.string.try_again),
+                        onClick = {
+                            homeViewModel.fetchArticles()
+                        }
+                    )
+                }
+                is ApiResponse.Loading -> {
+                    Log.d("Cilukba", "fetch loading")
+                    concatAdapter.removeAdapter(articlesAdapter)
+                    articlesAdapter = ArticlesAdapter(
+                        tabType = ArticlesAdapter.HIGHLIGHTS,
+                        context = requireContext()
+                    )
+                    concatAdapter.addAdapter(articlesAdapter)
+                    concatAdapter.notifyDataSetChanged()
+                }
+            }
+        }
+
+    }
 
 
 

@@ -1,9 +1,6 @@
 package com.bangkit.android.dermatify.data.repository
 
-import android.net.Uri
 import android.util.Log
-import androidx.datastore.preferences.protobuf.Api
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
 import com.bangkit.android.dermatify.data.local.UserPreferences
 import com.bangkit.android.dermatify.data.remote.response.ApiResponse
@@ -14,7 +11,6 @@ import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import retrofit2.HttpException

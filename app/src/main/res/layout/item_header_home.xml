@@ -17,7 +17,7 @@
         android:text="@string/hi_name_home_header"
         android:textStyle="bold"
         android:textSize="24sp"
-        android:maxLength="15"
+        android:maxLength="24"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/iv_waving_hand"/>

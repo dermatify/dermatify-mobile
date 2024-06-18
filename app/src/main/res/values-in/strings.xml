@@ -80,4 +80,6 @@
     <string name="title_journey">Scan History</string>
     <string name="select_from_gallery">Select photo from gallery</string>
     <string name="remove_photo">Remove profile picture</string>
+    <string name="network_lost_2">Can\'t fetch articles, seems you lost your connection.</string>
+    <string name="try_again">Try again</string>
 </resources>

@@ -22,9 +22,9 @@ class ListArticleAdapter(private val tabType: String, val newList: List<Articles
                         val intent = Intent(Intent.ACTION_VIEW, webpage)
                         cardView.context.startActivity(intent)
                     }
-                    ivLearnThumbnail.loadImg(newList[position].imgUrl!!)
+                    ivLearnThumbnail.loadImg(newList[position].newsUrl!!)
                     tvLearnTitle.text = newList[position].title!!.trim()
-                    tvLearnSubtitle.text = newList[position].description!!.trim()
+                    tvLearnSubtitle.text = newList[position].subtitle!!.trim()
                 }
             }
         }
