@@ -1,6 +1,7 @@
 package com.bangkit.android.dermatify.ui.changelanguage
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
@@ -9,10 +10,14 @@ import com.bangkit.android.dermatify.data.local.SettingsPreferences
 import kotlinx.coroutines.launch
 
 class ChangeLanguageViewModel(private val prefs: SettingsPreferences) : ViewModel() {
-    var currentLocale: String = "en"
+    private val _currentLocale = MediatorLiveData<String>("en")
+    val currentLocale: LiveData<String> = _currentLocale
 
-    fun getCurrentLocale(): LiveData<String> {
-        return prefs.getCurrentLocale().asLiveData()
+    init {
+        getCurrentLocale()
+    }
+    fun getCurrentLocale() = _currentLocale.addSource(prefs.getCurrentLocale().asLiveData()) { locale ->
+        _currentLocale.value = locale
     }
 
     fun updateLocale(locale: String) {

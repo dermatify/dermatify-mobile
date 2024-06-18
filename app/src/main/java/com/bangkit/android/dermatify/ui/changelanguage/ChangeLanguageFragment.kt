@@ -2,6 +2,7 @@ package com.bangkit.android.dermatify.ui.changelanguage
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -45,6 +46,7 @@ class ChangeLanguageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initLocaleObserver()
         initUI()
     }
 
@@ -54,18 +56,8 @@ class ChangeLanguageFragment : Fragment() {
                 findNavController().popBackStack()
             }
 
-            changeLangViewModel.getCurrentLocale().observe(viewLifecycleOwner) { locale ->
-                changeLangViewModel.currentLocale = locale
-
-                if (changeLangViewModel.currentLocale == "en") {
-                    rbEnglish.isChecked = true
-                } else if (changeLangViewModel.currentLocale == "in") {
-                    rbIndo.isChecked = true
-                }
-            }
-
             rbIndo.setOnClickListener {
-                if (changeLangViewModel.currentLocale == "en") {
+                if (changeLangViewModel.currentLocale.value == "en") {
                     MaterialAlertDialogBuilder(requireContext(), R.style.ThemeOverlay_App_MaterialAlertDialog)
                         .setTitle(getString(R.string.change_language_dialog_title))
                         .setMessage(getString(R.string.change_language_dialog_desc, rbIndo.text))
@@ -86,7 +78,7 @@ class ChangeLanguageFragment : Fragment() {
             }
 
             rbEnglish.setOnClickListener {
-                if (changeLangViewModel.currentLocale == "in") {
+                if (changeLangViewModel.currentLocale.value == "in") {
                     MaterialAlertDialogBuilder(requireContext(), R.style.ThemeOverlay_App_MaterialAlertDialog)
                         .setTitle(getString(R.string.change_language_dialog_title))
                         .setMessage(getString(R.string.change_language_dialog_desc, rbEnglish.text))
@@ -104,6 +96,17 @@ class ChangeLanguageFragment : Fragment() {
                         }
                         .show()
                 }
+            }
+        }
+    }
+
+    private fun initLocaleObserver() {
+        changeLangViewModel.currentLocale.observe(viewLifecycleOwner) { locale ->
+            Log.d("Cilukba", "current locale change")
+            if (changeLangViewModel.currentLocale.value == "en") {
+                binding.rbEnglish.isChecked = true
+            } else if (changeLangViewModel.currentLocale.value == "in") {
+                binding.rbIndo.isChecked = true
             }
         }
     }
