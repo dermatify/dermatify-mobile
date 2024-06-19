@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bangkit.android.dermatify.R
 import com.bangkit.android.dermatify.databinding.FragmentLearnBinding
 import com.bangkit.android.dermatify.ui.adapter.ArticlesAdapter
+import com.bangkit.android.dermatify.ui.adapter.HeaderAdapter
+import com.bangkit.android.dermatify.ui.adapter.HeaderAdapter.Companion.LEARN_TOP
 import com.bangkit.android.dermatify.ui.adapter.ListArticleAdapter
 
 class LearnFragment : Fragment() {
@@ -22,6 +24,8 @@ class LearnFragment : Fragment() {
     private lateinit var articlesAdapter: ArticlesAdapter
     private lateinit var listArticleAdapter: ListArticleAdapter
     private lateinit var concatAdapter: ConcatAdapter
+    private lateinit var topHeaderAdapter: HeaderAdapter
+    private lateinit var botHeaderAdapter: HeaderAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,13 +47,31 @@ class LearnFragment : Fragment() {
     }
 
     private fun initUI() {
-        articlesAdapter = ArticlesAdapter(ArticlesAdapter.LEARN_BOT, findNavController(), requireContext())
-        listArticleAdapter = ListArticleAdapter(ListArticleAdapter.LISTLEARN)
-        concatAdapter = ConcatAdapter(articlesAdapter, listArticleAdapter)
+        topHeaderAdapter = HeaderAdapter(
+            tabType = LEARN_TOP,
+            context = requireContext()
+        )
+        botHeaderAdapter = HeaderAdapter(
+            tabType = HeaderAdapter.LEARN_BOT,
+            context = requireContext()
+        )
+        articlesAdapter = ArticlesAdapter(
+            tabType = ArticlesAdapter.LEARN_BOT,
+            context = requireContext()
+        )
+        concatAdapter = ConcatAdapter(topHeaderAdapter, botHeaderAdapter, articlesAdapter)
         binding.apply {
             rvArticles.layoutManager = LinearLayoutManager(context)
             rvArticles.adapter = concatAdapter
         }
+
+//        articlesAdapter = ArticlesAdapter(ArticlesAdapter.LEARN_BOT, findNavController(), requireContext())
+//        listArticleAdapter = ListArticleAdapter(ListArticleAdapter.LISTLEARN)
+//        concatAdapter = ConcatAdapter(articlesAdapter, listArticleAdapter)
+//        binding.apply {
+//            rvArticles.layoutManager = LinearLayoutManager(context)
+//            rvArticles.adapter = concatAdapter
+//        }
     }
 
 }

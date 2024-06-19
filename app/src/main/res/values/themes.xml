@@ -32,6 +32,20 @@
         <item name="iconTint">@color/grey_variant_3</item>
     </style>
 
+    <style name="BookmarkIconButton" parent="Widget.Material3.Button.IconButton">
+        <item name="android:minWidth">0dp</item>
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingRight">0dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:insetLeft">0dp</item>
+        <item name="android:insetRight">0dp</item>
+        <item name="rippleColor">@color/blue_variant_1</item>
+        <item name="iconSize">28dp</item>
+        <item name="iconTint">@android:color/transparent</item>
+        <item name="iconTintMode">add</item>
+    </style>
+
     <style name="TextAppearanceLabel" parent="TextAppearance.Material3.LabelLarge">
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">16sp</item>

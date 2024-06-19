@@ -82,4 +82,6 @@
     <string name="remove_photo">Remove profile picture</string>
     <string name="network_lost_2">Can\'t fetch articles, seems you lost your connection.</string>
     <string name="try_again">Try again</string>
+    <string name="skin_care_101">Skincare 101</string>
+    <string name="articles_on_facial_skin_health">Articles on Facial Skin Health</string>
 </resources>
