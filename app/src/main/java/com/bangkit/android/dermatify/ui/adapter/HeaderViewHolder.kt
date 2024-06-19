@@ -17,16 +17,6 @@ import com.bangkit.android.dermatify.databinding.ItemArticlesBinding
 import com.bangkit.android.dermatify.databinding.ItemHeaderHomeBinding
 import com.bangkit.android.dermatify.databinding.ItemLearnBotHeaderBinding
 import com.bangkit.android.dermatify.databinding.ItemLearnTopHeaderBinding
-import com.bangkit.android.dermatify.databinding.ItemRowLearnBinding
-import com.bangkit.android.dermatify.ui.adapter.HeaderAdapter.Companion.LEARN_TOP
-import com.bangkit.android.dermatify.util.goneShimmer
-import com.bangkit.android.dermatify.util.showShimmer
-import com.bangkit.android.dermatify.util.visible
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
 
 sealed class HeaderViewHolder(binding: ViewBinding) : RecyclerView.ViewHolder(binding.root) {
     class HomeHeaderViewHolder(

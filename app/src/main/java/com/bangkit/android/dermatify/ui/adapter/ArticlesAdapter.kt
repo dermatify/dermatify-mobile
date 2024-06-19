@@ -61,7 +61,7 @@ class ArticlesAdapter(
     override fun getItemCount(): Int {
         return when (tabType) {
             HIGHLIGHTS, LEARN_HIGHLIGHTS -> 4
-            LEARN_BOT -> 10
+            LEARN_BOT -> 9
             else -> 0
         }
     }

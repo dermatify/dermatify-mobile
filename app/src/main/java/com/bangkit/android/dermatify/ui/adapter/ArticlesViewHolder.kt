@@ -86,7 +86,6 @@ sealed class ArticlesViewHolder(binding: ViewBinding) : RecyclerView.ViewHolder(
         fun bind(position: Int) {
             binding.apply {
                 shimmerLayout.showShimmer()
-                cvArticles.visible()
 
                 if (articles.isNotEmpty()) {
                     cvArticles.visible()
@@ -143,7 +142,6 @@ sealed class ArticlesViewHolder(binding: ViewBinding) : RecyclerView.ViewHolder(
         fun bind(position: Int) {
             binding.apply {
                 shimmerLayout.showShimmer()
-                cvArticles.visible()
 
                 if (articles.isNotEmpty()) {
                     cvArticles.visible()
