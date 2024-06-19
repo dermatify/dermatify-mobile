@@ -17,11 +17,11 @@ class ListArticleAdapter(private val tabType: String, val newList: List<Articles
         fun bind(position: Int) {
             if (newList != null) {
                 binding.apply {
-                    cardView.setOnClickListener {
-                        val webpage: Uri = Uri.parse(newList[position].newsUrl)
-                        val intent = Intent(Intent.ACTION_VIEW, webpage)
-                        cardView.context.startActivity(intent)
-                    }
+//                    cardView.setOnClickListener {
+//                        val webpage: Uri = Uri.parse(newList[position].newsUrl)
+//                        val intent = Intent(Intent.ACTION_VIEW, webpage)
+//                        cardView.context.startActivity(intent)
+//                    }
                     ivLearnThumbnail.loadImg(newList[position].newsUrl!!)
                     tvLearnTitle.text = newList[position].title!!.trim()
                     tvLearnSubtitle.text = newList[position].subtitle!!.trim()

@@ -9,6 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.bangkit.android.dermatify.data.remote.response.ArticlesItem
 import com.bangkit.android.dermatify.databinding.ItemArticlesBinding
+import com.bangkit.android.dermatify.databinding.ItemArticlesLearnTopBinding
+import com.bangkit.android.dermatify.databinding.ItemLearnTopHeaderBinding
+import com.bangkit.android.dermatify.databinding.ItemRowLearnBinding
 import com.bangkit.android.dermatify.util.gone
 import com.bangkit.android.dermatify.util.goneShimmer
 import com.bangkit.android.dermatify.util.showShimmer
@@ -65,6 +68,119 @@ sealed class ArticlesViewHolder(binding: ViewBinding) : RecyclerView.ViewHolder(
                             }
                         })
                         .into(ivArticlesThumbnail)
+                }
+
+                cvArticles.setOnClickListener {
+                    val webpage: Uri = Uri.parse(articles[position].newsUrl)
+                    val intent = Intent(Intent.ACTION_VIEW, webpage)
+                    cvArticles.context.startActivity(intent)
+                }
+            }
+        }
+    }
+    class LearnHighlightsArticlesViewHolder(
+        private val binding: ItemArticlesLearnTopBinding,
+        private val context: Context,
+        private val articles: List<ArticlesItem> = emptyList()
+    ) : ArticlesViewHolder(binding) {
+        fun bind(position: Int) {
+            binding.apply {
+                shimmerLayout.showShimmer()
+                cvArticles.visible()
+
+                if (articles.isNotEmpty()) {
+                    cvArticles.visible()
+                    tvArticleTitle.text = articles[position].title
+                    tvArticleSubtitle.text = articles[position].subtitle
+                    Log.d("Cilukba", "lewat art")
+                    Glide.with(context)
+                        .load(articles[position].thumbnail)
+                        .error(
+                            Glide.with(context)
+                                .load(articles[position].thumbnail)
+                        )
+                        .centerCrop()
+                        .listener(object : RequestListener<Drawable> {
+                            override fun onLoadFailed(
+                                e: GlideException?,
+                                model: Any?,
+                                target: Target<Drawable>,
+                                isFirstResource: Boolean
+                            ): Boolean {
+                                Log.d("Cilukba", "lewat failed")
+                                shimmerLayout.showShimmer()
+                                return false
+                            }
+                            override fun onResourceReady(
+                                resource: Drawable,
+                                model: Any,
+                                target: Target<Drawable>?,
+                                dataSource: DataSource,
+                                isFirstResource: Boolean
+                            ): Boolean {
+                                Log.d("Cilukba", "lewat ready")
+                                shimmerLayout.goneShimmer()
+                                return false
+                            }
+                        })
+                        .into(ivArticlesThumbnail)
+                }
+
+                cvArticles.setOnClickListener {
+                    val webpage: Uri = Uri.parse(articles[position].newsUrl)
+                    val intent = Intent(Intent.ACTION_VIEW, webpage)
+                    cvArticles.context.startActivity(intent)
+                }
+            }
+        }
+    }
+
+    class LearnBotArticlesViewHolder(
+        private val binding: ItemRowLearnBinding,
+        private val context: Context,
+        private val articles: List<ArticlesItem> = emptyList()
+    ) : ArticlesViewHolder(binding) {
+        fun bind(position: Int) {
+            binding.apply {
+                shimmerLayout.showShimmer()
+                cvArticles.visible()
+
+                if (articles.isNotEmpty()) {
+                    cvArticles.visible()
+                    tvLearnTitle.text = articles[position].title
+                    tvLearnSubtitle.text = articles[position].subtitle
+                    Log.d("Cilukba", "lewat art")
+                    Glide.with(context)
+                        .load(articles[position].thumbnail)
+                        .error(
+                            Glide.with(context)
+                                .load(articles[position].thumbnail)
+                        )
+                        .centerCrop()
+                        .listener(object : RequestListener<Drawable> {
+                            override fun onLoadFailed(
+                                e: GlideException?,
+                                model: Any?,
+                                target: Target<Drawable>,
+                                isFirstResource: Boolean
+                            ): Boolean {
+                                Log.d("Cilukba", "lewat failed")
+                                shimmerLayout.showShimmer()
+                                return false
+                            }
+                            override fun onResourceReady(
+                                resource: Drawable,
+                                model: Any,
+                                target: Target<Drawable>?,
+                                dataSource: DataSource,
+                                isFirstResource: Boolean
+                            ): Boolean {
+                                Log.d("Cilukba", "lewat ready")
+                                shimmerLayout.goneShimmer()
+                                return false
+                            }
+                        })
+                        .into(ivLearnThumbnail)
                 }
 
                 cvArticles.setOnClickListener {

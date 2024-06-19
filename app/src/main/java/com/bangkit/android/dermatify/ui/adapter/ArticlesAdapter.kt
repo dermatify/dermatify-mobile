@@ -7,6 +7,9 @@ import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bangkit.android.dermatify.data.remote.response.ArticlesItem
 import com.bangkit.android.dermatify.databinding.ItemArticlesBinding
+import com.bangkit.android.dermatify.databinding.ItemArticlesLearnTopBinding
+import com.bangkit.android.dermatify.databinding.ItemLearnTopHeaderBinding
+import com.bangkit.android.dermatify.databinding.ItemRowLearnBinding
 
 class ArticlesAdapter(
     private val tabType: String,
@@ -26,13 +29,23 @@ class ArticlesAdapter(
                 context = context,
                 articles = articles
             )
-            else -> ArticlesViewHolder.HighlightsArticlesViewHolder(
-                ItemArticlesBinding.inflate(
+            LEARN_HIGHLIGHTS -> ArticlesViewHolder.LearnHighlightsArticlesViewHolder(
+                ItemArticlesLearnTopBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
                 ),
-                context = context
+                context = context,
+                articles = articles
+            )
+            else -> ArticlesViewHolder.LearnBotArticlesViewHolder(
+                ItemRowLearnBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                ),
+                context = context,
+                articles = articles
             )
         }
     }
@@ -40,12 +53,14 @@ class ArticlesAdapter(
     override fun onBindViewHolder(holder: ArticlesViewHolder, position: Int) {
         when (holder) {
             is ArticlesViewHolder.HighlightsArticlesViewHolder -> holder.bind(position)
+            is ArticlesViewHolder.LearnHighlightsArticlesViewHolder -> holder.bind(position)
+            is ArticlesViewHolder.LearnBotArticlesViewHolder -> holder.bind(position)
         }
     }
 
     override fun getItemCount(): Int {
         return when (tabType) {
-            HIGHLIGHTS -> 4
+            HIGHLIGHTS, LEARN_HIGHLIGHTS -> 4
             LEARN_BOT -> 10
             else -> 0
         }
@@ -53,7 +68,8 @@ class ArticlesAdapter(
 
 
     companion object {
-        const val HIGHLIGHTS = "HOME_LEARN_HIGHLIGHTS"
+        const val HIGHLIGHTS = "HOME_HIGHLIGHTS"
+        const val LEARN_HIGHLIGHTS = "LEARN_HIGHLIGHTS"
         const val LEARN_BOT = "LEARN_BOT"
     }
 }

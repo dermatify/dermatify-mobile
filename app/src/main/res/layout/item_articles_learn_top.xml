@@ -2,20 +2,20 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:clipToPadding="false"
-    android:paddingHorizontal="16dp"
+    android:paddingHorizontal="6dp"
     android:paddingBottom="8dp">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_articles"
         android:layout_marginTop="4dp"
-        android:layout_width="match_parent"
-        android:layout_height="184dp"
+        android:layout_width="325dp"
+        android:layout_height="164dp"
         android:visibility="gone"
         tools:visibility="visible"
-        app:cardElevation="4dp"
+        app:cardElevation="2dp"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="20dp">
 
@@ -45,7 +45,7 @@
                 android:paddingHorizontal="20dp"
                 android:paddingBottom="2dp"
                 android:textColor="@color/white"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 tools:text="Sensitive Skin: How to Care for It" />
 
@@ -81,7 +81,7 @@
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmer_layout"
         android:layout_marginTop="4dp"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:shimmer_intensity="1">
         <FrameLayout
@@ -89,9 +89,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <View
-                android:layout_marginTop="4dp"
-                android:layout_width="match_parent"
-                android:layout_height="184dp"
+                android:layout_width="325dp"
+                android:layout_height="164dp"
                 android:background="@drawable/bg_rounded_solid_gray" />
         </FrameLayout>
     </com.facebook.shimmer.ShimmerFrameLayout>
