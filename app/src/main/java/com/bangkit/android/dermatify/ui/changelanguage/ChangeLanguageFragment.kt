@@ -12,8 +12,8 @@ import androidx.core.os.LocaleListCompat
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.bangkit.android.dermatify.R
-import com.bangkit.android.dermatify.data.local.SettingsPreferences
-import com.bangkit.android.dermatify.data.local.dataStore
+import com.bangkit.android.dermatify.data.local.preferences.SettingsPreferences
+import com.bangkit.android.dermatify.data.local.preferences.dataStore
 import com.bangkit.android.dermatify.databinding.FragmentChangeLanguageBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
