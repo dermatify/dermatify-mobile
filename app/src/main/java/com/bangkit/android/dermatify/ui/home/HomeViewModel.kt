@@ -38,7 +38,7 @@ class ViewModelFactory private constructor(
     private val articlesRepository: ArticlesRepository
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(HomeViewModel:: class.java)) {
+        if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
             return HomeViewModel(userRepository, articlesRepository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
