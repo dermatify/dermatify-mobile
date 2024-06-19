@@ -88,6 +88,11 @@
             app:destination="@id/profileFragment"
             app:enterAnim="@android:anim/fade_in"
             app:popExitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_homeFragment_to_examineFragment"
+            app:destination="@id/examineFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/journeyFragment"

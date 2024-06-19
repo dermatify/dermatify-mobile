@@ -1,13 +1,217 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.examine.ExamineFragment">
 
-    <TextView
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/topbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+        android:layout_height="48dp"
+        android:background="@color/white_background"
+        android:elevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_exit"
+        app:navigationIconTint="@color/grey_variant_3" />
 
-</FrameLayout>
+    <ImageView
+        android:id="@+id/ivProgressIndicator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/progbar_image_examine"
+        app:layout_constraintBottom_toBottomOf="@id/imageProgress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/imageProgress" />
+
+    <ImageView
+        android:id="@+id/imageProgress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/image_progress_done"
+        app:layout_constraintEnd_toStartOf="@id/resultProgress"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topbar" />
+
+    <ImageView
+        android:id="@+id/resultProgress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/result_progress_grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imageProgress"
+        app:layout_constraintTop_toTopOf="@id/imageProgress" />
+
+    <TextView
+        android:id="@+id/tvImageProgressTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/scan_your_skin"
+        android:textAlignment="center"
+        android:textColor="@color/primary_blue"
+        app:layout_constraintEnd_toStartOf="@id/tvResultProgressTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageProgress" />
+
+    <TextView
+        android:id="@+id/tvResultProgressTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/result"
+        android:textAlignment="center"
+        android:textColor="@color/grey_variant_3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvImageProgressTitle"
+        app:layout_constraintTop_toBottomOf="@id/resultProgress" />
+
+
+    <TextView
+        android:id="@+id/tv_header_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/examine_take_picture"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvImageProgressTitle" />
+
+    <TextView
+        android:id="@+id/tv_header_title_after_photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/analyze_your_skin"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvImageProgressTitle"
+        tools:visibility="visible" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_preview"
+        android:layout_width="240dp"
+        android:layout_height="240dp"
+        android:layout_marginVertical="12dp"
+        android:scaleType="centerCrop"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_header_title_after_photo"
+        tools:src="@tools:sample/avatars"
+        tools:visibility="visible" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/anim_illus"
+        android:layout_width="wrap_content"
+        android:layout_height="261dp"
+        android:layout_marginTop="8dp"
+        android:adjustViewBounds="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_header_title"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/lottie_examine_illu"
+        app:lottie_repeatMode="reverse" />
+
+
+    <Button
+        android:id="@+id/btn_cam"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="28dp"
+        android:backgroundTint="@color/secondary_pink"
+        android:text="@string/camera"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:icon="@drawable/ic_from_cam"
+        app:layout_constraintEnd_toStartOf="@id/btn_gallery"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/anim_illus"
+        app:strokeColor="@color/secondary_pink" />
+
+    <Button
+        android:id="@+id/btn_gallery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="28dp"
+        android:backgroundTint="@color/secondary_pink"
+        android:text="@string/gallery"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:icon="@drawable/ic_from_gallery"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_cam"
+        app:layout_constraintTop_toBottomOf="@id/anim_illus"
+        app:strokeColor="@color/secondary_pink" />
+
+    <Button
+        android:id="@+id/btn_analyze"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/primary_blue"
+        android:padding="12dp"
+        android:text="@string/analyze"
+        android:textSize="16sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/btn_gallery"
+        app:layout_constraintStart_toStartOf="@id/btn_cam"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/tv_analyzing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="@string/analyzing"
+        android:clickable="false"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:textAppearance="?attr/textAppearanceLabelLarge"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/btn_analyze"
+        app:layout_constraintEnd_toEndOf="@id/btn_analyze"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@id/progbar_analyze"
+        app:layout_constraintTop_toTopOf="@id/btn_analyze" />
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/progbar_analyze"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:indicatorColor="@color/white"
+        app:trackThickness="3.5dp"
+        android:layout_marginEnd="4dp"
+        app:indicatorSize="28dp"
+        app:layout_constraintBottom_toBottomOf="@id/btn_analyze"
+        app:layout_constraintEnd_toStartOf="@id/tv_analyzing"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@id/btn_analyze"
+        app:layout_constraintTop_toTopOf="@id/btn_analyze"
+        tools:visibility="visible" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

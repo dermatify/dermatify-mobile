@@ -36,6 +36,20 @@ sealed class HeaderViewHolder(binding: ViewBinding) : RecyclerView.ViewHolder(bi
                     val pic = Uri.parse(userPic)
                     ivAccProfile.setImageURI(pic)
                 }
+
+                btnAllResults.setOnClickListener {
+                    navController.popBackStack(R.id.main_nav, true)
+                    navController.navigate(R.id.journeyFragment)
+                }
+
+                btnLearnMore.setOnClickListener {
+                    navController.popBackStack(R.id.main_nav, true)
+                    navController.navigate(R.id.learnFragment)
+                }
+
+                btnCtaToExamine.setOnClickListener {
+                    navController.navigate(R.id.action_homeFragment_to_examineFragment)
+                }
             }
         }
     }
