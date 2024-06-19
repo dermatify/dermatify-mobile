@@ -2,8 +2,8 @@ package com.bangkit.android.dermatify.di
 
 import android.content.Context
 import android.util.Log
-import com.bangkit.android.dermatify.data.local.UserPreferences
-import com.bangkit.android.dermatify.data.local.userDataStore
+import com.bangkit.android.dermatify.data.local.preferences.UserPreferences
+import com.bangkit.android.dermatify.data.local.preferences.userDataStore
 import com.bangkit.android.dermatify.data.remote.retrofit.ApiConfig
 import com.bangkit.android.dermatify.data.repository.ArticlesRepository
 import com.bangkit.android.dermatify.data.repository.UserRepository

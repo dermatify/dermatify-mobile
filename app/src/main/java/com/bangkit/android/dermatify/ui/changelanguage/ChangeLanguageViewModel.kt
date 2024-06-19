@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.bangkit.android.dermatify.data.local.SettingsPreferences
+import com.bangkit.android.dermatify.data.local.preferences.SettingsPreferences
 import kotlinx.coroutines.launch
 
 class ChangeLanguageViewModel(private val prefs: SettingsPreferences) : ViewModel() {

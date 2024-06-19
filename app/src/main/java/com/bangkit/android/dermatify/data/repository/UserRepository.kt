@@ -2,7 +2,7 @@ package com.bangkit.android.dermatify.data.repository
 
 import android.util.Log
 import androidx.lifecycle.liveData
-import com.bangkit.android.dermatify.data.local.UserPreferences
+import com.bangkit.android.dermatify.data.local.preferences.UserPreferences
 import com.bangkit.android.dermatify.data.remote.response.ApiResponse
 import com.bangkit.android.dermatify.data.remote.response.ErrorResponse
 import com.bangkit.android.dermatify.data.remote.retrofit.ApiConfig

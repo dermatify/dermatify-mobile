@@ -1,4 +1,4 @@
-package com.bangkit.android.dermatify.data.md
+package com.bangkit.android.dermatify.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

@@ -1,4 +1,4 @@
-package com.bangkit.android.dermatify.data.local
+package com.bangkit.android.dermatify.data.local.preferences
 
 import android.content.Context
 import androidx.datastore.core.DataStore

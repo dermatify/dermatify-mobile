@@ -3,7 +3,7 @@ package com.bangkit.android.dermatify.data.local.room
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.bangkit.android.dermatify.data.local.dao.ScanHistoryDao
-import com.bangkit.android.dermatify.data.md.ScansEntity
+import com.bangkit.android.dermatify.data.local.entity.ScansEntity
 
 @Database(
     entities = [ScansEntity::class],
