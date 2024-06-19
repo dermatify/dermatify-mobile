@@ -16,8 +16,11 @@ class ChangeLanguageViewModel(private val prefs: SettingsPreferences) : ViewMode
     init {
         getCurrentLocale()
     }
-    fun getCurrentLocale() = _currentLocale.addSource(prefs.getCurrentLocale().asLiveData()) { locale ->
-        _currentLocale.value = locale
+    fun getCurrentLocale() {
+        _currentLocale.removeSource(prefs.getCurrentLocale().asLiveData())
+        _currentLocale.addSource(prefs.getCurrentLocale().asLiveData()) { locale ->
+            _currentLocale.value = locale
+        }
     }
 
     fun updateLocale(locale: String) {

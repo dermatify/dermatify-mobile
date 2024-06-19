@@ -102,7 +102,7 @@ class ChangeLanguageFragment : Fragment() {
 
     private fun initLocaleObserver() {
         changeLangViewModel.currentLocale.observe(viewLifecycleOwner) { locale ->
-            Log.d("Cilukba", "current locale change")
+            Log.d("Cilukba", "current locale change $locale")
             if (changeLangViewModel.currentLocale.value == "en") {
                 binding.rbEnglish.isChecked = true
             } else if (changeLangViewModel.currentLocale.value == "in") {
