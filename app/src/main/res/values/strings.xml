@@ -96,4 +96,15 @@
     <string name="try_again">Try again</string>
     <string name="skin_care_101">Skincare 101</string>
     <string name="articles_on_facial_skin_health">Articles on Facial Skin Health</string>
+    <string name="examine_take_picture">Please Take A Picture Of Your Skin</string>
+    <string name="analyze_your_skin">Analyze Your Skin To Unveil The Secrets\nTo Healthier and Glowing Skin</string>
+    <string name="scan_your_skin">Scan your skin</string>
+    <string name="result">Result</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="analyze">Analyze</string>
+    <string name="permission_granted">Permission request granted</string>
+    <string name="permission_denied">Permission request denied</string>
+    <string name="analyzing">Analyzing</string>
+
 </resources>

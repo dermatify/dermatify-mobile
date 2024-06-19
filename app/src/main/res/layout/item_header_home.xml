@@ -139,11 +139,11 @@
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@id/cv_header"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/tv_all_results" />
+        app:layout_constraintEnd_toStartOf="@id/btn_all_results" />
 
     <Button
         style="@style/LabelTextButton"
-        android:id="@+id/tv_all_results"
+        android:id="@+id/btn_all_results"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="12sp"
@@ -268,11 +268,11 @@
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@id/cv_recent_scans"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/tv_all_results" />
+        app:layout_constraintEnd_toStartOf="@id/btn_all_results" />
 
     <Button
         style="@style/LabelTextButton"
-        android:id="@+id/tv_learn_more"
+        android:id="@+id/btn_learn_more"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="12sp"

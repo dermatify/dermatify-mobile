@@ -26,34 +26,41 @@ class MainActivity : AppCompatActivity() {
         // Bind bottom navigation bar to navigation host fragment (navController)
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
-        binding.navView.setupWithNavController(navController)
 
-        // Clear backstack everytime navigate on bottom nav bar
-        binding.navView.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.homeFragment -> {
-                    navController.popBackStack(R.id.main_nav, true)
-                    navController.navigate(R.id.homeFragment)
-                    true
+        binding.apply {
+            fabBotNav.setOnClickListener {
+                navController.navigate(R.id.action_homeFragment_to_examineFragment)
+            }
+
+            navView.setupWithNavController(navController)
+            navView.setOnItemSelectedListener { item ->
+                when (item.itemId) {
+                    R.id.homeFragment -> {
+                        navController.popBackStack(R.id.main_nav, true)
+                        navController.navigate(R.id.homeFragment)
+                        true
+                    }
+                    R.id.journeyFragment -> {
+                        navController.popBackStack(R.id.main_nav, true)
+                        navController.navigate(R.id.journeyFragment)
+                        true
+                    }
+                    R.id.learnFragment -> {
+                        navController.popBackStack(R.id.main_nav, true)
+                        navController.navigate(R.id.learnFragment)
+                        true
+                    }
+                    R.id.wishlistFragment -> {
+                        navController.popBackStack(R.id.main_nav, true)
+                        navController.navigate(R.id.wishlistFragment)
+                        true
+                    }
+                    else -> false
                 }
-                R.id.journeyFragment -> {
-                    navController.popBackStack(R.id.main_nav, true)
-                    navController.navigate(R.id.journeyFragment)
-                    true
-                }
-                R.id.learnFragment -> {
-                    navController.popBackStack(R.id.main_nav, true)
-                    navController.navigate(R.id.learnFragment)
-                    true
-                }
-                R.id.wishlistFragment -> {
-                    navController.popBackStack(R.id.main_nav, true)
-                    navController.navigate(R.id.wishlistFragment)
-                    true
-                }
-                else -> false
             }
         }
+
+        // Clear backstack everytime navigate on bottom nav bar
 
         // Hide bottom navigation bar on some screens
         navController.addOnDestinationChangedListener { _, destination, _ ->
