@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "ScansHistory")
-data class ScansEntity(
+data class Scans(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val imageUri: String,

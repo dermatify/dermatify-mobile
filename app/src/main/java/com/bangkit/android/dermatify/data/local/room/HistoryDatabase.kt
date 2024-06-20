@@ -5,14 +5,31 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.bangkit.android.dermatify.data.local.dao.ScanHistoryDao
-import com.bangkit.android.dermatify.data.local.entity.ScansEntity
+import com.bangkit.android.dermatify.data.local.entity.Scans
 
 @Database(
-    entities = [ScansEntity::class],
+    entities = [Scans::class],
     version = 1,
     exportSchema = false
 )
 abstract class HistoryDatabase : RoomDatabase() {
-    abstract fun getAllHistories(): ScanHistoryDao
+    abstract fun scanHistoryDao(): ScanHistoryDao
+
+    companion object {
+        @Volatile
+        private var INSTANCE: HistoryDatabase? = null
+
+        fun getInstance(context: Context): HistoryDatabase {
+            return INSTANCE ?: synchronized(this) {
+                val instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    HistoryDatabase::class.java,
+                    "history_database"
+                ).build()
+                INSTANCE = instance
+                instance
+            }
+        }
+    }
 
 }
