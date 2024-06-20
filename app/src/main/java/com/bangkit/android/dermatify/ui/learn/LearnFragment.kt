@@ -97,8 +97,8 @@ class LearnFragment : Fragment() {
                 is ApiResponse.Success -> {
                     Log.d("Cilukba", "fetch success")
 
-                    val topArticles = (result.data as List<ArticlesItem>).subList(0,4)
-//                    val botArticles = (result.data as List<ArticlesItem>).subList(4,13)
+                    val topArticles = (result.data as List<ArticlesItem>).subList(9,13)
+                    val botArticles = (result.data as List<ArticlesItem>).subList(0,9)
 
                     concatAdapter.removeAdapter(topHeaderAdapter)
                     concatAdapter.removeAdapter(botHeaderAdapter)
@@ -116,7 +116,7 @@ class LearnFragment : Fragment() {
                     articlesAdapter = ArticlesAdapter(
                         tabType = ArticlesAdapter.LEARN_BOT,
                         context = requireContext(),
-//                        articles = botArticles
+                        articles = botArticles
                     )
                     concatAdapter.addAdapter(topHeaderAdapter)
                     concatAdapter.addAdapter(botHeaderAdapter)

@@ -52,7 +52,6 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initUserNameObserver()
-        initUserPicObserver()
         initArticlesObserver()
         initUI()
     }
@@ -85,15 +84,6 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun initUserPicObserver() {
-        homeViewModel.getUserPic().observe(viewLifecycleOwner) {
-            removeAdapterFromConcat()
-            homeHeaderAdapter.userPic = it
-            addAdapterToConcat()
-            concatAdapter.notifyDataSetChanged()
-            Log.d("Cilukba", "observing profpic $it")
-        }
-    }
 
     private fun removeAdapterFromConcat() {
         concatAdapter.removeAdapter(homeHeaderAdapter)

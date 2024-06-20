@@ -17,9 +17,12 @@ class LearnViewModel(private val articlesRepository: ArticlesRepository) : ViewM
         fetchArticles()
     }
 
-    fun fetchArticles() = _articles.addSource(articlesRepository.fetchArticles()) { response ->
-        Log.d("Cilukba", "update result = $response")
-        _articles.value = response
+    fun fetchArticles() {
+        _articles.removeSource(articlesRepository.fetchArticles())
+        _articles.addSource(articlesRepository.fetchArticles()) { response ->
+            Log.d("Cilukba", "fetch articles = $response")
+            _articles.value = response
+        }
     }
 }
 

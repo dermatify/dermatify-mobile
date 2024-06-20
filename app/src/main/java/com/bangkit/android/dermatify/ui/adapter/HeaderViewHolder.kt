@@ -23,19 +23,10 @@ sealed class HeaderViewHolder(binding: ViewBinding) : RecyclerView.ViewHolder(bi
         private val binding: ItemHeaderHomeBinding,
         private val navController: NavController,
         private val context: Context,
-        private var name: String,
-        private var userPic: String) : HeaderViewHolder(binding) {
+        private var name: String) : HeaderViewHolder(binding) {
         fun bind() {
             binding.apply {
-                btnAccProfile.setOnClickListener {
-                    navController.navigate(R.id.action_homeFragment_to_profileFragment)
-                }
                 tvWelcomeHeader.text = context.getString(R.string.hi_name_home_header, name)
-
-                if (userPic.isNotEmpty()) {
-                    val pic = Uri.parse(userPic)
-                    ivAccProfile.setImageURI(pic)
-                }
 
                 btnAllResults.setOnClickListener {
                     navController.popBackStack(R.id.main_nav, true)

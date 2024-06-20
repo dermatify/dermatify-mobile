@@ -16,7 +16,6 @@ class HeaderAdapter(
     private val navController: NavController? = null,
     private val context: Context,
     var name: String = "",
-    var userPic: String = "",
     private val articles: List<ArticlesItem> = emptyList()
 ) : RecyclerView.Adapter<HeaderViewHolder>() {
 
@@ -31,8 +30,7 @@ class HeaderAdapter(
                     ),
                     navController!!,
                     context,
-                    name,
-                    userPic
+                    name
                 )
             }
             LEARN_TOP -> {

@@ -81,9 +81,11 @@ dependencies {
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
 
-
     // Data Store
     implementation("androidx.datastore:datastore-preferences:1.1.1")
+
+    // EXIF
+    implementation("androidx.exifinterface:exifinterface:1.3.7")
 
     // Fragment
     implementation("androidx.fragment:fragment-ktx:1.8.0")

@@ -13,7 +13,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import retrofit2.HttpException
+import java.io.File
 
 class UserRepository private constructor(
     private var apiServiceAT: ApiService,
@@ -38,6 +42,35 @@ class UserRepository private constructor(
         CoroutineScope(Dispatchers.IO).launch {
             userDataStore.removePic()
         }
+    }
+
+    fun uploadPhoto(imageFile: File) = liveData {
+        emit(ApiResponse.Loading)
+        val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
+        val multipartBody = MultipartBody.Part.createFormData(
+            "photo",
+            imageFile.name,
+            requestImageFile
+        )
+
+        try {
+            val successReponse = apiServiceAT.analyzeSkin(multipartBody)
+            emit(ApiResponse.Success(successReponse))
+        } catch (e: HttpException) {
+            val errorBody = e.response()?.errorBody()?.string()
+            Log.d("Cilukba", "analyze error ${errorBody}")
+            val errorResponse = Gson().fromJson(errorBody, ErrorResponse::class.java)
+            emit(ApiResponse.Error(errorResponse.message))
+        } catch (e: Exception) {
+            Log.d("Cilukba", "analyze error ${e.message}")
+            val errorMessage = if (e.message?.contains("Unable to resolve host", ignoreCase = true) == true) {
+                "Seems you lost your connection. Please try again"
+            } else {
+                "An error occurred. Please try again"
+            }
+            emit(ApiResponse.Error(errorMessage))
+        }
+
     }
 
     fun updateUserName(newName: String) {

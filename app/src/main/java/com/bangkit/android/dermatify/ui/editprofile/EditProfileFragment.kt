@@ -245,7 +245,6 @@ class EditProfileFragment : Fragment() {
                         }
                     }
 
-
                     editProfileViewModel.renewAccessToken()
                     Log.d("Cilukba", "Save Error: ${result.errorMsg}")
                 }

@@ -84,11 +84,6 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_homeFragment_to_profileFragment"
-            app:destination="@id/profileFragment"
-            app:enterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/slide_out_right" />
-        <action
             android:id="@+id/action_homeFragment_to_examineFragment"
             app:destination="@id/examineFragment"
             app:enterAnim="@android:anim/slide_in_left"
@@ -98,7 +93,13 @@
         android:id="@+id/journeyFragment"
         android:name="com.bangkit.android.dermatify.ui.journey.JourneyFragment"
         android:label="fragment_journey"
-        tools:layout="@layout/fragment_journey" />
+        tools:layout="@layout/fragment_journey" >
+        <action
+            android:id="@+id/action_journeyFragment_to_examineFragment"
+            app:destination="@id/examineFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+    </fragment>
     <fragment
         android:id="@+id/examineFragment"
         android:name="com.bangkit.android.dermatify.ui.examine.ExamineFragment"
@@ -108,7 +109,13 @@
         android:id="@+id/learnFragment"
         android:name="com.bangkit.android.dermatify.ui.learn.LearnFragment"
         android:label="fragment_learn"
-        tools:layout="@layout/fragment_learn" />
+        tools:layout="@layout/fragment_learn" >
+        <action
+            android:id="@+id/action_learnFragment_to_examineFragment"
+            app:destination="@id/examineFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+    </fragment>
     <fragment
         android:id="@+id/wishlistFragment"
         android:name="com.bangkit.android.dermatify.ui.wishlist.WishlistFragment"
@@ -146,6 +153,11 @@
             app:popExitAnim="@android:anim/fade_out"
             app:popUpTo="@id/main_nav"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_profileFragment_to_examineFragment"
+            app:destination="@id/examineFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"

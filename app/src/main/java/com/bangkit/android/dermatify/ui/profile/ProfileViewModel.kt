@@ -1,19 +1,14 @@
 package com.bangkit.android.dermatify.ui.profile
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.asFlow
 import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
 import com.bangkit.android.dermatify.data.remote.response.ApiResponse
 import com.bangkit.android.dermatify.data.repository.UserRepository
 import com.bangkit.android.dermatify.di.Injection
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
 
 class ProfileViewModel(private val userRepository: UserRepository) : ViewModel() {
 
@@ -30,14 +25,20 @@ class ProfileViewModel(private val userRepository: UserRepository) : ViewModel()
     fun getUserName() = userRepository.getUserName().asLiveData()
 
 
-    fun logout() = _logoutResponse.addSource(userRepository.logout()) { response ->
-        _logoutResponse.value = response
-        _logoutResponse.value = null
+    fun logout() {
+        _logoutResponse.removeSource(userRepository.logout())
+        _logoutResponse.addSource(userRepository.logout()) { response ->
+            _logoutResponse.value = response
+            _logoutResponse.value = null
+        }
     }
 
-    fun renewAccessToken() = _renewTokenResponse.addSource(userRepository.renewAccessToken()) { response ->
-        _renewTokenResponse.value = response
-        _renewTokenResponse.value = null
+    fun renewAccessToken() {
+        _renewTokenResponse.removeSource(userRepository.renewAccessToken())
+        _renewTokenResponse.addSource(userRepository.renewAccessToken()) { response ->
+            _renewTokenResponse.value = response
+            _renewTokenResponse.value = null
+        }
     }
 
 
@@ -56,7 +57,7 @@ class ViewModelFactory private constructor(private val userRepository: UserRepos
         private var instance: ViewModelFactory? = null
         fun getInstance(context: Context): ViewModelFactory =
             instance ?: synchronized(this) {
-                instance ?: ViewModelFactory(Injection.provideAuthRepository(context))
+                instance ?: ViewModelFactory(Injection.provideUserRepository(context))
             }.also { instance = it }
     }
 }
