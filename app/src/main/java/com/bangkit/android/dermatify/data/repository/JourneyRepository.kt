@@ -1,26 +1,43 @@
 package com.bangkit.android.dermatify.data.repository
 
+import androidx.lifecycle.LiveData
+import com.bangkit.android.dermatify.data.local.dao.ScanHistoryDao
 import com.bangkit.android.dermatify.data.local.entity.Scans
-import com.bangkit.android.dermatify.data.remote.response.ApiResponse
-import com.bangkit.android.dermatify.ui.journey.JourneyDS
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOn
 
-class JourneyRepository(
-    private val dataStore: JourneyDS,
+class JourneyRepository private constructor(
+    private val scanHistoryDao: ScanHistoryDao,
 ) {
 
-    suspend fun getAllHistories(): Flow<ApiResponse<List<Scans>>> =
-        dataStore.fetchAllHistories().flowOn(Dispatchers.IO)
+    fun getAllHistories(): LiveData<List<Scans>> =
+        scanHistoryDao.getAllHistories()
 
-    suspend fun getHistoriesByMonth(month: String): Flow<ApiResponse<List<Scans>>> =
-        dataStore.fetchHistoriesByMonth(month).flowOn(Dispatchers.IO)
+   fun getHistoriesByMonth(month: String): LiveData<List<Scans>> =
+        scanHistoryDao.getHistoriesByMonth(month)
 
-    suspend fun getHistoriesByWeek(week: String): Flow<ApiResponse<List<Scans>>> =
-        dataStore.fetchHistoriesByWeek(week).flowOn(Dispatchers.IO)
+   fun getHistoriesByWeek(week: String): LiveData<List<Scans>> =
+        scanHistoryDao.getHistoriesByWeek(week)
 
-    suspend fun addHistory(history: Scans) {
-        dataStore.addHistory(history)
+    suspend fun size(): Int = scanHistoryDao.getDbSize()
+
+    fun addHistory(imageUri: String, description: String, timestamp: String, diagnosis: String) {
+        val scan = Scans(
+            imageUri = imageUri,
+            description = description,
+            timestamp = timestamp,
+            diagnosis = diagnosis
+        )
+        scanHistoryDao.insertHistory(scan)
     }
+
+    companion object {
+        private var instance: JourneyRepository? = null
+
+        fun getInstance(
+            scanHistoryDao: ScanHistoryDao
+        ): JourneyRepository =
+            instance ?: synchronized(this) {
+                instance ?: JourneyRepository(scanHistoryDao)
+            }.also { instance = it }
+    }
+
 }

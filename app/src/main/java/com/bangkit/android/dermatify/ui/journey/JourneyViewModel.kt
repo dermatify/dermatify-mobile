@@ -13,49 +13,81 @@ class JourneyViewModel(
     private val journeyRepository: JourneyRepository
 ) : ViewModel() {
 
-    val historyResult: LiveData<ApiResponse<List<Scans>>> by lazy { _historyResult }
+    private var _size = MutableLiveData(0)
+    val size: LiveData<Int> = _size
+
+    private fun getDbSize() {
+        viewModelScope.launch {
+            _size.value = journeyRepository.size()
+        }
+    }
+
     private val _historyResult = MutableLiveData<ApiResponse<List<Scans>>>()
+    val historyResult: LiveData<ApiResponse<List<Scans>>>
+        get() = _historyResult
 
-    val historyByMonth: LiveData<ApiResponse<List<Scans>>> by lazy { _historyByMonth }
     private val _historyByMonth = MutableLiveData<ApiResponse<List<Scans>>>()
+    val historyByMonth: LiveData<ApiResponse<List<Scans>>>
+        get() = _historyByMonth
 
-    val historyByWeek: LiveData<ApiResponse<List<Scans>>> by lazy { _historyByWeek }
     private val _historyByWeek = MutableLiveData<ApiResponse<List<Scans>>>()
+    val historyByWeek: LiveData<ApiResponse<List<Scans>>>
+        get() = _historyByWeek
 
-    fun getAllHistories() {
+
+    fun getAllHistories(): LiveData<List<Scans>> {
+        getDbSize()
+        return journeyRepository.getAllHistories()
+    }
+
+    fun getHistoriesByMonth(month: String): LiveData<List<Scans>> {
+        getDbSize()
+        return journeyRepository.getHistoriesByMonth(month)
+    }
+
+    fun getHistoriesByWeek(week: String): LiveData<List<Scans>> {
+        getDbSize()
+        return journeyRepository.getHistoriesByWeek(week)
+    }
+
+    fun refreshData() {
         viewModelScope.launch {
-            journeyRepository.getAllHistories().collect {
-                _historyResult.postValue(it)
+            _historyResult.value = ApiResponse.Loading
+            try {
+                journeyRepository.getAllHistories().observeForever { histories ->
+                    _historyResult.value = ApiResponse.Success(histories)
+                }
+            } catch (e: Exception) {
+                _historyResult.value = ApiResponse.Error(e.message ?: "An error occurred")
             }
         }
     }
 
-    fun getHistoriesByMonth(month: String) {
+    fun refreshDataByMonth(month: String) {
         viewModelScope.launch {
-            journeyRepository.getHistoriesByMonth(month).collect {
-                _historyByMonth.postValue(it)
+            _historyByMonth.value = ApiResponse.Loading
+            try {
+                journeyRepository.getHistoriesByMonth(month).observeForever { histories ->
+                    _historyByMonth.value = ApiResponse.Success(histories)
+                }
+            } catch (e: Exception) {
+                _historyByMonth.value = ApiResponse.Error(e.message ?: "An error occurred")
             }
         }
     }
 
-    fun getHistoriesByWeek(week: String) {
+    fun refreshDataByWeek(week: String) {
         viewModelScope.launch {
-            journeyRepository.getHistoriesByWeek(week).collect {
-                _historyByWeek.postValue(it)
+            _historyByMonth.value = ApiResponse.Loading
+            try {
+                journeyRepository.getHistoriesByMonth(week).observeForever { histories ->
+                    _historyByMonth.value = ApiResponse.Success(histories)
+                }
+            } catch (e: Exception) {
+                _historyByMonth.value = ApiResponse.Error(e.message ?: "An error occurred")
             }
         }
     }
 
-    fun addHistory(imageUri: String, description: String, timestamp: String, diagnosis: String) {
-        viewModelScope.launch {
-            val scan = Scans(
-                id = 0,
-                imageUri = imageUri,
-                description = description,
-                timestamp = timestamp,
-                diagnosis = diagnosis
-            )
-            journeyRepository.addHistory(scan)
-        }
-    }
+
 }
