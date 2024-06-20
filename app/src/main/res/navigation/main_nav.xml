@@ -104,7 +104,15 @@
         android:id="@+id/examineFragment"
         android:name="com.bangkit.android.dermatify.ui.examine.ExamineFragment"
         android:label="fragment_examine"
-        tools:layout="@layout/fragment_examine" />
+        tools:layout="@layout/fragment_examine" >
+        <action
+            android:id="@+id/action_examineFragment_to_examineResultFragment"
+            app:destination="@id/examineResultFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
+            app:popUpTo="@id/examineFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/learnFragment"
         android:name="com.bangkit.android.dermatify.ui.learn.LearnFragment"
@@ -116,11 +124,6 @@
             app:enterAnim="@android:anim/slide_in_left"
             app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
-    <fragment
-        android:id="@+id/wishlistFragment"
-        android:name="com.bangkit.android.dermatify.ui.wishlist.WishlistFragment"
-        android:label="fragment_wishlist"
-        tools:layout="@layout/fragment_wishlist" />
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.bangkit.android.dermatify.ui.profile.ProfileFragment"
@@ -189,5 +192,18 @@
         android:name="com.bangkit.android.dermatify.ui.meettheteam.MeetTeamFragment"
         android:label="fragment_meet_team"
         tools:layout="@layout/fragment_meet_team" />
+    <fragment
+        android:id="@+id/examineResultFragment"
+        android:name="com.bangkit.android.dermatify.ui.examineresult.ExamineResultFragment"
+        android:label="fragment_examine_result"
+        tools:layout="@layout/fragment_examine_result" >
+        <action
+            android:id="@+id/action_examineResultFragment_to_examineFragment"
+            app:destination="@id/examineFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"
+            app:popUpTo="@id/examineResultFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 
 </navigation>

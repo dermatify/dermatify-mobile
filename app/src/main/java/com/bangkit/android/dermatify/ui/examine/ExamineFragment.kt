@@ -108,7 +108,8 @@ class ExamineFragment : Fragment() {
                 picUri?.let {
                     file = picUri?.uriToFile(requireContext())?.reduceFileImage()
                     newPic = Uri.fromFile(file).convertUriToString()
-                    examineViewModel.analyzePic(file)
+//                    examineViewModel.analyzePic(file)
+                    findNavController().navigate(R.id.action_examineFragment_to_examineResultFragment)
                 }
 
             }
