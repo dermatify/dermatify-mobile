@@ -80,10 +80,6 @@ class ProfileFragment : Fragment() {
                 }
             }
 
-            topbar.setNavigationOnClickListener {
-                findNavController().popBackStack()
-            }
-
             btnEdit.setOnClickListener {
                 findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToEditProfileFragment(userEmail, userName, userProfilePic))
             }

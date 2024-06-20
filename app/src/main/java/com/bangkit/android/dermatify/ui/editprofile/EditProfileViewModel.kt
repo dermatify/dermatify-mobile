@@ -20,16 +20,18 @@ class EditProfileViewModel(private val userRepository: UserRepository) : ViewMod
 
     fun saveUpdateName(newUserName: String) = userRepository.updateUserName(newUserName)
     fun saveUpdatePic(newUserPic: String) = userRepository.updateUserPic(newUserPic)
-//    fun updateUserProfileRemotely(name: String) = userRepository.updateUserProfile(name)
 
-    fun updateUserProfileRemotely(name: String) =
+    fun updateUserProfileRemotely(name: String) {
+        _updateProfileResponse.removeSource(userRepository.updateUserProfile(name))
         _updateProfileResponse.addSource(userRepository.updateUserProfile(name)) { result ->
             Log.d("Cilukba", "update result = $result")
             _updateProfileResponse.value = result
             _updateProfileResponse.value = null
         }
+    }
 
     fun renewAccessToken() {
+        _renewTokenResponse.removeSource(userRepository.renewAccessToken())
         _renewTokenResponse.addSource(userRepository.renewAccessToken()) { result ->
             _renewTokenResponse.value = result
             _renewTokenResponse.value = null
@@ -50,7 +52,7 @@ class ViewModelFactory private constructor(private val userRepository: UserRepos
         private var instance: ViewModelFactory? = null
         fun getInstance(context: Context): ViewModelFactory =
             instance ?: synchronized(this) {
-                instance ?: ViewModelFactory(Injection.provideAuthRepository(context))
+                instance ?: ViewModelFactory(Injection.provideUserRepository(context))
             }.also { instance = it }
     }
 }

@@ -23,7 +23,7 @@ class RegViewModelFactory private constructor(private val userRepository: UserRe
         private var instance: RegViewModelFactory? = null
         fun getInstance(context: Context): RegViewModelFactory =
             instance ?: synchronized(this) {
-                instance ?: RegViewModelFactory(Injection.provideAuthRepository(context))
+                instance ?: RegViewModelFactory(Injection.provideUserRepository(context))
             }.also { instance = it }
 
     }

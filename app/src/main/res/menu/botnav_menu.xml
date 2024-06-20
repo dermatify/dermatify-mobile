@@ -19,7 +19,7 @@
         android:icon="@drawable/botnav_ic_learn"
         android:title="@string/learn" />
     <item
-        android:id="@+id/wishlistFragment"
-        android:icon="@drawable/botnav_ic_wishlist"
-        android:title="@string/wishlist" />
+        android:id="@+id/profileFragment"
+        android:icon="@drawable/botnav_ic_account"
+        android:title="@string/profile" />
 </menu>

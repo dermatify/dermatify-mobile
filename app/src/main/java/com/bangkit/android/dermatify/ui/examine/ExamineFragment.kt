@@ -12,15 +12,21 @@ import android.view.ViewGroup
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.bangkit.android.dermatify.R
+import com.bangkit.android.dermatify.data.remote.response.ApiResponse
 import com.bangkit.android.dermatify.databinding.FragmentExamineBinding
 import com.bangkit.android.dermatify.util.convertUriToString
 import com.bangkit.android.dermatify.util.getImageUri
 import com.bangkit.android.dermatify.util.invisible
+import com.bangkit.android.dermatify.util.reduceFileImage
 import com.bangkit.android.dermatify.util.setUriToImageView
 import com.bangkit.android.dermatify.util.showSnackbar
+import com.bangkit.android.dermatify.util.showSnackbarWithActionBtn
+import com.bangkit.android.dermatify.util.uriToFile
 import com.bangkit.android.dermatify.util.visible
+import java.io.File
 
 class ExamineFragment : Fragment() {
 
@@ -29,13 +35,17 @@ class ExamineFragment : Fragment() {
 
     private var picUri: Uri? = null
     private var newPic: String = ""
+    private var file: File? = null
+
+    private val examineViewModel by activityViewModels<ExamineViewModel> {
+        ViewModelFactory.getInstance(requireActivity().application)
+    }
 
     private val launcherGallery = registerForActivityResult(
         ActivityResultContracts.PickVisualMedia()
     ) { uri: Uri? ->
         if (uri != null) {
             picUri = uri
-            newPic = picUri.convertUriToString()
             Log.d("Cilukba", "newPic: $newPic")
             showImage()
         }
@@ -73,6 +83,7 @@ class ExamineFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initUI()
+        initAnalyzeObserver()
     }
 
     private fun initUI() {
@@ -94,12 +105,50 @@ class ExamineFragment : Fragment() {
             }
 
             btnAnalyze.setOnClickListener {
-                binding.apply {
-                    btnAnalyze.text = ""
-                    tvAnalyzing.visible()
-                    progbarAnalyze.visible()
-                    btnAnalyze.isEnabled = false
+                picUri?.let {
+                    file = picUri?.uriToFile(requireContext())?.reduceFileImage()
+                    newPic = Uri.fromFile(file).convertUriToString()
+                    examineViewModel.analyzePic(file)
                 }
+
+            }
+        }
+    }
+
+    private fun initAnalyzeObserver() {
+        examineViewModel.analyzeReponse.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is ApiResponse.Error -> {
+                    binding.apply {
+                        btnAnalyze.text = getString(R.string.analyze)
+                        tvAnalyzing.invisible()
+                        progbarAnalyze.invisible()
+                        btnAnalyze.isEnabled = true
+
+                        btnAnalyze.showSnackbarWithActionBtn(
+                            message = getString(R.string.error_occured),
+                            type = "error",
+                            actionMsg = getString(R.string.try_again),
+                            onClick = {
+                                file?.let {
+                                    examineViewModel.analyzePic(file)
+                                }
+                            }
+                        )
+                    }
+                }
+                is ApiResponse.Loading -> {
+                    binding.apply {
+                        btnAnalyze.text = ""
+                        tvAnalyzing.visible()
+                        progbarAnalyze.visible()
+                        btnAnalyze.isEnabled = false
+                    }
+                }
+                is ApiResponse.Success -> {
+
+                }
+                null -> { }
             }
         }
     }

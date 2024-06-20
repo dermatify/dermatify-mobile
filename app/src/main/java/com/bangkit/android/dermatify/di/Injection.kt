@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 
 object Injection {
-    fun provideAuthRepository(context: Context): UserRepository {
+    fun provideUserRepository(context: Context): UserRepository {
         val userDataStore = UserPreferences.getInstance(context.userDataStore)
         val accessToken = runBlocking {
             userDataStore.getAccessToken().first()
@@ -27,7 +27,7 @@ object Injection {
     }
 
     fun provideArticlesRepository(): ArticlesRepository {
-        val apiService = ApiConfig.getApiService("")
+        val apiService = ApiConfig.getArticlesApiService()
         return ArticlesRepository.getInstance(apiService)
     }
 }

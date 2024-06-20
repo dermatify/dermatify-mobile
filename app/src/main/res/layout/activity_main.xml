@@ -65,15 +65,5 @@
         app:layout_anchor="@id/bot_app_bar"
         app:tint="@color/white" />
 
-    <!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
-<!--        android:id="@+id/nav_view"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:itemActiveIndicatorStyle="@android:color/transparent"-->
-<!--        app:itemRippleColor="@android:color/transparent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        />-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

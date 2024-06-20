@@ -3,13 +3,11 @@ package com.bangkit.android.dermatify.ui.home
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.MediatorLiveData
 import com.bangkit.android.dermatify.data.remote.response.ApiResponse
-import com.bangkit.android.dermatify.data.remote.response.ArticlesItem
 import com.bangkit.android.dermatify.data.repository.ArticlesRepository
 import com.bangkit.android.dermatify.data.repository.UserRepository
 import com.bangkit.android.dermatify.di.Injection
@@ -24,13 +22,14 @@ class HomeViewModel(
     init {
         fetchArticles()
     }
-    fun fetchArticles() = _articles.addSource(articlesRepository.fetchArticles()) { response ->
-        Log.d("Cilukba", "update result = $response")
-        _articles.value = response
+    fun fetchArticles() {
+        _articles.removeSource(articlesRepository.fetchArticles())
+        _articles.addSource(articlesRepository.fetchArticles()) { response ->
+            Log.d("Cilukba", "update result = $response")
+            _articles.value = response
+        }
     }
     fun getUserName() = userRepository.getUserName().asLiveData()
-
-    fun getUserPic() = userRepository.getUserPic().asLiveData()
 }
 
 class ViewModelFactory private constructor(
@@ -50,7 +49,7 @@ class ViewModelFactory private constructor(
         fun getInstance(context: Context): ViewModelFactory =
             instance ?: synchronized(this) {
                 instance ?: ViewModelFactory(
-                    Injection.provideAuthRepository(context),
+                    Injection.provideUserRepository(context),
                     Injection.provideArticlesRepository()
                 )
             }.also { instance = it }
