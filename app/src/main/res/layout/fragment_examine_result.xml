@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:overScrollMode="never"
+    tools:context=".ui.examineresult.ExamineResultFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:paddingBottom="16dp">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topbar"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/white_background"
+            android:elevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/ic_exit"
+            app:navigationIconTint="@color/grey_variant_3" />
+
+        <ImageView
+            android:id="@+id/ivProgressIndicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/progbar_result_examine"
+            app:layout_constraintBottom_toBottomOf="@id/imageProgress"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/imageProgress" />
+
+        <ImageView
+            android:id="@+id/imageProgress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/image_progress_done"
+            app:layout_constraintEnd_toStartOf="@id/resultProgress"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/topbar" />
+
+        <ImageView
+            android:id="@+id/resultProgress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/result_progress_done"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imageProgress"
+            app:layout_constraintTop_toTopOf="@id/imageProgress" />
+
+        <TextView
+            android:id="@+id/tvImageProgressTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/scan_your_skin"
+            android:textAlignment="center"
+            android:textColor="@color/primary_blue"
+            app:layout_constraintEnd_toStartOf="@id/tvResultProgressTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageProgress" />
+
+        <TextView
+            android:id="@+id/tvResultProgressTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/result"
+            android:textAlignment="center"
+            android:textColor="@color/primary_blue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvImageProgressTitle"
+            app:layout_constraintTop_toBottomOf="@id/resultProgress" />
+
+        <TextView
+            android:id="@+id/tv_header_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/skin_analysis_result"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvImageProgressTitle" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_preview"
+            android:layout_width="240dp"
+            android:layout_height="240dp"
+            android:layout_marginVertical="12dp"
+            android:scaleType="centerCrop"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_header_title"
+            tools:src="@tools:sample/avatars"
+            tools:visibility="visible" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_dark_circles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="16dp"
+            android:clipToPadding="false"
+            android:visibility="invisible"
+            tools:visibility="visible"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="3dp"
+            app:layout_constraintEnd_toStartOf="@id/cv_redness"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_preview">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="8dp">
+
+                <ImageView
+                    android:id="@+id/iv_dark_circles"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentBottom="true"
+                    android:src="@drawable/ic_dark_circle" />
+
+                <TextView
+                    android:id="@+id/tv_dark_circles"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/iv_dark_circles"
+                    android:layout_alignBottom="@id/iv_dark_circles"
+                    android:layout_marginStart="4dp"
+                    android:layout_toEndOf="@id/iv_dark_circles"
+                    android:gravity="center"
+                    android:text="@string/dark_circles"
+                    android:textColor="@color/grey_variant_3" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_redness"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="8dp"
+            android:clipToPadding="false"
+            android:visibility="invisible"
+            tools:visibility="visible"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="3dp"
+            app:layout_constraintEnd_toStartOf="@id/cv_acnes"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@id/cv_dark_circles"
+            app:layout_constraintTop_toBottomOf="@id/iv_preview">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="8dp">
+
+                <ImageView
+                    android:id="@+id/iv_redness"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentBottom="true"
+                    android:src="@drawable/ic_redness" />
+
+                <TextView
+                    android:id="@+id/tv_redness"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/iv_redness"
+                    android:layout_alignBottom="@id/iv_redness"
+                    android:layout_marginStart="4dp"
+                    android:layout_toEndOf="@id/iv_redness"
+                    android:gravity="center"
+                    android:text="@string/redness"
+                    android:textColor="@color/grey_variant_3" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_acnes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="8dp"
+            android:visibility="invisible"
+            tools:visibility="visible"
+            android:layout_marginTop="16dp"
+            android:clipToPadding="false"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="3dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/cv_redness"
+            app:layout_constraintTop_toBottomOf="@id/iv_preview">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="8dp">
+
+                <ImageView
+                    android:id="@+id/iv_acnes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentBottom="true"
+                    android:src="@drawable/ic_acnes" />
+
+                <TextView
+                    android:id="@+id/tv_acnes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/iv_acnes"
+                    android:layout_alignBottom="@id/iv_acnes"
+                    android:layout_marginStart="4dp"
+                    android:layout_toEndOf="@id/iv_acnes"
+                    android:gravity="center"
+                    android:text="@string/acnes"
+                    android:textColor="@color/grey_variant_3" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_healthy_skin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:clipToPadding="false"
+            android:visibility="invisible"
+            tools:visibility="invisible"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="3dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_preview">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="8dp">
+
+                <ImageView
+                    android:id="@+id/iv_healthy_skin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentBottom="true"
+                    android:src="@drawable/ic_healthy_skin" />
+
+                <TextView
+                    android:id="@+id/tv_healthy_skin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/iv_healthy_skin"
+                    android:layout_alignBottom="@id/iv_healthy_skin"
+                    android:layout_marginStart="4dp"
+                    android:layout_toEndOf="@id/iv_healthy_skin"
+                    android:gravity="center"
+                    android:text="@string/healthy_skin"
+                    android:textColor="@color/grey_variant_3" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_diagnosis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:layout_marginHorizontal="32dp"
+            android:clipToPadding="false"
+            android:visibility="visible"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="3dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cv_healthy_skin">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="16dp">
+
+                <ImageView
+                    android:id="@+id/iv_diagnosis"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:src="@drawable/ic_diagnosis" />
+
+                <TextView
+                    android:id="@+id/tv_diagnosis"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/iv_diagnosis"
+                    android:layout_alignBottom="@id/iv_diagnosis"
+                    android:layout_marginStart="8dp"
+                    android:layout_alignParentEnd="true"
+                    android:textAlignment="textStart"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_toEndOf="@id/iv_diagnosis"
+                    android:text="@string/diagnosis"
+                    android:textColor="@color/grey_variant_3" />
+
+                <TextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/iv_diagnosis"
+                    android:layout_marginTop="4dp"
+                    android:layout_alignParentStart="true"
+                    tools:text="20 Dec 2024, 00:00 AM"
+                    android:textSize="12sp"
+                    android:textColor="@color/grey_variant_7" />
+
+                <TextView
+                    android:id="@+id/tv_diagnosis_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_date"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="8dp"
+                    android:layout_alignParentStart="true"
+                    tools:text="20 Dec 2024, 00:00 AM"
+                    android:textColor="@color/grey_variant_3" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_treatment_recs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="32dp"
+            android:clipToPadding="false"
+            android:visibility="visible"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="3dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cv_diagnosis">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="16dp">
+
+                <ImageView
+                    android:id="@+id/iv_treatment_recs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:src="@drawable/ic_treatment_recs" />
+
+                <TextView
+                    android:id="@+id/tv_treatment_recs_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/iv_treatment_recs"
+                    android:layout_alignBottom="@id/iv_treatment_recs"
+                    android:layout_marginStart="8dp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_alignParentEnd="true"
+                    android:layout_toEndOf="@id/iv_treatment_recs"
+                    android:text="@string/treatment_recs"
+                    android:textColor="@color/grey_variant_3" />
+
+
+                <TextView
+                    android:id="@+id/tv_treatment_recs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/iv_treatment_recs"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="8dp"
+                    android:layout_alignParentStart="true"
+                    tools:text="20 Dec 2024, 00:00 AM"
+                    android:textColor="@color/grey_variant_3" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginTop="48dp"
+            android:text="@string/examine_again"
+            android:textSize="16sp"
+            android:backgroundTint="@color/primary_blue"
+            app:layout_constraintTop_toBottomOf="@id/cv_treatment_recs"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
