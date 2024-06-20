@@ -1,6 +1,8 @@
 package com.bangkit.android.dermatify.ui.journey
 
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -8,30 +10,34 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bangkit.android.dermatify.R
-import com.bangkit.android.dermatify.data.local.room.HistoryDatabase
+import com.bangkit.android.dermatify.data.local.entity.Scans
 import com.bangkit.android.dermatify.data.remote.response.ApiResponse
-import com.bangkit.android.dermatify.data.remote.retrofit.ApiConfig
-import com.bangkit.android.dermatify.data.repository.JourneyRepository
 import com.bangkit.android.dermatify.databinding.FragmentJourneyBinding
 import com.bangkit.android.dermatify.ui.adapter.JourneyAdapter
-import kotlinx.coroutines.launch
+
 
 class JourneyFragment : Fragment() {
 
     private var _binding: FragmentJourneyBinding? = null
     private val binding get() = _binding!!
-    private lateinit var adapter: JourneyAdapter
-    private val viewModel: JourneyViewModel by viewModels()
+    private lateinit var journeyAdapter: JourneyAdapter
+    private val viewModel by activityViewModels<JourneyViewModel> {
+        JourneyViewModelFactory.getInstance(requireActivity().application)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        requireActivity().window.statusBarColor = activity?.getColor(R.color.white_background) ?: Color.TRANSPARENT
+        requireActivity().window.navigationBarColor = activity?.getColor(R.color.white_background) ?: Color.TRANSPARENT
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentJourneyBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -39,9 +45,18 @@ class JourneyFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupRecyclerView(emptyList())
+
+//        viewModel.getAllHistories().observe(viewLifecycleOwner) {scans ->
+//            if ((viewModel.size.value ?: 0) > 0) {
+//                setupRecyclerView(scans)
+//                journeyAdapter.submitList(scans)
+//            }
+//        }
+
         setupDropDownMenus()
-        setupRecyclerView()
         observerViewModel()
+        viewModel.refreshData()
 
     }
 
@@ -68,7 +83,7 @@ class JourneyFragment : Fragment() {
                 id: Long
             ) {
                 val selectedMonth = months[position]
-                viewModel.getHistoriesByMonth(selectedMonth)
+                viewModel.refreshDataByMonth(selectedMonth)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -84,7 +99,7 @@ class JourneyFragment : Fragment() {
                 id: Long
             ) {
                 val selectedWeek = weeks[position]
-                viewModel.getHistoriesByWeek(selectedWeek)
+                viewModel.refreshDataByWeek(selectedWeek)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -93,31 +108,80 @@ class JourneyFragment : Fragment() {
         }
     }
 
-    private fun setupRecyclerView() {
-        adapter = JourneyAdapter { scan ->
-            Toast.makeText(requireContext(), "Clicked: ${scan.diagnosis}", Toast.LENGTH_SHORT).show()
+    private fun setupRecyclerView(scans: List<Scans>) {
+        journeyAdapter = JourneyAdapter(scans)
+        binding.rvJourney.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            setHasFixedSize(true)
+            adapter = journeyAdapter
         }
-        binding.rvJourney.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvJourney.adapter = adapter
     }
 
     private fun observerViewModel() {
-        viewModel.historyResult.observe(viewLifecycleOwner, Observer { response ->
+        viewModel.historyResult.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is ApiResponse.Error -> {
-                    Toast.makeText(requireContext(), "Error: ${response.errorMsg}", Toast.LENGTH_SHORT).show()
+                    Log.e("JourneyFragment", "Error: ${response.errorMsg}")
+                    Toast.makeText(
+                        requireContext(),
+                        "Error: ${response.errorMsg}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
 
                 is ApiResponse.Loading -> {
-
+                    Log.d("JourneyFragment", "Loading data...")
                 }
-
                 is ApiResponse.Success -> {
-
+                    Log.d("JourneyFragment", "Data loaded successfully")
+                    journeyAdapter.submitList(response.data)
                 }
 
             }
-        })
+        }
+        viewModel.historyByMonth.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is ApiResponse.Error -> {
+                    Log.e("JourneyFragment", "Error: ${response.errorMsg}")
+                    Toast.makeText(
+                        requireContext(),
+                        "Error: ${response.errorMsg}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                is ApiResponse.Loading -> {
+                    Log.d("JourneyFragment", "Loading data...")
+                }
+                is ApiResponse.Success -> {
+                    Log.d("JourneyFragment", "Data loaded successfully")
+                    journeyAdapter.submitList(response.data)
+                }
+
+            }
+        }
+        viewModel.historyByWeek.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is ApiResponse.Error -> {
+                    Log.e("JourneyFragment", "Error: ${response.errorMsg}")
+                    Toast.makeText(
+                        requireContext(),
+                        "Error: ${response.errorMsg}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                is ApiResponse.Loading -> {
+                    Log.d("JourneyFragment", "Loading data...")
+                }
+                is ApiResponse.Success -> {
+                    Log.d("JourneyFragment", "Data loaded successfully")
+                    journeyAdapter.submitList(response.data)
+                }
+
+            }
+        }
+
     }
 
 

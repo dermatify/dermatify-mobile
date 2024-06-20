@@ -50,7 +50,7 @@
         app:layout_constraintGuide_percent="0.5" />
     
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_journey"
+        android:id="@+id/rvJourney"
         android:layout_width="@dimen/dimen_0dp"
         android:layout_height="@dimen/dimen_0dp"
         android:layout_marginTop="@dimen/dimen_8dp"
@@ -58,6 +58,7 @@
         app:layout_constraintTop_toBottomOf="@+id/dropdownMonth"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:listitem="@layout/item_journey"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

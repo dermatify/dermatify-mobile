@@ -4,8 +4,10 @@ import android.content.Context
 import android.util.Log
 import com.bangkit.android.dermatify.data.local.preferences.UserPreferences
 import com.bangkit.android.dermatify.data.local.preferences.userDataStore
+import com.bangkit.android.dermatify.data.local.room.HistoryDatabase
 import com.bangkit.android.dermatify.data.remote.retrofit.ApiConfig
 import com.bangkit.android.dermatify.data.repository.ArticlesRepository
+import com.bangkit.android.dermatify.data.repository.JourneyRepository
 import com.bangkit.android.dermatify.data.repository.UserRepository
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -29,5 +31,11 @@ object Injection {
     fun provideArticlesRepository(): ArticlesRepository {
         val apiService = ApiConfig.getArticlesApiService()
         return ArticlesRepository.getInstance(apiService)
+    }
+
+    fun provideRepository(context: Context): JourneyRepository {
+        val database = HistoryDatabase.getInstance(context)
+        val dao = database.scanHistoryDao()
+        return JourneyRepository.getInstance(dao)
     }
 }
