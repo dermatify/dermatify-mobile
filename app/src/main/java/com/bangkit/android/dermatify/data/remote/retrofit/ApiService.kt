@@ -1,5 +1,6 @@
 package com.bangkit.android.dermatify.data.remote.retrofit
 
+import com.bangkit.android.dermatify.data.local.entity.ScansEntity
 import com.bangkit.android.dermatify.data.remote.response.ArticlesResponse
 import com.bangkit.android.dermatify.data.remote.response.LoginResponse
 import com.bangkit.android.dermatify.data.remote.response.LogoutResponse
@@ -11,6 +12,7 @@ import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Query
 
 interface ApiService {
     @FormUrlEncoded
@@ -30,6 +32,7 @@ interface ApiService {
 
     @POST("auth/logout")
     suspend fun logout(): LogoutResponse
+
     @POST("auth/renew")
     suspend fun renewAccessToken(): RenewResponse
 
@@ -41,4 +44,5 @@ interface ApiService {
 
     @GET("articles")
     suspend fun fetchArticles(): ArticlesResponse
+
 }
