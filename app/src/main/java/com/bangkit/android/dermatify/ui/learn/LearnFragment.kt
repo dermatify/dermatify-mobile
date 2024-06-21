@@ -79,7 +79,6 @@ class LearnFragment : Fragment() {
         learnViewModel.articles.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is ApiResponse.Error -> {
-                    Log.d("Cilukba", "fetch error")
 
                     binding.rvArticles.showSnackbarWithActionBtn(
                         message = getString(R.string.network_lost_2),
@@ -92,10 +91,8 @@ class LearnFragment : Fragment() {
                 }
 
                 is ApiResponse.Loading -> {
-                    Log.d("Cilukba", "fetch loading")
                 }
                 is ApiResponse.Success -> {
-                    Log.d("Cilukba", "fetch success")
 
                     val topArticles = (result.data as List<ArticlesItem>).subList(9,13)
                     val botArticles = (result.data as List<ArticlesItem>).subList(0,9)

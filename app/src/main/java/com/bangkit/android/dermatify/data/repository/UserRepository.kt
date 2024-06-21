@@ -90,16 +90,12 @@ class UserRepository private constructor(
 
         try {
             val successReponse = apiServiceAT.analyzeSkin(multipartBody)
-            Log.d("CilukbaTest", "analyze success ${successReponse}")
             emit(ApiResponse.Success(successReponse.data))
         } catch (e: HttpException) {
             val errorBody = e.response()?.errorBody()?.string()
-            Log.d("CilukbaTest", "analyze error ${errorBody}")
             val errorResponse = Gson().fromJson(errorBody, AnalyzeError::class.java)
             emit(ApiResponse.Error(errorResponse.message))
         } catch (e: Exception) {
-            Log.d("Cilukba", "analyze error not http ${e}")
-            Log.d("Cilukba", "analyze error not http ${e.message}")
             val errorMessage = if (e.message?.contains("Unable to resolve host", ignoreCase = true) == true) {
                 "Seems you lost your connection. Please try again"
             } else {
@@ -127,7 +123,6 @@ class UserRepository private constructor(
     fun saveUpdateProfile(newName: String = "", newProfilePic: String = "") {
         CoroutineScope(Dispatchers.IO).launch {
             if (newProfilePic == "removed") {
-                Log.d("Cilukba", "pic is removed")
                 removePic()
             } else if (newProfilePic.isNotEmpty()) {
                 updateUserPic(newProfilePic)
@@ -141,15 +136,12 @@ class UserRepository private constructor(
         emit(ApiResponse.Loading)
         try {
             val successResponse = apiServiceAT.updateUserProfile(newName)
-            Log.d("Cilukba", "save ${successResponse}")
             emit(ApiResponse.Success(successResponse))
         } catch (e: HttpException) {
             val errorBody = e.response()?.errorBody()?.string()
-            Log.d("Cilukba", "save update error ${errorBody}")
             val errorResponse = Gson().fromJson(errorBody, ErrorResponse::class.java)
             emit(ApiResponse.Error(errorResponse.message))
         } catch (e: Exception) {
-            Log.d("Cilukba", "save update error ${e.message}")
             val errorMessage = if (e.message?.contains("Unable to resolve host", ignoreCase = true) == true) {
                 "Seems you lost your connection. Please try again"
             } else {
@@ -164,18 +156,15 @@ class UserRepository private constructor(
             val successResponse = apiServiceAT.login(email, password)
             apiServiceAT = ApiConfig.getApiService(successResponse.accessToken)
             apiServiceRT = ApiConfig.getApiService(successResponse.refreshToken)
-            Log.d("Cilukba", "login at: ${successResponse.accessToken}")
             userDataStore.saveToken(successResponse.accessToken, successResponse.refreshToken)
             userDataStore.saveUserName(successResponse.name)
             userDataStore.saveEmail(email)
             emit(ApiResponse.Success(successResponse))
         } catch (e: HttpException) {
             val errorBody = e.response()?.errorBody()?.string()
-            Log.d("Cilukba", "${errorBody}")
             val errorResponse = Gson().fromJson(errorBody, ErrorResponse::class.java)
             emit(ApiResponse.Error(errorResponse.message))
         } catch (e: Exception) {
-            Log.d("Cilukba", "${e.message}")
             val errorMessage = if (e.message?.contains("Unable to resolve host", ignoreCase = true) == true) {
                 "Seems you lost your connection. Please try again"
             } else {
@@ -190,15 +179,12 @@ class UserRepository private constructor(
         try {
             val successResponse = apiServiceAT.logout()
             emit(ApiResponse.Success(successResponse.message))
-            Log.d("Cilukba", "logout success ${successResponse.message}")
             userDataStore.removeAll()
         } catch (e: HttpException) {
             val errorBody = e.response()?.errorBody()?.string()
             val errorResponse = Gson().fromJson(errorBody, ErrorResponse::class.java)
-            Log.d("Cilukba", "$errorBody")
             emit(ApiResponse.Error(errorResponse.message))
         } catch (e: Exception) {
-            Log.d("Cilukba", "${e.message}")
             val errorMessage = if (e.message?.contains("Unable to resolve host", ignoreCase = true) == true) {
                 "Seems you lost your connection. Please try again"
             } else {
@@ -215,11 +201,9 @@ class UserRepository private constructor(
             emit(ApiResponse.Success(successResponse.message))
         } catch (e: HttpException) {
             val errorBody = e.response()?.errorBody()?.string()
-            Log.d("Cilukba", "$errorBody")
             val errorResponse = Gson().fromJson(errorBody, ErrorResponse::class.java)
             emit(ApiResponse.Error(errorResponse.message))
         } catch (e: Exception) {
-            Log.d("Cilukba", "${e.message}")
             val errorMessage = if (e.message?.contains("Unable to resolve host", ignoreCase = true) == true) {
                 "Seems you lost your connection. Please try again"
             } else {
@@ -235,11 +219,9 @@ class UserRepository private constructor(
             val successResponse = apiServiceRT.renewAccessToken()
             apiServiceAT = ApiConfig.getApiService(successResponse.accessToken)
             userDataStore.updateAccessToken(successResponse.accessToken)
-            Log.d("Cilukba", "renew: ${successResponse.accessToken}")
             emit(ApiResponse.Success(successResponse.message))
         } catch (e: HttpException) {
             val errorBody = e.response()?.errorBody()?.string()
-            Log.d("Cilukba", "$errorBody")
             val errorResponse = Gson().fromJson(errorBody, ErrorResponse::class.java)
             val errorMsg = "${errorResponse.message} Logout"
             emit(ApiResponse.Error(errorMsg))

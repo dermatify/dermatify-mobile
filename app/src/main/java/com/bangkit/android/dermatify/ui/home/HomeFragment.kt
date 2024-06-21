@@ -82,13 +82,11 @@ class HomeFragment : Fragment() {
             homeHeaderAdapter.name = it
             addAdapterToConcat()
             concatAdapter.notifyDataSetChanged()
-            Log.d("Cilukba", "dalam observe $it")
         }
     }
 
     private fun initRecentScansObserver() {
         homeViewModel.getRecentScans().observe(viewLifecycleOwner) { recent ->
-            Log.d("CilukbaTest", "HOME $recent")
             reloadAdapterWhenRecentScanExist(recent)
         }
     }
@@ -96,7 +94,6 @@ class HomeFragment : Fragment() {
     private fun reloadAdapterWhenRecentScanExist(recent: Scans? = null) {
 
         removeAdapterFromConcat()
-        Log.d("CilukbaTest", "RELOAD $recent")
         homeHeaderAdapter.scans = recent
         addAdapterToConcat()
         concatAdapter.notifyDataSetChanged()
@@ -118,7 +115,6 @@ class HomeFragment : Fragment() {
         homeViewModel.articles.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is ApiResponse.Success -> {
-                    Log.d("Cilukba", "fetch success")
                     concatAdapter.removeAdapter(articlesAdapter)
                     articlesAdapter = ArticlesAdapter(
                         tabType = ArticlesAdapter.HIGHLIGHTS,
@@ -129,7 +125,6 @@ class HomeFragment : Fragment() {
                     concatAdapter.notifyDataSetChanged()
                 }
                 is ApiResponse.Error -> {
-                    Log.d("Cilukba", "fetch error")
                     concatAdapter.removeAdapter(articlesAdapter)
                     articlesAdapter = ArticlesAdapter(
                         tabType = ArticlesAdapter.HIGHLIGHTS,
@@ -147,7 +142,6 @@ class HomeFragment : Fragment() {
                     )
                 }
                 is ApiResponse.Loading -> {
-                    Log.d("Cilukba", "fetch loading")
                     concatAdapter.removeAdapter(articlesAdapter)
                     articlesAdapter = ArticlesAdapter(
                         tabType = ArticlesAdapter.HIGHLIGHTS,

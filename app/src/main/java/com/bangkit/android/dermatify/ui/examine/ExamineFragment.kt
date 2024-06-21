@@ -48,7 +48,6 @@ class ExamineFragment : Fragment() {
     ) { uri: Uri? ->
         if (uri != null) {
             picUri = uri
-            Log.d("Cilukba", "newPic: $newPic")
             showImage()
         }
     }
@@ -111,7 +110,6 @@ class ExamineFragment : Fragment() {
                 picUri?.let {
                     file = picUri?.uriToFile(requireContext())?.reduceFileImage()
                     newPic = Uri.fromFile(file).convertUriToString()
-                    Log.d("Cilukba", "newPic: $newPic")
                     examineViewModel.analyzePic(file)
                 }
 
@@ -147,7 +145,6 @@ class ExamineFragment : Fragment() {
         examineViewModel.analyzeReponse.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is ApiResponse.Error -> {
-                    Log.d("CilukbaTest", "$result")
                     if (result.errorMsg == "Invalid token!") {
                         examineViewModel.renewAccessToken()
                     } else {
@@ -172,7 +169,6 @@ class ExamineFragment : Fragment() {
                     }
                 }
                 is ApiResponse.Loading -> {
-                    Log.d("CilukbaTest", "$result")
                     binding.apply {
                         btnAnalyze.text = ""
                         tvAnalyzing.visible()

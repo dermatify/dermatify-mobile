@@ -31,7 +31,6 @@ sealed class HeaderViewHolder(binding: ViewBinding) : RecyclerView.ViewHolder(bi
         private var scans: Scans?) : HeaderViewHolder(binding) {
         fun bind() {
             binding.apply {
-                Log.d("CilukbaTest", "VIEWHOLDER $scans")
                 if (scans != null) {
                     cvRecentScans.visible()
                     tvRecentScans.visible()

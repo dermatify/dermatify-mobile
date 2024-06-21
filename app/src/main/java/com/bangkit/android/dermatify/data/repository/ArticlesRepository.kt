@@ -16,15 +16,12 @@ class ArticlesRepository private constructor(
         emit(ApiResponse.Loading)
         try {
             val successResponse = apiService.fetchArticles()
-            Log.d("Cilukba", "articles is fetched ${successResponse}")
             emit(ApiResponse.Success(successResponse.articles))
         } catch (e: HttpException) {
             val errorBody = e.response()?.errorBody()?.string()
-            Log.d("Cilukba", "save ${errorBody}")
             val errorResponse = Gson().fromJson(errorBody, ErrorResponse::class.java)
             emit(ApiResponse.Error(errorResponse.message))
         } catch (e: Exception) {
-            Log.d("Cilukba", "save update ${e.message}")
             val errorMessage = if (e.message?.contains("Unable to resolve host", ignoreCase = true) == true) {
                 "Seems you lost your connection. Please try again"
             } else {

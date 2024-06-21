@@ -48,7 +48,6 @@ class SplashFragment : Fragment() {
 
     private fun initObserver() {
         splashViewModel.getAccessToken().observe(viewLifecycleOwner) { accessToken ->
-            Log.d("Cilukba", "$accessToken")
             if (accessToken.isEmpty()) {
                 findNavController().navigate(R.id.action_splashFragment_to_onboardingFragment)
             } else {

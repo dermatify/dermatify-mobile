@@ -134,24 +134,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/edt_password_reg" />
 
-    <Button
-        android:id="@+id/btn_continue_w_google"
-        style="?attr/materialButtonOutlinedStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="8dp"
-        android:backgroundTint="@color/white"
-        android:drawableLeft="@drawable/ic_google"
-        android:text="@string/continue_w_google"
-        android:textColor="@color/secondary_pink"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_register_reg"
-        app:strokeColor="@color/secondary_pink" />
-
     <TextView
         android:id="@+id/tv_login"
         android:layout_width="wrap_content"
@@ -190,7 +172,7 @@
         app:indicatorColor="@color/secondary_pink"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_continue_w_google"
+        app:layout_constraintTop_toBottomOf="@id/btn_register_reg"
         tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

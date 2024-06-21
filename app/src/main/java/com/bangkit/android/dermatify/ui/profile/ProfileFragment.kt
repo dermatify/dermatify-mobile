@@ -72,7 +72,6 @@ class ProfileFragment : Fragment() {
             }
 
             profileViewModel.getUserPic().observe(viewLifecycleOwner) { userPic ->
-                Log.d("Cilukba", "userpic: $userPic")
                 if (userPic.isNotEmpty()) {
                     ivProfilePicPh.setUriToImageView(Uri.parse(userPic))
                     userProfilePic = userPic
@@ -104,7 +103,6 @@ class ProfileFragment : Fragment() {
 
     private fun initLogoutObserver() {
         profileViewModel.logoutResponse.observe(viewLifecycleOwner) { result ->
-            Log.d("Cilukba", "logout obs init: $result")
             when (result) {
                 is ApiResponse.Loading -> {
                     binding.apply {
@@ -117,7 +115,6 @@ class ProfileFragment : Fragment() {
                 }
                 is ApiResponse.Error -> {
                     if (result.errorMsg == "Invalid token!") {
-                        Log.d("Cilukba", "Invalid token: Renew token")
                         profileViewModel.renewAccessToken()
                     } else {
                         val msg = if (result.errorMsg == "Seems you lost your connection. Please try again") {
@@ -145,7 +142,6 @@ class ProfileFragment : Fragment() {
 
     private fun initRenewObserver() {
         profileViewModel.renewTokenResponse.observe(viewLifecycleOwner) { result ->
-            Log.d("Cilukba", "renew profile obs init: $result")
             when (result) {
                 is ApiResponse.Error -> {
                     if (result.errorMsg.contains("Logout")) {
