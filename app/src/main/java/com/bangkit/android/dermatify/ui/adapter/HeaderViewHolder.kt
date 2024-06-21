@@ -28,19 +28,20 @@ sealed class HeaderViewHolder(binding: ViewBinding) : RecyclerView.ViewHolder(bi
         private val navController: NavController,
         private val context: Context,
         private var name: String,
-        private val scans: Scans? = null) : HeaderViewHolder(binding) {
+        private var scans: Scans?) : HeaderViewHolder(binding) {
         fun bind() {
             binding.apply {
+                Log.d("CilukbaTest", "VIEWHOLDER $scans")
                 if (scans != null) {
                     cvRecentScans.visible()
                     tvRecentScans.visible()
                     btnAllResults.visible()
-                    val picUri = Uri.parse(scans.imageUri)
+                    val picUri = Uri.parse(scans?.imageUri)
                     ivScans.setUriToImageView(picUri)
-                    tvDiagnosisDesc.text = scans.description
-                    tvScansResultDate.text = scans.timestamp
-                    tvDiagnosis.text = scans.diagnosis
-                    when (scans.diagnosis) {
+                    tvDiagnosisDesc.text = scans?.description
+                    tvScansResultDate.text = scans?.timestamp
+                    tvDiagnosis.text = scans?.diagnosis
+                    when (scans?.diagnosis) {
                         "Acne" -> {
                             ivDiagnosis.setImageResource(R.drawable.ic_acnes)
                         }
@@ -53,10 +54,10 @@ sealed class HeaderViewHolder(binding: ViewBinding) : RecyclerView.ViewHolder(bi
                     }
                     cvRecentScans.setOnClickListener {
                         navController.navigate(HomeFragmentDirections.actionHomeFragmentToExamineResultFragment(
-                            diagnosis = scans.diagnosis,
-                            createdAt = scans.timestamp,
-                            id = scans.id.toString(),
-                            picUri = scans.imageUri
+                            diagnosis = scans!!.diagnosis,
+                            createdAt = scans!!.timestamp,
+                            id = scans?.id.toString(),
+                            picUri = scans!!.imageUri
                         ))
                     }
                 }
