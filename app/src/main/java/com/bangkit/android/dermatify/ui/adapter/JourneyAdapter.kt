@@ -10,15 +10,17 @@ import com.bangkit.android.dermatify.data.local.entity.Scans
 import com.bangkit.android.dermatify.databinding.ItemJourneyBinding
 import com.bangkit.android.dermatify.util.setUriToImageView
 
-class JourneyAdapter(private val scans: List<Scans>) : ListAdapter<Scans, JourneyAdapter.JourneyViewHolder>(DIFF_CALLBACK) {
+class JourneyAdapter : ListAdapter<Scans, JourneyAdapter.JourneyViewHolder>(DIFF_CALLBACK) {
+
+    private var scans: MutableList<Scans> = mutableListOf()
 
     inner class JourneyViewHolder(private val binding: ItemJourneyBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(position: Int) {
+        fun bind(scans: Scans) {
             binding.apply {
-                tvDiagnosis.text = scans[position].diagnosis
-                tvDiagnosisDesc.text = scans[position].description
-                tvScansResultDate.text = scans[position].timestamp
-                val imageUri = Uri.parse(scans[position].imageUri)
+                tvDiagnosis.text = scans.diagnosis
+                tvDiagnosisDesc.text = scans.description
+                tvScansResultDate.text = scans.timestamp
+                val imageUri = Uri.parse(scans.imageUri)
                 ivScans.setUriToImageView(imageUri)
             }
         }
@@ -38,10 +40,16 @@ class JourneyAdapter(private val scans: List<Scans>) : ListAdapter<Scans, Journe
     }
 
     override fun onBindViewHolder(holder: JourneyAdapter.JourneyViewHolder, position: Int) {
-        holder.bind(position)
+        holder.bind(scans[position])
     }
 
-    override fun getItemCount(): Int = 2
+    override fun getItemCount(): Int = scans.size
+
+    fun setScans(scansList: List<Scans>) {
+        this.scans.clear()
+        this.scans.addAll(scansList)
+        notifyDataSetChanged()
+    }
 
 
     companion object {

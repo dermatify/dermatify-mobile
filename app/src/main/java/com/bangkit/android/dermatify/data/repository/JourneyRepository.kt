@@ -19,13 +19,7 @@ class JourneyRepository private constructor(
 
     suspend fun size(): Int = scanHistoryDao.getDbSize()
 
-    fun addHistory(imageUri: String, description: String, timestamp: String, diagnosis: String) {
-        val scan = Scans(
-            imageUri = imageUri,
-            description = description,
-            timestamp = timestamp,
-            diagnosis = diagnosis
-        )
+    fun addHistory(scan: Scans) {
         scanHistoryDao.insertHistory(scan)
     }
 

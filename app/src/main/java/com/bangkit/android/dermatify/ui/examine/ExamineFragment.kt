@@ -19,7 +19,6 @@ import com.bangkit.android.dermatify.data.remote.response.AnalyzeResult
 import com.bangkit.android.dermatify.data.remote.response.ApiResponse
 import com.bangkit.android.dermatify.databinding.FragmentExamineBinding
 import com.bangkit.android.dermatify.util.convertUriToString
-import com.bangkit.android.dermatify.util.formatDate
 import com.bangkit.android.dermatify.util.getImageUri
 import com.bangkit.android.dermatify.util.invisible
 import com.bangkit.android.dermatify.util.reduceFileImage
@@ -114,9 +113,9 @@ class ExamineFragment : Fragment() {
                     Log.d("Cilukba", "newPic: $newPic")
                     examineViewModel.analyzePic(file)
                 }
-
             }
         }
+
     }
 
     private fun initRenewTokenObserver() {

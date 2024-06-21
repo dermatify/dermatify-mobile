@@ -1,9 +1,7 @@
 package com.bangkit.android.dermatify.ui.examineresult
 
 import android.net.Uri
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -27,6 +25,7 @@ class ExamineResultFragment : Fragment() {
     private lateinit var diagnosis: String
     private lateinit var picUri: Uri
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,7 +43,9 @@ class ExamineResultFragment : Fragment() {
                 findNavController().popBackStack()
             }
             tvDate.text = createdAt
-            ivPreview.setUriToImageView(picUri)
+            picUri?.let {
+                ivPreview.setUriToImageView(it)
+            }
             cvDiagnosis.visible()
             cvTreatmentRecs.visible()
             when (diagnosis) {
@@ -71,6 +72,7 @@ class ExamineResultFragment : Fragment() {
                 findNavController().navigate(R.id.action_examineResultFragment_to_examineFragment)
             }
         }
+
     }
 
     private fun fetchDataFromNavArgs() {

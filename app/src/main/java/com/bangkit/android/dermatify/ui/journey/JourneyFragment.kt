@@ -13,7 +13,6 @@ import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bangkit.android.dermatify.R
-import com.bangkit.android.dermatify.data.local.entity.Scans
 import com.bangkit.android.dermatify.data.remote.response.ApiResponse
 import com.bangkit.android.dermatify.databinding.FragmentJourneyBinding
 import com.bangkit.android.dermatify.ui.adapter.JourneyAdapter
@@ -45,12 +44,12 @@ class JourneyFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val data : List<Scans> = listOf(
-            Scans(13, "iimg", "desc", "June", "rednes"),
-            Scans(34, "lmg", "descc", "July", "acnes")
-        )
+//        val data : List<Scans> = listOf(
+//            Scans(13, "iimg", "desc", "June", "rednes"),
+//            Scans(34, "lmg", "descc", "July", "acnes")
+//        )
 
-        setupRecyclerView(data)
+        setupRecyclerView()
 
 //        viewModel.getAllHistories().observe(viewLifecycleOwner) {scans ->
 //            if ((viewModel.size.value ?: 0) > 0) {
@@ -114,8 +113,8 @@ class JourneyFragment : Fragment() {
         }
     }
 
-    private fun setupRecyclerView(scans: List<Scans>) {
-        journeyAdapter = JourneyAdapter(scans)
+    private fun setupRecyclerView() {
+        journeyAdapter = JourneyAdapter()
         binding.rvJourney.apply {
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
@@ -140,7 +139,9 @@ class JourneyFragment : Fragment() {
                 }
                 is ApiResponse.Success -> {
                     Log.d("JourneyFragment", "Data loaded successfully")
-                    journeyAdapter.submitList(response.data)
+                    response.data?.let { scansList ->
+                        journeyAdapter.setScans(scansList)
+                    }
                 }
 
             }
