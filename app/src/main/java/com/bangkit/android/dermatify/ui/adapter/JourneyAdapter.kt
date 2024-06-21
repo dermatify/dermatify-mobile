@@ -41,6 +41,9 @@ class JourneyAdapter(private val scans: List<Scans>) : ListAdapter<Scans, Journe
         holder.bind(position)
     }
 
+    override fun getItemCount(): Int = 2
+
+
     companion object {
         val DIFF_CALLBACK: DiffUtil.ItemCallback<Scans> =
             object : DiffUtil.ItemCallback<Scans>() {

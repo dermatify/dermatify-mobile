@@ -45,7 +45,12 @@ class JourneyFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupRecyclerView(emptyList())
+        val data : List<Scans> = listOf(
+            Scans(13, "iimg", "desc", "June", "rednes"),
+            Scans(34, "lmg", "descc", "July", "acnes")
+        )
+
+        setupRecyclerView(data)
 
 //        viewModel.getAllHistories().observe(viewLifecycleOwner) {scans ->
 //            if ((viewModel.size.value ?: 0) > 0) {
@@ -82,8 +87,9 @@ class JourneyFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                val selectedMonth = months[position]
+                val selectedMonth = resources.getStringArray(R.array.months_array)[position]
                 viewModel.refreshDataByMonth(selectedMonth)
+                Log.d("Dropdown", "load")
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
