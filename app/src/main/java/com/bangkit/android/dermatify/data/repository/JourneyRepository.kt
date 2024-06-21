@@ -26,7 +26,7 @@ class JourneyRepository private constructor(
             timestamp = timestamp,
             diagnosis = diagnosis
         )
-        scanHistoryDao.insertHistory(scan)
+//        scanHistoryDao.insertHistory(scan)
     }
 
     companion object {

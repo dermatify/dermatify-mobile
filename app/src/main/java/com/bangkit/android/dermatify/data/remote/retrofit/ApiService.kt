@@ -4,10 +4,13 @@ import com.bangkit.android.dermatify.data.remote.response.AnalyzeResponse
 import com.bangkit.android.dermatify.data.remote.response.ArticlesResponse
 import com.bangkit.android.dermatify.data.remote.response.LoginResponse
 import com.bangkit.android.dermatify.data.remote.response.LogoutResponse
+import com.bangkit.android.dermatify.data.remote.response.RecentScansResponse
+import com.bangkit.android.dermatify.data.remote.response.RecentScansResult
 import com.bangkit.android.dermatify.data.remote.response.RegisterResponse
 import com.bangkit.android.dermatify.data.remote.response.RenewResponse
 import com.bangkit.android.dermatify.data.remote.response.UpdateUserProfileResponse
 import okhttp3.MultipartBody
+import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -51,4 +54,7 @@ interface ApiService {
     suspend fun analyzeSkin(
         @Part image: MultipartBody.Part
     ): AnalyzeResponse
+
+    @GET("articles")
+    fun fetchRecentScans(): Call<List<RecentScansResult>>
 }

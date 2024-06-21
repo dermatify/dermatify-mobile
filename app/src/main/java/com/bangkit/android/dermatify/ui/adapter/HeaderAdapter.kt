@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
+import com.bangkit.android.dermatify.data.local.entity.Scans
 import com.bangkit.android.dermatify.data.remote.response.ArticlesItem
 import com.bangkit.android.dermatify.databinding.ItemHeaderHomeBinding
 import com.bangkit.android.dermatify.databinding.ItemLearnBotHeaderBinding
@@ -16,7 +17,8 @@ class HeaderAdapter(
     private val navController: NavController? = null,
     private val context: Context,
     var name: String = "",
-    private val articles: List<ArticlesItem> = emptyList()
+    private val articles: List<ArticlesItem> = emptyList(),
+    private val scans: Scans? = null
 ) : RecyclerView.Adapter<HeaderViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HeaderViewHolder {
@@ -30,7 +32,8 @@ class HeaderAdapter(
                     ),
                     navController!!,
                     context,
-                    name
+                    name,
+                    scans
                 )
             }
             LEARN_TOP -> {

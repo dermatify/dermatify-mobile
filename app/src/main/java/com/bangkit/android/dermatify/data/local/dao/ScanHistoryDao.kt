@@ -10,7 +10,7 @@ import com.bangkit.android.dermatify.data.local.entity.Scans
 @Dao
 interface ScanHistoryDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertHistory(history: Scans)
+    suspend fun insertHistory(history: Scans)
 
     @Query("SELECT * FROM ScansHistory")
     fun getAllHistories(): LiveData<List<Scans>>
@@ -26,5 +26,8 @@ interface ScanHistoryDao {
 
     @Query("SELECT COUNT(*) FROM ScansHistory")
     suspend fun getDbSize(): Int
+
+    @Query("SELECT * FROM ScansHistory ORDER BY id DESC LIMIT 1")
+    fun getRecentScans(): LiveData<Scans>
 
 }
