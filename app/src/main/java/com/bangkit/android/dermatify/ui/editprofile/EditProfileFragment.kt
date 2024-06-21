@@ -62,7 +62,6 @@ class EditProfileFragment : Fragment() {
 
             userProfilePic = uri
             newPic = userProfilePic.convertUriToString()
-            Log.d("Cilukba", "newPic: $newPic")
             binding.apply {
                 ivProfile.invisible()
                 ivProfilePicPh.setUriToImageView(uri)
@@ -97,7 +96,6 @@ class EditProfileFragment : Fragment() {
             tvEmail.text = userEmail
             edEditName.text = Editable.Factory.getInstance().newEditable(userName)
 
-            Log.d("Cilukba", "isempty userpic: ${oldPic}")
             if (oldPic.isNotEmpty()) {
                 ivProfilePicPh.setUriToImageView(userProfilePic)
                 ivProfilePicPh.visible()
@@ -173,7 +171,6 @@ class EditProfileFragment : Fragment() {
                 }
 
                 if (isChanged) {
-                    Log.d("Cilukba", "Profile is changed")
                     editProfileViewModel.updateUserProfileRemotely(userName)
                 } else {
                     findNavController().popBackStack()
@@ -187,7 +184,6 @@ class EditProfileFragment : Fragment() {
             val file = fileUri.path?.let { File(it) }
             val deleted = file?.delete()
             if (deleted != null && deleted) {
-                Log.d("Cilukba", "delete $pic success")
             }
         }
     }
@@ -211,7 +207,6 @@ class EditProfileFragment : Fragment() {
 
     private fun initObserverUpdateUserProfile() {
         editProfileViewModel.updateProfileResponse.observe(viewLifecycleOwner) { result ->
-            Log.d("Cilukba", "update result obs init: $result")
             when (result) {
                 is ApiResponse.Success -> {
                     binding.apply {
@@ -222,11 +217,9 @@ class EditProfileFragment : Fragment() {
                         )
                     }
                     findNavController().popBackStack()
-                    Log.d("Cilukba", "save remote success ${result.data.toString()}")
                 }
                 is ApiResponse.Error -> {
                     if (result.errorMsg == "Invalid token!") {
-                        Log.d("Cilukba", "Invalid token: Renew token")
                         editProfileViewModel.renewAccessToken()
                     } else {
                         val msg = if (result.errorMsg == "Seems you lost your connection. Please try again") {
@@ -246,7 +239,6 @@ class EditProfileFragment : Fragment() {
                     }
 
                     editProfileViewModel.renewAccessToken()
-                    Log.d("Cilukba", "Save Error: ${result.errorMsg}")
                 }
                 is ApiResponse.Loading -> {
                     binding.apply {
@@ -261,7 +253,6 @@ class EditProfileFragment : Fragment() {
 
     private fun initRenewObserver() {
         editProfileViewModel.renewTokenResponse.observe(viewLifecycleOwner) { result ->
-            Log.d("Cilukba", "renew editprof obs init: $result")
             when (result) {
                 is ApiResponse.Error -> {
                     if (result.errorMsg == "Seems you lost your connection. Please try again") {
@@ -274,10 +265,8 @@ class EditProfileFragment : Fragment() {
                             )
                         }
                     }
-                    Log.d("Cilukba", "Renew Error: ${result.errorMsg}")
                 }
                 is ApiResponse.Success -> {
-                    Log.d("Cilukba", "Renew Success: ${result.data}")
                     editProfileViewModel.updateUserProfileRemotely(userName)
                 }
                 is ApiResponse.Loading -> { }

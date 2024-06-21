@@ -33,7 +33,6 @@ class HomeViewModel(
     fun fetchArticles() {
         _articles.removeSource(articlesRepository.fetchArticles())
         _articles.addSource(articlesRepository.fetchArticles()) { response ->
-            Log.d("Cilukba", "update result = $response")
             _articles.value = response
         }
 

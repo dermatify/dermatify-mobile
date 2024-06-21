@@ -21,7 +21,6 @@ object Injection {
         val database = HistoryDatabase.getInstance(context)
         val scansDao = database.scanHistoryDao()
 
-        Log.d("Cilukba", "injection at: $accessToken")
         val apiServiceAT = ApiConfig.getApiService(accessToken)
 
         val refreshToken = runBlocking {

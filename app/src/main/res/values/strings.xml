@@ -4,7 +4,6 @@
     <string name="home">Home</string>
     <string name="journey">Journey</string>
     <string name="learn">Learn</string>
-    <string name="wishlist">Wishlist</string>
     <string name="name">Name</string>
     <string name="name_error">Name can\'t be empty. Please enter your name</string>
     <string name="email">Email</string>
@@ -25,8 +24,6 @@
     <string name="register">Register</string>
     <string name="register_title">Join us and discover the secrets to healthier skin</string>
     <string name="register_in_login">Don\'t have an account?</string>
-    <string name="login_w_google">Login with Google</string>
-    <string name="continue_w_google">Continue with Google</string>
     <string name="create_acc">Create an account</string>
     <string name="lottie_assets_name">\@drawable/placeholder_onboarding_illus</string>
     <string name="hi_name_home_header">Hi, %1$s!</string>

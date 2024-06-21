@@ -22,7 +22,6 @@ class ExamineViewModel(private val userRepository: UserRepository) : ViewModel()
         if (imageFile != null) {
             _analyzeReponse.removeSource(userRepository.uploadPhoto(imageFile))
             _analyzeReponse.addSource(userRepository.uploadPhoto(imageFile)) { result ->
-                Log.d("Cilukba", "analyze result = $result")
                 _analyzeReponse.value = result
                 _analyzeReponse.value = null
             }

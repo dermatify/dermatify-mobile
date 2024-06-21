@@ -36,7 +36,6 @@ sealed class ArticlesViewHolder(binding: ViewBinding) : RecyclerView.ViewHolder(
                     cvArticles.visible()
                     tvArticleTitle.text = articles[position].title
                     tvArticleSubtitle.text = articles[position].subtitle
-                    Log.d("Cilukba", "lewat art")
                     Glide.with(context)
                         .load(articles[position].thumbnail)
                         .error(
@@ -51,7 +50,6 @@ sealed class ArticlesViewHolder(binding: ViewBinding) : RecyclerView.ViewHolder(
                                 target: Target<Drawable>,
                                 isFirstResource: Boolean
                             ): Boolean {
-                                Log.d("Cilukba", "lewat failed")
                                 shimmerLayout.showShimmer()
                                 return false
                             }
@@ -62,7 +60,6 @@ sealed class ArticlesViewHolder(binding: ViewBinding) : RecyclerView.ViewHolder(
                                 dataSource: DataSource,
                                 isFirstResource: Boolean
                             ): Boolean {
-                                Log.d("Cilukba", "lewat ready")
                                 shimmerLayout.goneShimmer()
                                 return false
                             }
@@ -91,7 +88,6 @@ sealed class ArticlesViewHolder(binding: ViewBinding) : RecyclerView.ViewHolder(
                     cvArticles.visible()
                     tvArticleTitle.text = articles[position].title
                     tvArticleSubtitle.text = articles[position].subtitle
-                    Log.d("Cilukba", "lewat art")
                     Glide.with(context)
                         .load(articles[position].thumbnail)
                         .error(
@@ -106,7 +102,6 @@ sealed class ArticlesViewHolder(binding: ViewBinding) : RecyclerView.ViewHolder(
                                 target: Target<Drawable>,
                                 isFirstResource: Boolean
                             ): Boolean {
-                                Log.d("Cilukba", "lewat failed")
                                 shimmerLayout.showShimmer()
                                 return false
                             }
@@ -117,7 +112,6 @@ sealed class ArticlesViewHolder(binding: ViewBinding) : RecyclerView.ViewHolder(
                                 dataSource: DataSource,
                                 isFirstResource: Boolean
                             ): Boolean {
-                                Log.d("Cilukba", "lewat ready")
                                 shimmerLayout.goneShimmer()
                                 return false
                             }
@@ -147,7 +141,6 @@ sealed class ArticlesViewHolder(binding: ViewBinding) : RecyclerView.ViewHolder(
                     cvArticles.visible()
                     tvLearnTitle.text = articles[position].title
                     tvLearnSubtitle.text = articles[position].subtitle
-                    Log.d("Cilukba", "lewat art")
                     Glide.with(context)
                         .load(articles[position].thumbnail)
                         .error(
@@ -162,7 +155,6 @@ sealed class ArticlesViewHolder(binding: ViewBinding) : RecyclerView.ViewHolder(
                                 target: Target<Drawable>,
                                 isFirstResource: Boolean
                             ): Boolean {
-                                Log.d("Cilukba", "lewat failed")
                                 shimmerLayout.showShimmer()
                                 return false
                             }
@@ -173,7 +165,6 @@ sealed class ArticlesViewHolder(binding: ViewBinding) : RecyclerView.ViewHolder(
                                 dataSource: DataSource,
                                 isFirstResource: Boolean
                             ): Boolean {
-                                Log.d("Cilukba", "lewat ready")
                                 shimmerLayout.goneShimmer()
                                 return false
                             }

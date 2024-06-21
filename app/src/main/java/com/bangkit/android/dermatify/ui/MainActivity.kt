@@ -87,14 +87,14 @@ class MainActivity : AppCompatActivity() {
                         root.setBackgroundColor(Color.TRANSPARENT)
                     }
                 }
-//                R.id.changeLanguageFragment, R.id.profileFragment -> {
-//                    binding.apply {
-//                        botAppBar.gone()
-//                        fabBotNav.visibility = View.GONE
-//                        divider.gone()
-//                        root.setBackgroundColor(Color.TRANSPARENT)
-//                    }
-//                }
+                R.id.changeLanguageFragment -> {
+                    binding.apply {
+                        botAppBar.gone()
+                        fabBotNav.visibility = View.GONE
+                        divider.gone()
+                        root.setBackgroundColor(Color.TRANSPARENT)
+                    }
+                }
                 else -> {
                     binding.apply {
                         botAppBar.gone()

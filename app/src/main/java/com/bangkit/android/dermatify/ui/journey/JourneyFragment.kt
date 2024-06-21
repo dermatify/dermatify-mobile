@@ -121,7 +121,6 @@ class JourneyFragment : Fragment() {
         viewModel.historyResult.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is ApiResponse.Error -> {
-                    Log.e("JourneyFragment", "Error: ${response.errorMsg}")
                     Toast.makeText(
                         requireContext(),
                         "Error: ${response.errorMsg}",
@@ -130,10 +129,8 @@ class JourneyFragment : Fragment() {
                 }
 
                 is ApiResponse.Loading -> {
-                    Log.d("JourneyFragment", "Loading data...")
                 }
                 is ApiResponse.Success -> {
-                    Log.d("JourneyFragment", "Data loaded successfully")
                     journeyAdapter.submitList(response.data)
                 }
 
@@ -142,7 +139,6 @@ class JourneyFragment : Fragment() {
         viewModel.historyByMonth.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is ApiResponse.Error -> {
-                    Log.e("JourneyFragment", "Error: ${response.errorMsg}")
                     Toast.makeText(
                         requireContext(),
                         "Error: ${response.errorMsg}",
@@ -151,10 +147,8 @@ class JourneyFragment : Fragment() {
                 }
 
                 is ApiResponse.Loading -> {
-                    Log.d("JourneyFragment", "Loading data...")
                 }
                 is ApiResponse.Success -> {
-                    Log.d("JourneyFragment", "Data loaded successfully")
                     journeyAdapter.submitList(response.data)
                 }
 
@@ -163,7 +157,6 @@ class JourneyFragment : Fragment() {
         viewModel.historyByWeek.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is ApiResponse.Error -> {
-                    Log.e("JourneyFragment", "Error: ${response.errorMsg}")
                     Toast.makeText(
                         requireContext(),
                         "Error: ${response.errorMsg}",
@@ -172,10 +165,8 @@ class JourneyFragment : Fragment() {
                 }
 
                 is ApiResponse.Loading -> {
-                    Log.d("JourneyFragment", "Loading data...")
                 }
                 is ApiResponse.Success -> {
-                    Log.d("JourneyFragment", "Data loaded successfully")
                     journeyAdapter.submitList(response.data)
                 }
 

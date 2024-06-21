@@ -24,7 +24,6 @@ class EditProfileViewModel(private val userRepository: UserRepository) : ViewMod
     fun updateUserProfileRemotely(name: String) {
         _updateProfileResponse.removeSource(userRepository.updateUserProfile(name))
         _updateProfileResponse.addSource(userRepository.updateUserProfile(name)) { result ->
-            Log.d("Cilukba", "update result = $result")
             _updateProfileResponse.value = result
             _updateProfileResponse.value = null
         }

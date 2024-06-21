@@ -122,30 +122,6 @@ class LoginFragment : Fragment() {
                 findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
             }
 
-            btnLoginWGoogle.setOnClickListener {
-                val rawNonce = UUID.randomUUID().toString()
-                val bytes = rawNonce.toByteArray()
-                val md = MessageDigest.getInstance("SHA-256")
-                val digest = md.digest(bytes)
-                val hashedNonce = digest.fold("") {str, it -> str + "%02x".format(it)}
-
-                val credentialManager = CredentialManager.create(requireContext())
-
-                val googleIdOption: GetGoogleIdOption = GetGoogleIdOption.Builder()
-                    .setFilterByAuthorizedAccounts(false)
-                    .setServerClientId(BuildConfig.WEB_CLIENT_ID)
-                    .setAutoSelectEnabled(true)
-                    .setNonce(hashedNonce)
-                    .build()
-                val request: GetCredentialRequest = GetCredentialRequest.Builder()
-                    .addCredentialOption(googleIdOption)
-                    .build()
-
-                CoroutineScope(Dispatchers.Main).launch {
-                    signInWithGoogle(credentialManager, request)
-                }
-            }
-
         }
     }
 
@@ -162,13 +138,10 @@ class LoginFragment : Fragment() {
                     val msg = if (result.errorMsg.contains("Invalid credential") ||
                         result.errorMsg.contains("User not found")
                     ) {
-                        Log.d("Cilukba", "lewat invalid creds")
                         getString(R.string.invalid_creds)
                     } else if (result.errorMsg == "Seems you lost your connection. Please try again") {
-                        Log.d("Cilukba", "lewat network lost")
                         getString(R.string.network_lost)
                     } else {
-                        Log.d("Cilukba", "lewat gak")
                         getString(R.string.error_occured)
                     }
                     binding.apply {
@@ -185,76 +158,6 @@ class LoginFragment : Fragment() {
                     binding.progbarLogin.gone()
                     findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
                 }
-            }
-        }
-    }
-    private suspend fun signInWithGoogle(credentialManager: CredentialManager, request: GetCredentialRequest) {
-        coroutineScope {
-            try {
-                val result = credentialManager.getCredential(
-                    request = request,
-                    context = requireContext()
-                )
-                handleSignIn(result)
-                val credential = result.credential
-                val googleIdTokenCredential = GoogleIdTokenCredential
-                    .createFrom(credential.data)
-
-                val googleIdToken = googleIdTokenCredential.idToken
-
-                Log.d("Cilukba", googleIdToken)
-                Toast.makeText(requireContext(), "Complete",Toast.LENGTH_SHORT).show()
-
-            } catch (e: Exception) {
-                Log.d("Cilukba", "${e.message}")
-                Toast.makeText(requireContext(), e.message,Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-    private fun handleSignIn(result: GetCredentialResponse) {
-        // Handle the successfully returned credential.
-        val credential = result.credential
-
-        when (credential) {
-
-            // Passkey credential
-            is PublicKeyCredential -> {
-                // Share responseJson such as a GetCredentialResponse on your server to
-                // validate and authenticate
-                val responseJson = credential.authenticationResponseJson
-                Log.d("Cilukba", "responseJson $responseJson")
-            }
-
-            // Password credential
-            is PasswordCredential -> {
-                // Send ID and password to your server to validate and authenticate.
-                val username = credential.id
-                val password = credential.password
-                Log.d("Cilukba", "PC $username $password")
-
-            }
-
-            // GoogleIdToken credential
-            is CustomCredential -> {
-                if (credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
-                    try {
-                        // Use googleIdTokenCredential and extract id to validate and
-                        // authenticate on your server.
-                        val googleIdTokenCredential = GoogleIdTokenCredential
-                            .createFrom(credential.data)
-                        Log.d("Cilukba", "GITC ${googleIdTokenCredential.id}\n${googleIdTokenCredential.data}\n${googleIdTokenCredential.displayName}")
-                    } catch (e: GoogleIdTokenParsingException) {
-                        Log.e("Cilukba", "Received an invalid google id token response", e)
-                    }
-                } else {
-                    // Catch any unrecognized custom credential type here.
-                    Log.e("Cilukba", "Unexpected type of credential")
-                }
-            }
-
-            else -> {
-                // Catch any unrecognized credential type here.
-                Log.e("Cilukba", "Unexpected type of credential")
             }
         }
     }
