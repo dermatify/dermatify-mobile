@@ -19,35 +19,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
-    <Spinner
-        android:id="@+id/dropdownMonth"
-        android:layout_width="@dimen/dimen_0dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="@dimen/dimen_16dp"
-        android:layout_marginEnd="@dimen/dimen_8dp"
-        android:hint="@string/hint_month"
-        app:layout_constraintTop_toBottomOf="@id/scanHistory"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/guideline" />
-
-    <Spinner
-        android:id="@+id/dropdownWeek"
-        android:layout_width="@dimen/dimen_0dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="@dimen/dimen_16dp"
-        android:layout_marginStart="@dimen/dimen_8dp"
-        android:hint="@string/hint_week"
-        app:layout_constraintTop_toBottomOf="@id/scanHistory"
-        app:layout_constraintStart_toEndOf="@id/guideline"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
     
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvJourney"
@@ -55,7 +26,7 @@
         android:layout_height="@dimen/dimen_0dp"
         android:layout_marginTop="@dimen/dimen_8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toBottomOf="@+id/dropdownMonth"
+        app:layout_constraintTop_toBottomOf="@+id/scanHistory"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -7,8 +7,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -44,73 +42,10 @@ class JourneyFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        val data : List<Scans> = listOf(
-//            Scans(13, "iimg", "desc", "June", "rednes"),
-//            Scans(34, "lmg", "descc", "July", "acnes")
-//        )
-
         setupRecyclerView()
-
-//        viewModel.getAllHistories().observe(viewLifecycleOwner) {scans ->
-//            if ((viewModel.size.value ?: 0) > 0) {
-//                setupRecyclerView(scans)
-//                journeyAdapter.submitList(scans)
-//            }
-//        }
-
-        setupDropDownMenus()
         observerViewModel()
         viewModel.refreshData()
 
-    }
-
-    private fun setupDropDownMenus() {
-
-        val months = resources.getStringArray(R.array.months_array)
-        val weeks = resources.getStringArray(R.array.weeks_array)
-
-        val monthAdapter =
-            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, months)
-        monthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.dropdownMonth.adapter = monthAdapter
-
-        val weekAdapter =
-            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, weeks)
-        weekAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.dropdownWeek.adapter = weekAdapter
-
-        binding.dropdownMonth.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                val selectedMonth = resources.getStringArray(R.array.months_array)[position]
-                viewModel.refreshDataByMonth(selectedMonth)
-                Log.d("Dropdown", "load")
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
-        }
-
-        binding.dropdownWeek.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                val selectedWeek = weeks[position]
-                viewModel.refreshDataByWeek(selectedWeek)
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
-        }
     }
 
     private fun setupRecyclerView() {
@@ -137,6 +72,7 @@ class JourneyFragment : Fragment() {
                 is ApiResponse.Loading -> {
                     Log.d("JourneyFragment", "Loading data...")
                 }
+
                 is ApiResponse.Success -> {
                     Log.d("JourneyFragment", "Data loaded successfully")
                     response.data?.let { scansList ->
@@ -146,51 +82,8 @@ class JourneyFragment : Fragment() {
 
             }
         }
-        viewModel.historyByMonth.observe(viewLifecycleOwner) { response ->
-            when (response) {
-                is ApiResponse.Error -> {
-                    Log.e("JourneyFragment", "Error: ${response.errorMsg}")
-                    Toast.makeText(
-                        requireContext(),
-                        "Error: ${response.errorMsg}",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-
-                is ApiResponse.Loading -> {
-                    Log.d("JourneyFragment", "Loading data...")
-                }
-                is ApiResponse.Success -> {
-                    Log.d("JourneyFragment", "Data loaded successfully")
-                    journeyAdapter.submitList(response.data)
-                }
-
-            }
-        }
-        viewModel.historyByWeek.observe(viewLifecycleOwner) { response ->
-            when (response) {
-                is ApiResponse.Error -> {
-                    Log.e("JourneyFragment", "Error: ${response.errorMsg}")
-                    Toast.makeText(
-                        requireContext(),
-                        "Error: ${response.errorMsg}",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-
-                is ApiResponse.Loading -> {
-                    Log.d("JourneyFragment", "Loading data...")
-                }
-                is ApiResponse.Success -> {
-                    Log.d("JourneyFragment", "Data loaded successfully")
-                    journeyAdapter.submitList(response.data)
-                }
-
-            }
-        }
 
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

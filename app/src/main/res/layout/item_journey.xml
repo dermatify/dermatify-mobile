@@ -58,10 +58,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            tools:text="Lorem ipsum description dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
+            android:layout_marginEnd="@dimen/dimen_8dp"
             android:maxLines="2"
             android:textColor="@color/grey_variant_3"
-            android:textSize="13sp"
+            android:textSize="12sp"
+            android:ellipsize="end"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_diagnosis"
             app:layout_constraintEnd_toStartOf="@id/iv_scans"/>
@@ -81,13 +82,14 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_scans"
-            android:layout_width="wrap_content"
+            android:layout_width="108dp"
             android:layout_height="108dp"
             android:contentDescription="@string/recent_user_scan_photo"
             android:elevation="4dp"
+            android:layout_marginEnd="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tv_diagnosis_desc"
+            app:layout_constraintEnd_toStartOf="@id/iv_next"
             tools:src="@tools:sample/avatars" />
 
         <ImageView
@@ -95,7 +97,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_next_1"
-            app:layout_constraintStart_toEndOf="@id/iv_scans"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
