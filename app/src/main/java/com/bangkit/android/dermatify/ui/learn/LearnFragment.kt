@@ -94,8 +94,8 @@ class LearnFragment : Fragment() {
                 }
                 is ApiResponse.Success -> {
 
-                    val topArticles = (result.data as List<ArticlesItem>).subList(9,13)
-                    val botArticles = (result.data as List<ArticlesItem>).subList(0,9)
+                    val topArticles = (result.data as List<ArticlesItem>).subList(0,4)
+                    val botArticles = (result.data as List<ArticlesItem>).subList(4,13)
 
                     concatAdapter.removeAdapter(topHeaderAdapter)
                     concatAdapter.removeAdapter(botHeaderAdapter)
