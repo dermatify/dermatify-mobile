@@ -7,10 +7,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.bangkit.android.dermatify.data.remote.response.AnalyzeResult
 import com.bangkit.android.dermatify.data.remote.response.ApiResponse
+import com.bangkit.android.dermatify.data.remote.response.RecentScansResult
 import com.bangkit.android.dermatify.data.repository.ArticlesRepository
 import com.bangkit.android.dermatify.data.repository.UserRepository
 import com.bangkit.android.dermatify.di.Injection
+import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val userRepository: UserRepository,
@@ -18,6 +23,9 @@ class HomeViewModel(
 ) : ViewModel() {
     private val _articles = MediatorLiveData<ApiResponse<*>>()
     val articles: LiveData<ApiResponse<*>> = _articles
+
+    private var _size = MutableLiveData(0)
+    val size: LiveData<Int> = _size
 
     init {
         fetchArticles()
@@ -28,7 +36,17 @@ class HomeViewModel(
             Log.d("Cilukba", "update result = $response")
             _articles.value = response
         }
+
     }
+
+    fun getDbSize() {
+        viewModelScope.launch {
+            _size.value = userRepository.getDbsize()
+        }
+    }
+
+    fun getRecentScans() = userRepository.getRecent()
+
     fun getUserName() = userRepository.getUserName().asLiveData()
 }
 

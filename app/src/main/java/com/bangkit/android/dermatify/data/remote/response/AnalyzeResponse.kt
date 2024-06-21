@@ -18,3 +18,14 @@ data class AnalyzeError(
     val status: String,
     val message: String
 )
+
+data class RecentScansResponse(
+    val id: RecentScansResult
+)
+
+data class RecentScansResult(
+    val id: String,
+    val createdAt: String,
+    val issue: String,
+    val score: Double
+)

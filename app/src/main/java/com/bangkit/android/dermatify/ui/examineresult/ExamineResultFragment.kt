@@ -8,10 +8,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bangkit.android.dermatify.R
 import com.bangkit.android.dermatify.databinding.FragmentExamineResultBinding
+import com.bangkit.android.dermatify.util.convertUriToString
 import com.bangkit.android.dermatify.util.formatDate
 import com.bangkit.android.dermatify.util.setUriToImageView
 import com.bangkit.android.dermatify.util.visible
@@ -26,6 +28,10 @@ class ExamineResultFragment : Fragment() {
     private lateinit var createdAt: String
     private lateinit var diagnosis: String
     private lateinit var picUri: Uri
+
+    private val resultViewModel by activityViewModels<ExamineResultViewModel> {
+        ViewModelFactory.getInstance(requireActivity().application)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,7 +63,7 @@ class ExamineResultFragment : Fragment() {
                 "Redness" -> {
                     cvRedness.visible()
                     tvDiagnosisDesc.text = getString(R.string.redness_diagnosis_desc)
-                    tvTreatmentRecs.text = getString(R.string.acnes_treatment_desc)
+                    tvTreatmentRecs.text = getString(R.string.redness_treatment_desc)
                 }
 
                 "Eyebags" -> {
@@ -70,7 +76,15 @@ class ExamineResultFragment : Fragment() {
             btnExamineAgain.setOnClickListener {
                 findNavController().navigate(R.id.action_examineResultFragment_to_examineFragment)
             }
+            if (navigationArgs.isNew) {
+                resultViewModel.insertScans(
+                    img = picUri.convertUriToString(),
+                    diagnosis = diagnosis,
+                    desc = tvDiagnosisDesc.text.toString(),
+                    date = createdAt)
+            }
         }
+
     }
 
     private fun fetchDataFromNavArgs() {

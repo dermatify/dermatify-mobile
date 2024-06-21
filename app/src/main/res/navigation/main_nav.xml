@@ -88,6 +88,11 @@
             app:destination="@id/examineFragment"
             app:enterAnim="@android:anim/slide_in_left"
             app:popExitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_homeFragment_to_examineResultFragment"
+            app:destination="@id/examineResultFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/journeyFragment"
@@ -216,6 +221,10 @@
         <argument
             android:name="picUri"
             app:argType="string" />
+        <argument
+            android:name="isNew"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
 
 </navigation>

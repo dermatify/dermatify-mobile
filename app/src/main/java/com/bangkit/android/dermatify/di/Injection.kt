@@ -18,6 +18,9 @@ object Injection {
         val accessToken = runBlocking {
             userDataStore.getAccessToken().first()
         }
+        val database = HistoryDatabase.getInstance(context)
+        val scansDao = database.scanHistoryDao()
+
         Log.d("Cilukba", "injection at: $accessToken")
         val apiServiceAT = ApiConfig.getApiService(accessToken)
 
@@ -25,7 +28,7 @@ object Injection {
             userDataStore.getRefreshToken().first()
         }
         val apiServiceRT = ApiConfig.getApiService(refreshToken)
-        return UserRepository.getInstance(apiServiceAT, apiServiceRT, userDataStore)
+        return UserRepository.getInstance(apiServiceAT, apiServiceRT, userDataStore, scansDao)
     }
 
     fun provideArticlesRepository(): ArticlesRepository {

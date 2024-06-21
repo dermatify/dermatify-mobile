@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bangkit.android.dermatify.R
+import com.bangkit.android.dermatify.data.local.entity.Scans
 import com.bangkit.android.dermatify.data.remote.response.ApiResponse
 import com.bangkit.android.dermatify.data.remote.response.ArticlesItem
 import com.bangkit.android.dermatify.databinding.FragmentHomeBinding
@@ -54,6 +55,7 @@ class HomeFragment : Fragment() {
         initUserNameObserver()
         initArticlesObserver()
         initUI()
+        initRecentScansObserver()
     }
 
     // Ensure the status bar and nav bar color is
@@ -81,6 +83,22 @@ class HomeFragment : Fragment() {
             addAdapterToConcat()
             concatAdapter.notifyDataSetChanged()
             Log.d("Cilukba", "dalam observe $it")
+        }
+    }
+
+    private fun initRecentScansObserver() {
+        homeViewModel.getRecentScans().observe(viewLifecycleOwner) { recent ->
+            Log.d("CilukbaTest", "HOME $recent")
+            reloadAdapterWhenRecentScanExist(recent)
+        }
+    }
+
+    private fun reloadAdapterWhenRecentScanExist(recent: Scans? = null) {
+        if ((homeViewModel.size.value ?: 0) > 0) {
+            removeAdapterFromConcat()
+            homeHeaderAdapter = HeaderAdapter(HeaderAdapter.HOME, findNavController(), requireContext(), userName, scans = recent)
+            addAdapterToConcat()
+            concatAdapter.notifyDataSetChanged()
         }
     }
 

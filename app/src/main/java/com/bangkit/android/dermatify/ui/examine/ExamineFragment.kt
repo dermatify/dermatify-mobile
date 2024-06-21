@@ -189,7 +189,8 @@ class ExamineFragment : Fragment() {
                             diagnosis = diagnosis,
                             createdAt = date,
                             id = id,
-                            picUri = newPic
+                            picUri = newPic,
+                            isNew = true
                         )
                     )
                 }

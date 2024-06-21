@@ -106,7 +106,6 @@
             android:id="@+id/cv_dark_circles"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:clipToPadding="false"
             android:visibility="invisible"
@@ -114,7 +113,7 @@
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="15dp"
             app:cardElevation="3dp"
-            app:layout_constraintEnd_toStartOf="@id/cv_redness"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_preview">
@@ -194,7 +193,6 @@
             android:id="@+id/cv_acnes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
             android:visibility="invisible"
             tools:visibility="visible"
             android:layout_marginTop="16dp"
@@ -204,7 +202,7 @@
             app:cardElevation="3dp"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/cv_redness"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_preview">
 
             <RelativeLayout

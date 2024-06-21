@@ -1,29 +1,39 @@
 package com.bangkit.android.dermatify.data.repository
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
+import com.bangkit.android.dermatify.data.local.dao.ScanHistoryDao
+import com.bangkit.android.dermatify.data.local.entity.Scans
 import com.bangkit.android.dermatify.data.local.preferences.UserPreferences
 import com.bangkit.android.dermatify.data.remote.response.AnalyzeError
 import com.bangkit.android.dermatify.data.remote.response.ApiResponse
 import com.bangkit.android.dermatify.data.remote.response.ErrorResponse
+import com.bangkit.android.dermatify.data.remote.response.RecentScansResult
 import com.bangkit.android.dermatify.data.remote.retrofit.ApiConfig
 import com.bangkit.android.dermatify.data.remote.retrofit.ApiService
 import com.google.gson.Gson
+import com.google.gson.JsonElement
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.HttpException
+import retrofit2.Response
 import java.io.File
 
 class UserRepository private constructor(
     private var apiServiceAT: ApiService,
     private var apiServiceRT: ApiService,
-    private val userDataStore: UserPreferences
+    private val userDataStore: UserPreferences,
+    private val scansDao: ScanHistoryDao
 ) {
 
     fun getUserName(): Flow<String> = userDataStore.getUserName()
@@ -31,18 +41,42 @@ class UserRepository private constructor(
     fun getUserEmail(): Flow<String> = userDataStore.getUserEmail()
     fun getAccessToken(): Flow<String> = userDataStore.getAccessToken()
 
-    private fun getRefreshToken(): Flow<String> = userDataStore.getRefreshToken()
+    fun getRecent(): LiveData<Scans> = scansDao.getRecentScans()
 
-    private fun removeToken() {
-        CoroutineScope(Dispatchers.IO).launch {
-            userDataStore.removeToken()
-        }
+    suspend fun getDbsize() = scansDao.getDbSize()
+
+    suspend     fun insertScans (img: String, diagnosis: String, desc: String, date: String) {
+        val scansEntity = Scans(
+            imageUri = img,
+            description = desc,
+            diagnosis = diagnosis,
+            timestamp = date)
+        scansDao.insertHistory(scansEntity)
     }
 
     private fun removePic() {
         CoroutineScope(Dispatchers.IO).launch {
             userDataStore.removePic()
         }
+    }
+    fun getRecents(callback: (ApiResponse<List<RecentScansResult>>) -> Unit) {
+        val call = apiServiceAT.fetchRecentScans()
+
+        call.enqueue(object : Callback<List<RecentScansResult>> {
+            override fun onResponse(call: Call<List<RecentScansResult>>, response: Response<List<RecentScansResult>>) {
+                if (response.isSuccessful) {
+                    response.body()?.let {
+                        callback(ApiResponse.Success(it))
+                    } ?: callback(ApiResponse.Error("Response body is null"))
+                } else {
+                    callback(ApiResponse.Error("Response was not successful: ${response.code()}"))
+                }
+            }
+
+            override fun onFailure(call: Call<List<RecentScansResult>>, t: Throwable) {
+                callback(ApiResponse.Error("${t.message}"))
+            }
+        })
     }
 
     fun uploadPhoto(imageFile: File) = liveData {
@@ -223,9 +257,11 @@ class UserRepository private constructor(
     companion object {
         @Volatile
         private var instance: UserRepository? = null
-        fun getInstance(apiServiceAT: ApiService, apiServiceRT: ApiService, userDataStore: UserPreferences): UserRepository =
+        fun getInstance(apiServiceAT: ApiService, apiServiceRT: ApiService, userDataStore: UserPreferences, scansDao: ScanHistoryDao): UserRepository =
             instance ?: synchronized(this) {
-                instance ?: UserRepository(apiServiceAT, apiServiceRT, userDataStore)
+                instance ?: UserRepository(apiServiceAT, apiServiceRT, userDataStore, scansDao)
             }.also { instance = it }
     }
 }
+
+
