@@ -102,7 +102,7 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_preview"
-        android:layout_width="240dp"
+        android:layout_width="0dp"
         android:layout_height="240dp"
         android:layout_marginVertical="12dp"
         android:scaleType="centerCrop"

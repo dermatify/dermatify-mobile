@@ -15,6 +15,9 @@ class ExamineViewModel(private val userRepository: UserRepository) : ViewModel()
     private val _analyzeReponse = MediatorLiveData<ApiResponse<*>?>()
     val analyzeReponse: LiveData<ApiResponse<*>?> = _analyzeReponse
 
+    private val _renewTokenResponse = MediatorLiveData<ApiResponse<*>?>()
+    val renewTokenResponse: LiveData<ApiResponse<*>?> = _renewTokenResponse
+
     fun analyzePic(imageFile: File?) {
         if (imageFile != null) {
             _analyzeReponse.removeSource(userRepository.uploadPhoto(imageFile))
@@ -23,6 +26,14 @@ class ExamineViewModel(private val userRepository: UserRepository) : ViewModel()
                 _analyzeReponse.value = result
                 _analyzeReponse.value = null
             }
+        }
+    }
+
+    fun renewAccessToken() {
+        _renewTokenResponse.removeSource(userRepository.renewAccessToken())
+        _renewTokenResponse.addSource(userRepository.renewAccessToken()) { result ->
+            _renewTokenResponse.value = result
+            _renewTokenResponse.value = null
         }
     }
 
