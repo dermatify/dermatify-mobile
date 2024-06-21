@@ -47,7 +47,7 @@ interface ApiService {
     suspend fun fetchArticles(): ArticlesResponse
 
     @Multipart
-    @POST("analyze")
+    @POST("predict")
     suspend fun analyzeSkin(
         @Part image: MultipartBody.Part
     ): AnalyzeResponse

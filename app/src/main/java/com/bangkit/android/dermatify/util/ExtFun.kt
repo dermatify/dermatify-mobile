@@ -22,6 +22,13 @@ import com.bangkit.android.dermatify.R
 import com.bumptech.glide.Glide
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.datetime.Instant
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.format.MonthNames
+import kotlinx.datetime.format.char
+import kotlinx.datetime.toLocalDateTime
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -38,6 +45,28 @@ private const val MAXIMAL_SIZE = 1000000
 private const val FILENAME_FORMAT = "yyyyMMdd_HHmmss"
 private val timeStamp: String = SimpleDateFormat(FILENAME_FORMAT, Locale.ROOT).format(Date())
 
+
+// Date
+fun formatDate(createdAt: String): String {
+    val postDate = Instant.parse(createdAt)
+    val systemTimezone = TimeZone.currentSystemDefault()
+    val customFormat = LocalDateTime.Format {
+        dayOfMonth()
+        char(' ')
+        monthName(MonthNames.ENGLISH_ABBREVIATED)
+        char(' ')
+        year()
+        char(',')
+        char(' ')
+        hour()
+        char(':')
+        minute()
+        char(' ')
+        amPmMarker("AM", "PM")
+    }
+    val toLocalDateTime = postDate.toLocalDateTime(systemTimezone)
+    return customFormat.format(toLocalDateTime)
+}
 
 // Get Uri from Media Store
 fun getImageUri(context: Context): Uri {
@@ -168,7 +197,7 @@ fun View.showSnackbar(message: String, type: String = "", anchorView: View = thi
         .show()
 }
 
-fun View.showSnackbarWithActionBtn(message: String, type: String = "", actionMsg: String, onClick: () -> Unit) {
+fun View.showSnackbarWithActionBtn(message: String, type: String = "", actionMsg: String, onClick: () -> Unit, anchorView: Int = R.id.fabBotNav) {
     Snackbar.make(
         this,
         message,
@@ -185,7 +214,7 @@ fun View.showSnackbarWithActionBtn(message: String, type: String = "", actionMsg
         .setAction(actionMsg) {
             onClick()
         }
-        .setAnchorView(R.id.fabBotNav)
+        .setAnchorView(anchorView)
         .setTextColor(context.getColor(R.color.white))
         .setActionTextColor(context.getColor(R.color.white))
         .show()

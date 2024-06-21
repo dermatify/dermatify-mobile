@@ -3,6 +3,7 @@ package com.bangkit.android.dermatify.data.repository
 import android.util.Log
 import androidx.lifecycle.liveData
 import com.bangkit.android.dermatify.data.local.preferences.UserPreferences
+import com.bangkit.android.dermatify.data.remote.response.AnalyzeError
 import com.bangkit.android.dermatify.data.remote.response.ApiResponse
 import com.bangkit.android.dermatify.data.remote.response.ErrorResponse
 import com.bangkit.android.dermatify.data.remote.retrofit.ApiConfig
@@ -48,21 +49,23 @@ class UserRepository private constructor(
         emit(ApiResponse.Loading)
         val requestImageFile = imageFile.asRequestBody("image/jpeg".toMediaType())
         val multipartBody = MultipartBody.Part.createFormData(
-            "photo",
+            "image",
             imageFile.name,
             requestImageFile
         )
 
         try {
             val successReponse = apiServiceAT.analyzeSkin(multipartBody)
-            emit(ApiResponse.Success(successReponse))
+            Log.d("CilukbaTest", "analyze success ${successReponse}")
+            emit(ApiResponse.Success(successReponse.data))
         } catch (e: HttpException) {
             val errorBody = e.response()?.errorBody()?.string()
-            Log.d("Cilukba", "analyze error ${errorBody}")
-            val errorResponse = Gson().fromJson(errorBody, ErrorResponse::class.java)
+            Log.d("CilukbaTest", "analyze error ${errorBody}")
+            val errorResponse = Gson().fromJson(errorBody, AnalyzeError::class.java)
             emit(ApiResponse.Error(errorResponse.message))
         } catch (e: Exception) {
-            Log.d("Cilukba", "analyze error ${e.message}")
+            Log.d("Cilukba", "analyze error not http ${e}")
+            Log.d("Cilukba", "analyze error not http ${e.message}")
             val errorMessage = if (e.message?.contains("Unable to resolve host", ignoreCase = true) == true) {
                 "Seems you lost your connection. Please try again"
             } else {

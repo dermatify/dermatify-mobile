@@ -15,9 +15,11 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.bangkit.android.dermatify.R
+import com.bangkit.android.dermatify.data.remote.response.AnalyzeResult
 import com.bangkit.android.dermatify.data.remote.response.ApiResponse
 import com.bangkit.android.dermatify.databinding.FragmentExamineBinding
 import com.bangkit.android.dermatify.util.convertUriToString
+import com.bangkit.android.dermatify.util.formatDate
 import com.bangkit.android.dermatify.util.getImageUri
 import com.bangkit.android.dermatify.util.invisible
 import com.bangkit.android.dermatify.util.reduceFileImage
@@ -84,6 +86,7 @@ class ExamineFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initUI()
         initAnalyzeObserver()
+        initRenewTokenObserver()
     }
 
     private fun initUI() {
@@ -108,10 +111,34 @@ class ExamineFragment : Fragment() {
                 picUri?.let {
                     file = picUri?.uriToFile(requireContext())?.reduceFileImage()
                     newPic = Uri.fromFile(file).convertUriToString()
-//                    examineViewModel.analyzePic(file)
-                    findNavController().navigate(R.id.action_examineFragment_to_examineResultFragment)
+                    Log.d("Cilukba", "newPic: $newPic")
+                    examineViewModel.analyzePic(file)
                 }
 
+            }
+        }
+    }
+
+    private fun initRenewTokenObserver() {
+        examineViewModel.renewTokenResponse.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is ApiResponse.Error -> {
+                    if (result.errorMsg == "Seems you lost your connection. Please try again") {
+                        val msg = getString(R.string.network_lost)
+                        binding.apply {
+                            root.showSnackbar(
+                                message = msg,
+                                type = "error",
+                                anchorView = btnAnalyze
+                            )
+                        }
+                    }
+                }
+                ApiResponse.Loading -> { }
+                is ApiResponse.Success -> {
+                    examineViewModel.analyzePic(file)
+                }
+                null -> { }
             }
         }
     }
@@ -120,25 +147,32 @@ class ExamineFragment : Fragment() {
         examineViewModel.analyzeReponse.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is ApiResponse.Error -> {
-                    binding.apply {
-                        btnAnalyze.text = getString(R.string.analyze)
-                        tvAnalyzing.invisible()
-                        progbarAnalyze.invisible()
-                        btnAnalyze.isEnabled = true
+                    Log.d("CilukbaTest", "$result")
+                    if (result.errorMsg == "Invalid token!") {
+                        examineViewModel.renewAccessToken()
+                    } else {
+                        binding.apply {
+                            btnAnalyze.text = getString(R.string.analyze)
+                            tvAnalyzing.invisible()
+                            progbarAnalyze.invisible()
+                            btnAnalyze.isEnabled = true
 
-                        btnAnalyze.showSnackbarWithActionBtn(
-                            message = getString(R.string.error_occured),
-                            type = "error",
-                            actionMsg = getString(R.string.try_again),
-                            onClick = {
-                                file?.let {
-                                    examineViewModel.analyzePic(file)
-                                }
-                            }
-                        )
+                            btnAnalyze.showSnackbarWithActionBtn(
+                                message = getString(R.string.error_occured),
+                                type = "error",
+                                actionMsg = getString(R.string.try_again),
+                                onClick = {
+                                    file?.let {
+                                        examineViewModel.analyzePic(file)
+                                    }
+                                },
+                                anchorView = R.id.btn_analyze
+                            )
+                        }
                     }
                 }
                 is ApiResponse.Loading -> {
+                    Log.d("CilukbaTest", "$result")
                     binding.apply {
                         btnAnalyze.text = ""
                         tvAnalyzing.visible()
@@ -147,7 +181,17 @@ class ExamineFragment : Fragment() {
                     }
                 }
                 is ApiResponse.Success -> {
-
+                    val diagnosis = (result.data as AnalyzeResult).issue
+                    val date = result.data.createdAt
+                    val id = result.data.id
+                    findNavController().navigate(ExamineFragmentDirections
+                        .actionExamineFragmentToExamineResultFragment(
+                            diagnosis = diagnosis,
+                            createdAt = date,
+                            id = id,
+                            picUri = newPic
+                        )
+                    )
                 }
                 null -> { }
             }

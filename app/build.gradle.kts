@@ -84,6 +84,9 @@ dependencies {
     // Data Store
     implementation("androidx.datastore:datastore-preferences:1.1.1")
 
+    // DateTime
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.0")
+
     // EXIF
     implementation("androidx.exifinterface:exifinterface:1.3.7")
 

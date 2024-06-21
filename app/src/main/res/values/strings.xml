@@ -38,9 +38,9 @@
     <string name="recent_scans">Recent Scans</string>
     <string name="all_results">All Results</string>
     <string name="skin_analysis_result">Skin Analysis Result</string>
-    <string name="dark_circles">Dark circles</string>
+    <string name="dark_circles">Eye bags</string>
     <string name="redness">Redness</string>
-    <string name="acnes">Acnes</string>
+    <string name="acnes">Acne</string>
     <string name="cd_dark_circles">Dark circles under the eye icon</string>
     <string name="recent_user_scan_photo">Recent user scan photo</string>
     <string name="learn_more">Learn More</string>
@@ -112,9 +112,12 @@
     <string name="treatment_recs">Treament Recommendation</string>
     <string name="diagnosis">Diagnosis</string>
     <string name="examine_again">Examine again</string>
-    <string name="acnes_diagnosis_desc">Your skin analysis result shows that you have acnes. Acnes is a common skin condition that causes pimples and blackheads. It\'s usually caused by a combination of factors, including excess oil production, bacteria, and inflammation. To improve your acne, consider using a gentle cleanser, avoiding oil-based products, and using a topical treatment prescribed by a dermatologist.</string>
+    <string name="acnes_diagnosis_desc">Your skin analysis result shows that you have acne. Acne is a common skin condition that causes pimples and blackheads. It\'s usually caused by a combination of factors, including excess oil production, bacteria, and inflammation. To improve your acne, consider using a gentle cleanser, avoiding oil-based products, and using a topical treatment prescribed by a dermatologist.</string>
     <string name="acnes_treatment_desc">To improve your acne, consider using a gentle cleanser, avoiding oil-based products, and using a topical treatment prescribed by a dermatologist.</string>
-    <string name="dark_circles_diagnosis_desc">Your skin analysis has revealed the presence of dark circles around your eyes. This condition can be caused by factors like lack of sleep, dehydration, aging, or genetic predisposition. Addressing any underlying issues, getting enough rest, staying hydrated, and using targeted skincare products may help improve the appearance of dark circles.</string>
-    <string name="dark_circles_treatment_desc">To improve your dark circles, consider using a moisturizer with light-reflecting ingredients, getting enough sleep, and avoiding smoking and excessive alcohol consumption.</string>
-
+    <string name="dark_circles_diagnosis_desc">Your skin analysis has revealed the presence of eye bags around your eyes. This condition can be caused by factors like lack of sleep, dehydration, aging, or genetic predisposition. Addressing any underlying issues, getting enough rest, staying hydrated, and using targeted skincare products may help improve the appearance of eye bags.</string>
+    <string name="dark_circles_treatment_desc">To improve your eye bags, consider using a moisturizer with light-reflecting ingredients, getting enough sleep, and avoiding smoking and excessive alcohol consumption.</string>
+    <string name="redness_diagnosis_desc">Your skin analysis result shows that you have redness or inflammation on your skin. Redness can be caused by a variety of factors, including rosacea, sunburn, or sensitivity to certain ingredients.</string>
+    <string name="redness_treatment_desc">To improve your redness, consider using a moisturizer with soothing ingredients, avoiding irritants, and using a sunscreen with a high SPF to protect your skin from further damage.</string>
+    <string name="healthy_skin_diagnosis_desc">Congratulations! Your skin analysis result shows that you have healthy skin. Healthy skin is characterized by a smooth texture, even tone, and few visible signs of aging.</string>
+    <string name="healthy_skin_treatment_desc">To maintain your healthy skin, consider using a gentle cleanser, moisturizing regularly, and protecting your skin from the sun with a sunscreen.</string>
 </resources>
