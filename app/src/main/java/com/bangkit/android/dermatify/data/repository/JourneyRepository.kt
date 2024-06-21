@@ -11,14 +11,6 @@ class JourneyRepository private constructor(
     fun getAllHistories(): LiveData<List<Scans>> =
         scanHistoryDao.getAllHistories()
 
-   fun getHistoriesByMonth(month: String): LiveData<List<Scans>> =
-        scanHistoryDao.getHistoriesByMonth(month)
-
-   fun getHistoriesByWeek(week: String): LiveData<List<Scans>> =
-        scanHistoryDao.getHistoriesByWeek(week)
-
-    suspend fun size(): Int = scanHistoryDao.getDbSize()
-
     fun addHistory(scan: Scans) {
         scanHistoryDao.insertHistory(scan)
     }

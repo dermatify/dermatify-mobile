@@ -15,16 +15,4 @@ interface ScanHistoryDao {
     @Query("SELECT * FROM ScansHistory")
     fun getAllHistories(): LiveData<List<Scans>>
 
-    @Query("SELECT * FROM ScansHistory WHERE id = :id")
-    suspend fun getDetailHistory(id: Int): Scans
-
-    @Query("SELECT * FROM ScansHistory WHERE strftime('%m', timestamp) = :month")
-    fun getHistoriesByMonth(month: String): LiveData<List<Scans>>
-
-    @Query("SELECT * FROM ScansHistory WHERE strftime('%W', timestamp) = :week")
-    fun getHistoriesByWeek(week: String): LiveData<List<Scans>>
-
-    @Query("SELECT COUNT(*) FROM ScansHistory")
-    suspend fun getDbSize(): Int
-
 }
