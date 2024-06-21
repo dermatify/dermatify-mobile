@@ -88,8 +88,12 @@ class ExamineResultFragment : Fragment() {
     }
 
     private fun fetchDataFromNavArgs() {
+        createdAt = if (navigationArgs.isNew) {
+            formatDate(navigationArgs.createdAt)
+        } else {
+            navigationArgs.createdAt
+        }
         id = navigationArgs.id
-        createdAt = formatDate(navigationArgs.createdAt)
         picUri = Uri.parse(navigationArgs.picUri)
         diagnosis = navigationArgs.diagnosis
     }

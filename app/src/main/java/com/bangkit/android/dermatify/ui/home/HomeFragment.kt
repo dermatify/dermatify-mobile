@@ -94,12 +94,13 @@ class HomeFragment : Fragment() {
     }
 
     private fun reloadAdapterWhenRecentScanExist(recent: Scans? = null) {
-        if ((homeViewModel.size.value ?: 0) > 0) {
-            removeAdapterFromConcat()
-            homeHeaderAdapter = HeaderAdapter(HeaderAdapter.HOME, findNavController(), requireContext(), userName, scans = recent)
-            addAdapterToConcat()
-            concatAdapter.notifyDataSetChanged()
-        }
+
+        removeAdapterFromConcat()
+        Log.d("CilukbaTest", "RELOAD $recent")
+        homeHeaderAdapter.scans = recent
+        addAdapterToConcat()
+        concatAdapter.notifyDataSetChanged()
+
     }
 
 

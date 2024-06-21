@@ -18,7 +18,7 @@ class HeaderAdapter(
     private val context: Context,
     var name: String = "",
     private val articles: List<ArticlesItem> = emptyList(),
-    private val scans: Scans? = null
+    var scans: Scans? = null
 ) : RecyclerView.Adapter<HeaderViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HeaderViewHolder {
